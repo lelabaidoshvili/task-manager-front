@@ -33,13 +33,15 @@
       <input type='password' matInput formControlName='password'>
       <div *ngIf="registrationForm.get('confirmPassword')?.invalid && registrationForm.get('confirmPassword')?.touched">
       </div>
-      <div *ngIf="registrationForm.get('confirmPassword')?.getError('confirmPassword') && registrationForm.get('confirmPassWord')?.touched">
+      <div *ngIf="this.registrationForm.get('confirmPassword')?.errors?.['notMatch']&&
+      this.registrationForm.get('confirmPassWord')?.touched &&
+       this.registrationForm.get('password')?.touched">
         <p> * Password does not match</p>
       </div>
     </mat-form-field>
     <button mat-button (click)='onSignUp()'>Sign Up</button>
-    <button class='pt-3'>Already Registered?
-      <span routerLink='/login' class='text-blue-600'>Login</span>
+    <button (click)="onSignIn()" class='pt-3'>Already Registered?
+      <span class='text-blue-600'>Login</span>
     </button>
   </form>
 </div>

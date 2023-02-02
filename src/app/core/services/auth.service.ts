@@ -47,8 +47,8 @@ export class AuthService extends BaseService {
 
         this.setUser(response.user);
 
-        // console.log(this.token);
-        // console.log(this.user);
+        console.log(this.token);
+        console.log(this.user);
       })
     );
   }
