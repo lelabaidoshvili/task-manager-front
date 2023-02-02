@@ -3,9 +3,8 @@ import { AuthResponse, Login, Register } from '../interfaces/auth.interface';
 import { Observable, tap } from 'rxjs';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
-
-import { User } from '../interfaces/user.interface';
 import { CookieStorageService } from './cookie.service';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +25,7 @@ export class AuthService extends BaseService {
     return this.post<AuthResponse>('auth/login', payload).pipe(
       tap((response: AuthResponse) => {
         const expiresInMilliseconds = 24 * 60 * 60 * 1000;
+
         const cookieExpire = new Date(Date.now() + expiresInMilliseconds);
 
         console.log('cookie expire date:');
@@ -37,6 +37,14 @@ export class AuthService extends BaseService {
           cookieExpire
         );
 
+        this.cookieStorageService.setCookie(
+          'refreshToken',
+          response.token.refreshToken
+        );
+
+        // console.log('this is a refresh token');
+        // console.log(this.RefreshTok);
+
         this.setUser(response.user);
 
         // console.log(this.token);
@@ -45,20 +53,30 @@ export class AuthService extends BaseService {
     );
   }
 
-  get token(): string | null {
+  get token(): string {
     return this.cookieStorageService.getCookie('token');
+  }
+
+  get RefreshTok(): string {
+    return this.cookieStorageService.getCookie('refreshToken');
   }
 
   setUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  get user(): User | null {
+  get user(): User {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
 
+  refreshToken(refresh: string): Observable<AuthResponse> {
+    return this.post('auth/token', { refreshToken: refresh });
+  }
+
   signOut() {
     localStorage.clear();
+    this.cookieStorageService.deleteCookie('accessToken');
+    this.cookieStorageService.deleteCookie('refreshToken');
   }
 }
