@@ -5,7 +5,6 @@ export interface Register {
   lastName: string;
   email: string;
   password: string;
-
 }
 
 export interface Login {
