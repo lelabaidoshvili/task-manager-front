@@ -1,4 +1,23 @@
 
+<div class="navigation flex justify-between pt-2">
+  <div class="navigation-products flex items-center gap-x-3.5">
+    <a routerLink="/" class="cursor-pointer text-lg text-blue-600 font-semibold">Home</a>
+  </div>
+  <button *ngIf="loggedIn else notLoggedInState" mat-mini-fab color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon button with a menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button routerLink="/" mat-menu-item>Home</button>
+    <button mat-menu-item>Projects</button>
+    <button type="submit" mat-menu-item (click)="signOut()">Sign out</button>
+  </mat-menu>
+  <ng-template #notLoggedInState>
+    <div class="flex gap-x-3.5">
+      <button routerLink="/auth/login" mat-button color="primary">Login</button>
+      <button routerLink="/auth/register" mat-raised-button color="primary">Sign-up</button>
+    </div>
+  </ng-template>
+</div>
 <div>
   <router-outlet></router-outlet>
 </div>
