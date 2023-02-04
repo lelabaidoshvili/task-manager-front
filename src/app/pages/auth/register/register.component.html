@@ -69,8 +69,8 @@
         <p>* Password does not match</p>
       </div>
     </mat-form-field>
-    <button mat-button (click)="onSignUp()">Sign Up</button>
-    <button (click)="onSignIn()" class="pt-3">
+    <button type="submit" mat-button (click)="onSignUp()">Sign Up</button>
+    <button  routerLink="/auth/login" type="button" class="pt-3">
       Already Registered?
       <span class="text-blue-600">Login</span>
     </button>
