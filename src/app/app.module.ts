@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { CookieService } from 'ngx-cookie-service';
+import {MainLayoutModule} from "./feature/main-layout/main-layout.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    MainLayoutModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

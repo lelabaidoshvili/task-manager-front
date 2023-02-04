@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         console.log(res)
 
-        this.router.navigate(["/project"])
+        this.router.navigate(["/stepper"])
       })
   }
 
