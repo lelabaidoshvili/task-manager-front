@@ -4,6 +4,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatPaginatorModule} from '@angular/material/paginator'
 import {MatTableModule} from '@angular/material/table';
+import {MatMenuModule} from "@angular/material/menu";
 
 
 
@@ -16,6 +17,7 @@ import {MatTableModule} from '@angular/material/table';
     MatIconModule,
     MatPaginatorModule,
     MatTableModule,
+    MatMenuModule
 
   ],
 
