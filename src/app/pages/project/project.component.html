@@ -1,0 +1,14 @@
+<div class="navigation flex justify-between pt-2">
+  <div class="navigation-products flex items-center gap-x-3.5">
+    <a routerLink="/" class="cursor-pointer text-lg text-blue-600 font-semibold">Home</a>
+  </div>
+  <button  mat-mini-fab color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon button with a menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button routerLink="/" mat-menu-item>Home</button>
+    <button mat-menu-item>Projects</button>
+    <button type="submit" mat-menu-item (click)="signOut()">Sign out</button>
+  </mat-menu>
+</div>
+
