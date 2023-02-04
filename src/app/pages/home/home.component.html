@@ -1,8 +1,30 @@
 
-<button mat-button routerLink="/auth/login">Get Started</button>
-    <div class='flex gap-x-3.5'>
-      <button routerLink='/auth/login' mat-button color="primary">Login</button>
-      <button routerLink='/auth/register' mat-raised-button color="primary">Sign-up</button>
+<div class="home">
+  <div class="navigation flex justify-between pt-3">
+    <div class="navigation-products flex items-center gap-x-3.5">
+      <div class="flex gap-x-3.5">
+        <button routerLink="/auth/login" mat-button color="primary">Login</button>
+        <button routerLink="/auth/register" mat-raised-button color="primary">Sign-up</button>
+      </div>
     </div>
-  <router-outlet></router-outlet>
+  </div>
+  <div class="pt-5 items-center flex items-center justify-center">
+
+    <h1 class="text-blue-900">My Task</h1>
+
+  </div>
+
+  <div class="pt-5 items-center flex items-center justify-center">
+    <img src="./assets/images/home-page.png">
+  </div>
+
+
+  <div class="pt-10 items-center flex items-center justify-center">
+    <button mat-raised-button color="primary" routerLink="/auth/login">Get Started</button>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
+
 
