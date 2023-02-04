@@ -76,7 +76,7 @@ export class AuthService extends BaseService {
 
   signOut() {
     localStorage.clear();
-    this.cookieStorageService.deleteCookie('accessToken');
+    this.cookieStorageService.deleteCookie('token');
     this.cookieStorageService.deleteCookie('refreshToken');
   }
 }
