@@ -7,7 +7,6 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 
-import { AuthService } from '../services/auth.service';
 import {
   BehaviorSubject,
   catchError,
@@ -20,6 +19,7 @@ import {
   throwError,
 } from 'rxjs';
 import { AuthResponse } from '../interfaces/auth.interface';
+import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -40,17 +40,17 @@ export class AuthInterceptor implements HttpInterceptor {
     return request;
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authFacadeService: AuthFacadeService) {}
 
   intercept(
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (this.authService.token) {
+    if (this.authFacadeService.token) {
       req = req.clone({
         headers: req.headers.set(
           'Authorization',
-          `Bearer ${this.authService.token}`
+          `Bearer ${this.authFacadeService.token}`
         ),
       });
     }
@@ -76,26 +76,31 @@ export class AuthInterceptor implements HttpInterceptor {
       this.isTokenRefreshRequestInProgress = true;
       this.tokenSubject.next(null);
 
-      return this.authService.refreshToken(this.authService.RefreshTok).pipe(
-        switchMap((res: AuthResponse) => {
-          if (res) {
-            this.tokenSubject.next(res.token.accessToken);
-            return next.handle(
-              AuthInterceptor.addTokenToRequest(request, res.token.accessToken)
-            );
-          } else {
-            this.authService.signOut();
+      return this.authFacadeService
+        .refreshToken(this.authFacadeService.RefreshTok)
+        .pipe(
+          switchMap((res: AuthResponse) => {
+            if (res) {
+              this.tokenSubject.next(res.token.accessToken);
+              return next.handle(
+                AuthInterceptor.addTokenToRequest(
+                  request,
+                  res.token.accessToken
+                )
+              );
+            } else {
+              this.authFacadeService.signOut();
+              return of(false);
+            }
+          }),
+          catchError((err) => {
+            this.authFacadeService.signOut();
             return of(false);
-          }
-        }),
-        catchError((err) => {
-          this.authService.signOut();
-          return of(false);
-        }),
-        finalize(() => {
-          this.isTokenRefreshRequestInProgress = false;
-        })
-      );
+          }),
+          finalize(() => {
+            this.isTokenRefreshRequestInProgress = false;
+          })
+        );
     } else {
       return this.tokenSubject.pipe(
         filter((accessToken) => accessToken != null),
@@ -106,7 +111,7 @@ export class AuthInterceptor implements HttpInterceptor {
           );
         }),
         catchError((err: HttpErrorResponse) => {
-          this.authService.signOut();
+          this.authFacadeService.signOut();
           return of(false);
         })
       );
