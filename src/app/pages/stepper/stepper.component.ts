@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { StepperService } from './stepper.service';
 
 @Component({
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
-  styleUrls: ['./stepper.component.scss']
+  styleUrls: ['./stepper.component.scss'],
 })
 export class StepperComponent implements OnInit {
+  isLinear = true;
+  stepperService: StepperService = inject(StepperService);
 
-  constructor() { }
+  stepNumber$: Observable<number> = this.stepperService.stepNumber$;
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
+
+  submit() {}
 }

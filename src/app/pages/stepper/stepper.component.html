@@ -1,1 +1,18 @@
-<p>stepper works!</p>
+<mat-stepper
+  [linear]="isLinear"
+  labelPosition="bottom"
+  #stepper
+  [selectedIndex]="stepNumber$ | async"
+>
+  <mat-step label="Create Project" [editable]="false">
+    <app-create-project></app-create-project>
+  </mat-step>
+
+  <mat-step label="Create board" [editable]="false">
+    <app-board></app-board>
+  </mat-step>
+  <mat-step label="Done ">
+    <p>well done</p>
+    <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+  </mat-step>
+</mat-stepper>

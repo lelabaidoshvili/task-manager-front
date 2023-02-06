@@ -3,15 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { StepperRoutingModule } from './stepper-routing.module';
 import { StepperComponent } from './stepper.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CreateProjectComponent } from './create-project/create-project.component';
+import { BoardComponent } from './board/board.component';
 
 @NgModule({
-  declarations: [
-    StepperComponent
-  ],
-  imports: [
-    CommonModule,
-    StepperRoutingModule
-  ]
+  declarations: [StepperComponent, CreateProjectComponent, BoardComponent],
+  imports: [CommonModule, StepperRoutingModule, SharedModule],
 })
-export class StepperModule { }
+export class StepperModule {}
