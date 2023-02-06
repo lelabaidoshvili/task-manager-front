@@ -1,8 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import { FormGroup, NonNullableFormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Validators } from "@angular/forms";
 import { AuthService } from "../../../core/services/auth.service";
+import {Subject, Subscription, takeUntil} from "rxjs";
+
 
 
 @Component({
@@ -10,8 +12,11 @@ import { AuthService } from "../../../core/services/auth.service";
   templateUrl: "./register.component.html",
   styleUrls: ["./register.component.scss"],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
+  private destroy$ = new Subject()
+
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -38,7 +43,7 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit() {
-    this.registrationForm.get("password")?.valueChanges.subscribe((pas) => {
+    this.registrationForm.get("password")?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((pas) => {
       const confirmPas = this.registrationForm.get("confirmPassword")?.value;
       if (pas && confirmPas && pas !== confirmPas) {
         this.registrationForm
@@ -61,5 +66,10 @@ export class RegisterComponent implements OnInit {
         this.registrationForm.get("confirmPassword")?.setErrors(null);
       }
     });
+
   }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+  }
+
 }
