@@ -32,13 +32,17 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Color</mat-label>
-      <input
-        class="color"
-        type="color"
-        matInput
-        placeholder="color"
-        formControlName="color"
-      />
+      <div class="align">
+        <input
+          class="color"
+          type="color"
+          matInput
+          placeholder="color"
+          formControlName="color"
+        />
+
+        <span>{{ projectFormGroup.get("color").value }}</span>
+      </div>
 
       <mat-icon matSuffix>{{
         projectFormGroup.get("color").invalid &&
