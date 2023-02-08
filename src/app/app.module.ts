@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MainLayoutModule } from './feature/main-layout/main-layout.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import {ProjectInterceptor} from "./core/interceptors/project.interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,11 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ProjectInterceptor,
       multi: true,
     },
   ],
