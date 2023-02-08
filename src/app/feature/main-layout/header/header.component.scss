@@ -1,4 +1,13 @@
 .navigation {
-  max-width: 90%;
-  margin: auto;
+  max-width: 100%;
+  padding: 15px 80px;
+  align-items: center;
+}
+h1 {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+button {
+  margin-right: 1rem;
 }

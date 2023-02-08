@@ -1,13 +1,22 @@
-img {
-  width: 800px;
-  height: 650px;
-}
-h1 {
-  font-size: 50px;
-  font-weight: bold;
+.home {
+  margin: 0 auto;
+  width: 80rem;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: relative;
 }
 
-.home {
-  background-color: #efeeee;
-  margin: 30px;
+img {
+  width: 40%;
+  height: auto;
+}
+
+.abs-align {
+  position: absolute;
+  left: 50%;
+  bottom: -12%;
+  transform: translate(-50%, -50%);
 }
