@@ -8,21 +8,21 @@ import { StepperService } from '../stepper.service';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  stepperService: StepperService = inject(StepperService);
+  // stepperService: StepperService = inject(StepperService);
 
-  boardFormGroup: FormGroup;
+  // boardFormGroup: FormGroup;
 
-  constructor() {
-    this.boardFormGroup = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      abbreviation: new FormControl(null, Validators.required),
-    });
-  }
+  // constructor() {
+  //   this.boardFormGroup = new FormGroup({
+  //     name: new FormControl(null, Validators.required),
+  //     abbreviation: new FormControl(null, Validators.required),
+  //   });
+  // }
 
   ngOnInit(): void {}
-  submit() {
-    if (!this.boardFormGroup.invalid) {
-      this.stepperService.goToStep(2);
-    }
-  }
+  // submit() {
+  //   if (!this.boardFormGroup.invalid) {
+  //     this.stepperService.goToStep(2);
+  //   }
+  // }
 }

@@ -22,4 +22,16 @@ export class ProjectFacadeService {
   getProjects() {
     return this.projectHttpService.getAllProjects();
   }
+
+  updateProject(id: number, project: Project) {
+    return this.projectHttpService.updateProject(id, project);
+  }
+
+  getProjectById(id: number) {
+    return this.projectHttpService.getProjectById(id);
+  }
+
+  deleteProject(id: number) {
+    return this.projectHttpService.deleteProject(id);
+  }
 }

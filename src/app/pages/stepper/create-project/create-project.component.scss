@@ -5,18 +5,28 @@
 }
 
 .color {
-  width: 80px;
-  height: 80px;
+  // width: 80px;
+  // height: 80px;
   cursor: pointer;
 }
 
 .align {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 0.5rem;
 }
 
 span {
   color: #333;
   font-weight: 600;
+  margin-right: 0.5rem;
+}
+.center {
+  width: 80%;
+  margin: 12px auto;
+}
+
+.text-purple-800 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }

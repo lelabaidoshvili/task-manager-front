@@ -1,8 +1,9 @@
-<form [formGroup]="projectFormGroup">
+<form [formGroup]="projectFormGroup" class="center">
+  <p *ngIf="updateState" class="text-purple-800">Update project</p>
   <div class="wrapper">
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="name" formControlName="name" />
+      <input type="text" matInput placeholder="name" formControlName="name" />
       <mat-icon matSuffix>{{
         projectFormGroup.get("name").invalid &&
         projectFormGroup.get("name").touched
@@ -12,7 +13,12 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Abbr</mat-label>
-      <input matInput placeholder="abbr" formControlName="abbreviation" />
+      <input
+        type="text"
+        matInput
+        placeholder="abbr"
+        formControlName="abbreviation"
+      />
       <mat-icon matSuffix>{{
         projectFormGroup.get("abbreviation").invalid &&
         projectFormGroup.get("abbreviation").touched
@@ -22,7 +28,12 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
-      <input matInput placeholder="description" formControlName="description" />
+      <input
+        type="text"
+        matInput
+        placeholder="desc"
+        formControlName="description"
+      />
       <mat-icon matSuffix>{{
         projectFormGroup.get("description").invalid &&
         projectFormGroup.get("description").touched
@@ -52,5 +63,7 @@
       }}</mat-icon>
     </mat-form-field>
   </div>
-  <button mat-raised-button color="primary" (click)="submit()">Next</button>
+  <button mat-raised-button color="primary" (click)="submit()">
+    {{ updateState ? "Update" : "Next" }}
+  </button>
 </form>

@@ -5,3 +5,8 @@ export interface Project {
   description: string;
   color: string;
 }
+
+export interface ProjectDeleteResponse {
+  deleted: boolean;
+  message: string;
+}
