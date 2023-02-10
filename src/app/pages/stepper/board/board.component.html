@@ -1,4 +1,3 @@
-<p>board</p>
 <form [formGroup]="boardFormGroup">
   <button
     class="add"
@@ -49,55 +48,59 @@
           : "sentiment_very_satisfied"
       }}</mat-icon>
     </mat-form-field>
-  </div>
-
-  <div
-    formArrayName="columns"
-    *ngFor="
-      let column of boardFormGroup.get('columns')['controls'];
-      let i = index
-    "
-  >
-    <div [formGroupName]="i">
-      <mat-form-field appearance="outline">
-        <mat-label>name</mat-label>
-        <input type="text" matInput placeholder="name" formControlName="name" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="description"
-          formControlName="description"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Position</mat-label>
-        <input
-          type="number"
-          matInput
-          placeholder="position"
-          formControlName="position"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>BoardId</mat-label>
-        <input
-          type="number"
-          matInput
-          placeholder="boardId"
-          formControlName="boardId"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>TaskStatus</mat-label>
-        <mat-select formControlName="taskStatus">
-          <mat-option *ngFor="let task of taskEnum" [value]="task">
-            {{ task }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div
+      formArrayName="columns"
+      *ngFor="
+        let column of boardFormGroup.get('columns')['controls'];
+        let i = index
+      "
+    >
+      <div [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>name</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="name"
+            formControlName="name"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="description"
+            formControlName="description"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Position</mat-label>
+          <input
+            type="number"
+            matInput
+            placeholder="position"
+            formControlName="position"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>BoardId</mat-label>
+          <input
+            type="number"
+            matInput
+            placeholder="boardId"
+            formControlName="boardId"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>TaskStatus</mat-label>
+          <mat-select formControlName="taskStatus">
+            <mat-option *ngFor="let task of taskEnum" [value]="task">
+              {{ task }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </div>
 

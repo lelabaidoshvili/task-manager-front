@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskStatus } from 'src/app/core/enums/issue-type.enum';
 
-import { BoardHttpService } from 'src/app/core/services/board-http.service';
+import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { StepperService } from '../stepper.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class BoardComponent implements OnInit {
   boardFormGroup: FormGroup;
   columnGroup: FormGroup;
 
-  constructor(private boardHttpService: BoardHttpService) {
+  constructor(private boardFacadeService: BoardFacadeService) {
     this.taskEnum = Object.keys(this.tasks);
   }
 
@@ -50,7 +50,7 @@ export class BoardComponent implements OnInit {
   submit() {
     if (!this.boardFormGroup.invalid) {
       this.stepperService.goToStep(2);
-      this.boardHttpService
+      this.boardFacadeService
         .createBoard(this.boardFormGroup.value)
         .subscribe((res) => {
           console.log(res);
