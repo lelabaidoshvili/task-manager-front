@@ -10,15 +10,26 @@
       }}</mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Abbr</mat-label>
-      <input matInput placeholder="abbr" formControlName="abbreviation" />
+      <mat-label>description</mat-label>
+      <input matInput placeholder="Description" formControlName="description" />
       <mat-icon matSuffix>{{
-        boardFormGroup.get("abbreviation").invalid &&
-        boardFormGroup.get("abbreviation").touched
+        boardFormGroup.get("description").invalid &&
+        boardFormGroup.get("description").touched
           ? "mood_bad"
           : "sentiment_very_satisfied"
       }}</mat-icon>
     </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Column Name</mat-label>
+      <input matInput placeholder="column" formControlName="column" />
+      <mat-icon matSuffix>{{
+        boardFormGroup.get("column").invalid &&
+        boardFormGroup.get("column").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+        }}</mat-icon>
+    </mat-form-field>
+
   </div>
 
   <button
