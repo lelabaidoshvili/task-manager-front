@@ -1,9 +1,18 @@
 <p>board</p>
-<!-- <form [formGroup]="boardFormGroup">
+<form [formGroup]="boardFormGroup">
+  <button
+    class="add"
+    type="button"
+    mat-raised-button
+    color="primary"
+    (click)="addColumn()"
+  >
+    Add column
+  </button>
   <div class="wrapper">
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="name" formControlName="name" />
+      <input type="text" matInput placeholder="name" formControlName="name" />
       <mat-icon matSuffix>{{
         boardFormGroup.get("name").invalid && boardFormGroup.get("name").touched
           ? "mood_bad"
@@ -11,15 +20,85 @@
       }}</mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Abbr</mat-label>
-      <input matInput placeholder="abbr" formControlName="abbreviation" />
+      <mat-label>description</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Description"
+        formControlName="description"
+      />
       <mat-icon matSuffix>{{
-        boardFormGroup.get("abbreviation").invalid &&
-        boardFormGroup.get("abbreviation").touched
+        boardFormGroup.get("description").invalid &&
+        boardFormGroup.get("description").touched
           ? "mood_bad"
           : "sentiment_very_satisfied"
       }}</mat-icon>
     </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Position</mat-label>
+      <input
+        type="number"
+        matInput
+        placeholder="position"
+        formControlName="position"
+      />
+      <mat-icon matSuffix>{{
+        boardFormGroup.get("position").invalid &&
+        boardFormGroup.get("position").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+      }}</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div
+    formArrayName="columns"
+    *ngFor="
+      let column of boardFormGroup.get('columns')['controls'];
+      let i = index
+    "
+  >
+    <div [formGroupName]="i">
+      <mat-form-field appearance="outline">
+        <mat-label>name</mat-label>
+        <input type="text" matInput placeholder="name" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="description"
+          formControlName="description"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Position</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="position"
+          formControlName="position"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>BoardId</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="boardId"
+          formControlName="boardId"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>TaskStatus</mat-label>
+        <mat-select formControlName="taskStatus">
+          <mat-option *ngFor="let task of taskEnum" [value]="task">
+            {{ task }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
   <button
@@ -30,4 +109,4 @@
   >
     Next
   </button>
-</form> -->
+</form>
