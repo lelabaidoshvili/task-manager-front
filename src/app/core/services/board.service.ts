@@ -8,7 +8,7 @@ import {Board} from "../interfaces/board";
 })
 export class BoardService extends BaseService{
 
-  createBoard(payload: any):Observable<any> {
-    return this.post<any>('board', payload);
+  createBoard(payload: Board):Observable<Board> {
+    return this.post<Board>('board', payload);
   }
 }
