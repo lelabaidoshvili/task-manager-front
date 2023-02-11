@@ -12,6 +12,8 @@ import { StepperService } from '../stepper.service';
 })
 export class BoardComponent implements OnInit {
   stepperService: StepperService = inject(StepperService);
+
+  displayedColumns: string[] = ['first'];
   tasks = TaskStatus;
   taskEnum = [];
 

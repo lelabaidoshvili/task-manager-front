@@ -8,4 +8,18 @@
   margin-bottom: 1rem;
 }
 
-
+.btn-col {
+  margin-top: 1rem;
+}
+.add {
+  margin-top: 1rem;
+}
+.btn-up {
+  position: relative;
+}
+.btn-up button {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
