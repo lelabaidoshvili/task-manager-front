@@ -20,7 +20,7 @@ th.projects-table-cell {
 }
 
 th {
-  background-color: #5038b0;
+  background-color:#504a90;
   color: #e8ebfc;
   font-size: 1.2rem;
 }
@@ -28,9 +28,18 @@ tr {
   background-color: #fbfffe;
 }
 tr.mat-row:nth-child(even) {
-  background-color: #e5e8fc;
+  background-color: #e8f3ed;
 }
 
 button {
   margin-right: 1rem;
+}
+
+.warn {
+  background-color: #be756f;
+  color: #e8ebfc;
+}
+.primary {
+  background-color: #9acba8;
+  color: #e8ebfc;
 }
