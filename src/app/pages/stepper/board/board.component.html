@@ -7,7 +7,7 @@
         boardFormGroup.get("name").invalid && boardFormGroup.get("name").touched
           ? "mood_bad"
           : "sentiment_very_satisfied"
-      }}</mat-icon>
+        }}</mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>description</mat-label>
@@ -22,7 +22,7 @@
         boardFormGroup.get("description").touched
           ? "mood_bad"
           : "sentiment_very_satisfied"
-      }}</mat-icon>
+        }}</mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Position</mat-label>
@@ -37,148 +37,148 @@
         boardFormGroup.get("position").touched
           ? "mood_bad"
           : "sentiment_very_satisfied"
-      }}</mat-icon>
+        }}</mat-icon>
     </mat-form-field>
   </div>
 
   <!------------------------- Table tailwind------------------------------->
 
   <div
-    class="relative overflow-x-auto shadow-md sm:rounded-lg bg-violet-50 shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    class="relative overflow-x-auto shadow-md sm:rounded-lg bg-violet-50 shadow-md rounded px-8 pt-6 pb-8"
   >
     <table
       formArrayName="columns"
-      class="w-full text-sm text-left bg-violet-50 dark:text-gray-400"
+      class="w-full text-sm text-left bg-violet-50 dark:text-grey-400"
     >
-      <thead class="text-xs text-white-700 uppercase bg-indigo-500">
-        <tr>
-          <th
-            scope="col"
-            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-          >
-            Name
-          </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-          >
-            Description
-          </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-          >
-            Position
-          </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-          >
-            Board Id
-          </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-          >
-            Task Status
-          </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-          >
-            Actions
-          </th>
-        </tr>
+      <thead class="text-xs text-white-700 uppercase bg-violet-900">
+      <tr>
+        <th
+          scope="col"
+          class="px-6 py-3 text-white Class Properties text-left text-align: left; "
+        >
+          Name
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-white Class Properties text-left text-align: left; "
+        >
+          Description
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-white Class Properties text-left text-align: left; "
+        >
+          Position
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-white Class Properties text-left text-align: left; "
+        >
+          Board Id
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-white Class Properties text-left text-align: left; "
+        >
+          Task Status
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
+        >
+          Actions
+        </th>
+      </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="
+      <tr
+        *ngFor="
             let column of boardFormGroup.get('columns')['controls'];
             let i = index
           "
-          [formGroupName]="i"
-          class="bg-violet-50 dark:bg-gray-900"
-        >
-          <td>
-            <mat-form-field appearance="outline">
-              <input
-                id="default-input"
-                type="text"
-                matInput
-                class="form-control"
-                formControlName="name"
-              />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                type="text"
-                class="form-control"
-                formControlName="description"
-              />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline">
-              <input
-                type="number"
-                matInput
-                class="form-control"
-                formControlName="position"
-              />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                type="number"
-                class="form-control"
-                formControlName="boardId"
-              />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline">
-              <mat-select class="form-control" formControlName="taskStatus">
-                <mat-option *ngFor="let task of taskEnum" [value]="task">
-                  {{ task }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </td>
+        [formGroupName]="i"
+        class="bg-violet-50 dark:bg-gray-100"
+      >
+        <td>
+          <mat-form-field appearance="outline">
+            <input
+              id="default-input"
+              type="text"
+              matInput
+              class="form-control"
+              formControlName="name"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              formControlName="description"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <input
+              type="number"
+              matInput
+              class="form-control"
+              formControlName="position"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="number"
+              class="form-control"
+              formControlName="boardId"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-select class="form-control" formControlName="taskStatus">
+              <mat-option *ngFor="let task of taskEnum" [value]="task">
+                {{ task }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
 
-          <td class="btn-up">
-            <div mat-dialog-actions>
-              <button mat-raised-button color="warn" type="button">
-                Delete
-              </button>
-            </div>
-          </td>
-        </tr>
+        <td class="btn-up">
+          <div mat-dialog-actions>
+            <button mat-raised-button class="warn-button" type="button">
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
       <tfoot>
-        <tr>
-          <td>
-            <button
-              class="add"
-              type="button"
-              mat-raised-button
-              color="primary"
-              (click)="addColumn()"
-            >
-              Add New column
-            </button>
-          </td>
-        </tr>
+      <tr>
+        <td>
+          <button
+            class="add"
+            type="button"
+            mat-raised-button
+            class="primary-button"
+            (click)="addColumn()"
+          >
+            Add New column
+          </button>
+        </td>
+      </tr>
       </tfoot>
     </table>
   </div>
   <!------------------------- Table------------------------------->
 </form>
-<button
+<button class="next"
   [disabled]="boardFormGroup.invalid"
   mat-raised-button
   color="primary"
