@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Board, BoardResponse } from '../core/interfaces';
+import { Board } from '../core/interfaces';
 import { BoardHttpService } from '../core/services/board-http.service';
 
 @Injectable({

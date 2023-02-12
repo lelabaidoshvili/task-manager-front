@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TaskStatus } from 'src/app/core/enums/issue-type.enum';
+import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { StepperService } from '../stepper.service';
@@ -13,7 +13,6 @@ import { StepperService } from '../stepper.service';
 export class BoardComponent implements OnInit {
   stepperService: StepperService = inject(StepperService);
 
-  displayedColumns: string[] = ['first'];
   tasks = TaskStatus;
   taskEnum = [];
 
@@ -30,7 +29,15 @@ export class BoardComponent implements OnInit {
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
       position: new FormControl(null, Validators.required),
-      columns: new FormArray([]),
+      columns: new FormArray([
+        new FormGroup({
+          name: new FormControl(null, Validators.required),
+          description: new FormControl(null, Validators.required),
+          position: new FormControl(null, Validators.required),
+          // boardId: new FormControl(null, Validators.required),
+          taskStatus: new FormControl(null, Validators.required),
+        }),
+      ]),
     });
   }
 
@@ -43,12 +50,15 @@ export class BoardComponent implements OnInit {
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
       position: new FormControl(null, Validators.required),
-      boardId: new FormControl(null, Validators.required),
+      // boardId: new FormControl(null, Validators.required),
       taskStatus: new FormControl(null, Validators.required),
     });
     this.boardColumnArray.push(this.columnGroup);
   }
 
+  deleteInputsRow(index: number) {
+    this.boardColumnArray.removeAt(index);
+  }
   submit() {
     if (!this.boardFormGroup.invalid) {
       this.stepperService.goToStep(2);

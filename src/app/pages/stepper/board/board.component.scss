@@ -4,6 +4,11 @@
 
   column-gap: 0.5rem;
 }
+
+.mat-form-field.sized {
+  width: 15rem;
+  margin-top: 7px;
+}
 .add {
   margin-bottom: 1rem;
 }
@@ -35,4 +40,8 @@
 }
 .next {
   margin-top: 30px;
+}
+
+mat-icon {
+  margin-left: 1rem;
 }

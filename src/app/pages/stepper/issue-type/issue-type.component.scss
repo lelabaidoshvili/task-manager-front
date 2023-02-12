@@ -1,0 +1,52 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 0.5rem;
+}
+.grid-item {
+  grid-column: 2/4;
+}
+
+.colorField input.mat-input-element {
+  margin-top: -16em;
+}
+
+.mat-form-field.sized {
+  margin-top: 7px;
+  width: 30rem;
+}
+.add {
+  margin-bottom: 1rem;
+}
+
+.btn-col {
+  margin-top: 1rem;
+}
+.add {
+  margin-top: 1rem;
+}
+.btn-up {
+  position: relative;
+}
+.btn-up button {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.primary-button {
+  margin-top: 10px;
+  background-color: #779d82;
+  color: #e8ebfc;
+}
+.warn-button {
+  background-color: #d27569;
+  color: #e8ebfc;
+}
+.next {
+  margin-top: 30px;
+}
+mat-icon {
+  margin-left: 1rem;
+}

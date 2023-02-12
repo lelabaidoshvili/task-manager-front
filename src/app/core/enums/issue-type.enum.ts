@@ -6,9 +6,3 @@ export enum IssueTypeEnum {
   Test = 'Test',
   Research = 'Research',
 }
-
-export enum TaskStatus {
-  ToDo = 'ToDo',
-  InProgress = ' InProgress',
-  Done = 'Done',
-}
