@@ -12,11 +12,10 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 export class ProjectsTableComponent implements OnInit, OnDestroy {
   allProjects: Project[] = [];
   displayedColumns: string[] = [
-    'id',
     'name',
-    'abbr',
     'description',
-    'color',
+    'boards',
+    'users',
     'actions',
   ];
 
