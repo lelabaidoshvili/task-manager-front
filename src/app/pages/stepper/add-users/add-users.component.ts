@@ -10,6 +10,7 @@ import { UsersFacadeService } from '../../../facades/users-facade.service';
 })
 export class AddUsersComponent implements OnInit {
   usersFormGroup: FormGroup;
+  goNextStep: boolean;
   constructor(
     private stepperService: StepperService,
     private usersFacadeService: UsersFacadeService
@@ -22,26 +23,24 @@ export class AddUsersComponent implements OnInit {
       email: new FormControl(null, Validators.required),
       mobileNumber: new FormControl(null, Validators.required),
     });
+    this.goNextStep = false;
   }
-  addUser() {
-    if (!this.usersFormGroup.invalid) {
-      this.stepperService.goToStep(2);
+
+  saveUser() {
+    if (this.usersFormGroup.valid) {
+      this.goNextStep = true;
       this.usersFacadeService
         .createUsers(this.usersFormGroup.value)
         .subscribe((res) => {
           console.log(res);
         });
     }
+
+    this.usersFormGroup.reset();
   }
   submit() {
-    if (!this.usersFormGroup.invalid) {
+    if (this.goNextStep) {
       this.stepperService.goToStep(4);
-      // this.usersFacadeService
-      //   .createUsers(this.usersFormGroup.value)
-      //   .subscribe((res) => {
-      //     console.log(res);
-      //     this.stepperService.goToStep(4);
-      //   });
     }
   }
 }
