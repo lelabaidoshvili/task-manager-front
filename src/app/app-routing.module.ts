@@ -32,6 +32,14 @@ const routes: Routes = [
             (m) => m.ProjectsTableModule
           ),
       },
+      {
+        path: 'task',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./pages/task/task.module').then(
+            (m) => m.TaskModule
+          ),
+      },
     ],
   },
 ];

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StepperService } from './stepper.service';
+import { Router} from "@angular/router";
 import '@angular/platform-browser-dynamic';
 
 @Component({
@@ -14,9 +15,11 @@ export class StepperComponent implements OnInit {
 
   stepNumber$: Observable<number> = this.stepperService.stepNumber$;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  submit() {}
+  submit() {
+    this.router.navigate(['task'])
+  }
 }
