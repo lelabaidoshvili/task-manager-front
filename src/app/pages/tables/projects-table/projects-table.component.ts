@@ -14,7 +14,7 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'name',
     'description',
-    'boards',
+    // 'boards',
     'users',
     'actions',
   ];
@@ -37,7 +37,7 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
   }
 
   updateProject(id: number) {
-    this.router.navigate([`stepper/edit/${id}`]);
+    this.router.navigate([`stepper/projects/edit/${id}`]);
   }
 
   deleteProject(id: number) {

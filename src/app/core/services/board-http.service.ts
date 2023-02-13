@@ -11,8 +11,8 @@ export class BoardHttpService extends BaseService {
     return this.post<BoardResponse>('board', payload);
   }
 
-  getBoards(): Observable<BoardResponse> {
-    return this.get<BoardResponse>('board');
+  getBoards(): Observable<BoardResponse[]> {
+    return this.get<BoardResponse[]>('board');
   }
 
   getBoardById(id: number): Observable<BoardResponse> {

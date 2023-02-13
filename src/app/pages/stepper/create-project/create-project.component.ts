@@ -86,7 +86,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
           console.log(response);
         });
 
-      this.router.navigate(['/projects']);
+      this.router.navigate(['/tables']);
     }
   }
 

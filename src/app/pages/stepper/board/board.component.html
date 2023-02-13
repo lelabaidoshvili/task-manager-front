@@ -1,4 +1,5 @@
 <form [formGroup]="boardFormGroup">
+  <p *ngIf="update" class="text-purple-800">Update Board</p>
   <div class="wrapper">
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
@@ -152,16 +153,7 @@
               }}</mat-icon>
             </mat-form-field>
           </td>
-          <!-- <td>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                type="number"
-                class="form-control"
-                formControlName="boardId"
-              />
-            </mat-form-field>
-          </td> -->
+
           <td>
             <mat-form-field class="sized" appearance="outline">
               <mat-select class="form-control" formControlName="taskStatus">

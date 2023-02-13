@@ -11,6 +11,7 @@ import { UsersFacadeService } from '../../../facades/users-facade.service';
 export class AddUsersComponent implements OnInit {
   usersFormGroup: FormGroup;
   goNextStep: boolean;
+
   constructor(
     private stepperService: StepperService,
     private usersFacadeService: UsersFacadeService
@@ -35,9 +36,9 @@ export class AddUsersComponent implements OnInit {
           console.log(res);
         });
     }
-
     this.usersFormGroup.reset();
   }
+
   submit() {
     if (this.goNextStep) {
       this.stepperService.goToStep(4);

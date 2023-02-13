@@ -2,14 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectsTableComponent } from './projects-table.component';
-const routes: Routes = [
-  {
-    path: '',
-    component: ProjectsTableComponent,
-  },
-];
+const routes: Routes = [];
 @NgModule({
-  declarations: [ProjectsTableComponent],
+  declarations: [],
   imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })

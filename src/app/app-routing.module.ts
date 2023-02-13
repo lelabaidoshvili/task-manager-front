@@ -25,11 +25,11 @@ const routes: Routes = [
           import('./pages/stepper/stepper.module').then((m) => m.StepperModule),
       },
       {
-        path: 'projects',
+        path: 'tables',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/tables/projects-table/projects-table.module').then(
-            (m) => m.ProjectsTableModule
+          import('./pages/tables/table-tabs/table-tabs.module').then(
+            (m) => m.TableTabsModule
           ),
       },
     ],
