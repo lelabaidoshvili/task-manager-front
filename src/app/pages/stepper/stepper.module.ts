@@ -10,7 +10,13 @@ import { IssueTypeComponent } from './issue-type/issue-type.component';
 import { AddUsersComponent } from './add-users/add-users.component';
 
 @NgModule({
-  declarations: [StepperComponent, CreateProjectComponent, BoardComponent, IssueTypeComponent, AddUsersComponent],
+  declarations: [
+    StepperComponent,
+    CreateProjectComponent,
+    BoardComponent,
+    IssueTypeComponent,
+    AddUsersComponent,
+  ],
   imports: [CommonModule, StepperRoutingModule, SharedModule],
 })
 export class StepperModule {}

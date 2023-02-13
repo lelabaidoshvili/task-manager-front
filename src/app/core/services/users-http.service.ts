@@ -1,31 +1,48 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {BaseService} from "./base.service";
-import {User} from "../interfaces";
-import {AddUsers} from "../interfaces/addUsers.interface";
-import {UsersDeleteResponse} from "../interfaces/addUsers.interface";
+import { Observable } from 'rxjs';
+import { BaseService } from './base.service';
+import {
+  UserPasswordUpdate,
+  Users,
+  UsersDataResponse,
+  UsersDeleteResponse,
+  UsersResponse,
+  UsersRole,
+} from '../interfaces/users.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersHttpService extends BaseService {
+  createUsers(payload: Users): Observable<UsersResponse> {
+    return this.post<UsersResponse>('users', payload);
+  }
+  getAllUsers(): Observable<UsersResponse[]> {
+    return this.get<UsersResponse[]>('users/all');
+  }
 
-  createUsers(payload: AddUsers): Observable<AddUsers> {
-    return this.post<AddUsers>('users', payload);
+  getUsers(): Observable<UsersDataResponse> {
+    return this.get<UsersDataResponse>('users');
   }
-  getAllUsers(): Observable<User[]> {
-    return this.get<User[]>('users/all');
+
+  createUsersRoles(payload: UsersRole): Observable<UsersResponse> {
+    return this.post<UsersResponse>('users/roles', payload);
   }
-  createUsersRoles(payload: User): Observable<User> {
-    return this.post<User>('users/roles', payload);
+
+  getUserById(id: number): Observable<UsersResponse> {
+    return this.get<UsersResponse>(`users/${id}`);
   }
-  getUsersById(id: number): Observable<User> {
-    return this.get<User>(`users/${id}`)
+
+  updateUserById(id: number, payload: Users): Observable<UsersResponse> {
+    return this.put<UsersResponse>(`users/${id}`, payload);
   }
-  updateUsers(id: number, users: AddUsers): Observable<AddUsers> {
-    return this.put<AddUsers>(`project/${id}`, users);
+
+  deleteUserById(id: number): Observable<UsersDeleteResponse> {
+    return this.delete<UsersDeleteResponse>(`users/${id}`);
   }
-  deleteUsers(id: number): Observable<UsersDeleteResponse> {
-    return this.delete<UsersDeleteResponse>(`project/${id}`);
-  }
+
+  // updateUsersPassword(payload: UserPasswordUpdate): Observable<UsersResponse> {
+  //   return this.post<UsersResponse>('users/passwordUpdate');
+  // }
+  //---------
 }

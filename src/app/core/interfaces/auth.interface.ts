@@ -1,4 +1,4 @@
-import { User } from './user.interface';
+import { UsersResponse } from './users.interface';
 
 export interface Register {
   firstName: string;
@@ -13,7 +13,7 @@ export interface Login {
 }
 
 export interface AuthResponse {
-  user: User;
+  user: UsersResponse;
   token: Token;
 }
 

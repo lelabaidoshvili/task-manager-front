@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs';
-import { AuthResponse, Login, User } from 'src/app/core/interfaces';
+import { AuthResponse, Login } from 'src/app/core/interfaces';
+import { Users, UsersResponse } from 'src/app/core/interfaces/users.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CookieStorageService } from 'src/app/core/services/cookie.service';
 
@@ -50,11 +51,11 @@ export class AuthFacadeService extends AuthService {
     return this.cookieStorageService.getCookie('refreshToken');
   }
 
-  setUser(user: User) {
+  setUser(user: UsersResponse) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  get user(): User {
+  get user(): UsersResponse {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
