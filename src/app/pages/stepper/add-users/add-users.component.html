@@ -1,1 +1,86 @@
-<p>add-users works!</p>
+<form [formGroup]="usersFormGroup">
+  <div class="wrapper">
+    <mat-form-field appearance="outline">
+      <mat-label>Add Name</mat-label>
+      <input type="text" matInput placeholder="firstName" formControlName="firstName" />
+      <mat-icon matSuffix>{{
+        usersFormGroup.get("firstName").invalid && usersFormGroup.get("firstName").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+        }}</mat-icon>
+    </mat-form-field>
+
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Add lastname</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="lastName"
+        formControlName="lastName"
+      />
+      <mat-icon matSuffix>{{
+        usersFormGroup.get("lastName").invalid &&
+        usersFormGroup.get("lastName").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+        }}</mat-icon>
+    </mat-form-field>
+
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Add Email</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="email"
+        formControlName="email"
+      />
+      <mat-icon matSuffix>{{
+        usersFormGroup.get("email").invalid &&
+        usersFormGroup.get("email").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+        }}</mat-icon>
+    </mat-form-field>
+
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Add Phone</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="mobileNumber"
+        formControlName="mobileNumber"
+      />
+      <mat-icon matSuffix>{{
+        usersFormGroup.get("mobileNumber").invalid &&
+        usersFormGroup.get("mobileNumber").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+        }}</mat-icon>
+    </mat-form-field>
+
+  </div>
+</form>
+
+<button class="user"
+        [disabled]="usersFormGroup.invalid"
+        mat-raised-button
+        color="basic"
+        (click)="addUser()"
+>
+  Add more User
+</button>
+<button class="next"
+        [disabled]="usersFormGroup.invalid"
+        mat-raised-button
+        color="primary"
+        (click)="submit()"
+>
+  Submit
+</button>
+

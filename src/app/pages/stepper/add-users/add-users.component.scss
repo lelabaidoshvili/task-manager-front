@@ -1,0 +1,11 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  column-gap: 0.5rem;
+}
+
+.user {
+  margin: 20px;
+  color: #46309f;
+}

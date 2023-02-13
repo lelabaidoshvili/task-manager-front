@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StepperService } from './stepper.service';
+import '@angular/platform-browser-dynamic';
 
 @Component({
   selector: 'app-stepper',
