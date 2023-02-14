@@ -1,6 +1,16 @@
 <div class="container">
-  <h1>{{ myLastProject.name }}</h1>
+  <div class="hr"></div>
+  <h1>Projects - {{ myLastProject.name }}</h1>
   <p class="abr">
-    Abbreviation of the project: {{ myLastProject.abbreviation }}
+    {{ myLastProject.abbreviation }} - BOARD
   </p>
+  <div class="columns">
+    <div class="column"><p> TO DO </p><div class="column-hr"></div>
+      <div class="example-box" cdkDrag>
+        Drag me around
+      </div>
+    </div>
+    <div class="column"><p> IN PROGRESS</p><div class="column-hr"></div></div>
+    <div class="column"><p> DONE</p><div class="column-hr"></div></div>
+  </div>
 </div>

@@ -2,16 +2,79 @@
   width: 1800px;
   height: 800px;
   margin: auto;
+
+}
+.hr {
+  width: 1540px;
+  height: 2px;
+  background-color: #46309f;
 }
 h1 {
-  padding: 20px;
+ margin-top: 30px;
   color: #d5d2d2;
-  font-size: 30px;
+  font-size: 18px;
+  font-style: italic;
 }
 .abr {
   padding-left: 20px;
   color: #46309f;
-  font-style: italic;
+  font-weight: bold;
+
 }
+.columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+}
+.column {
+  width: 235px;
+  height: 500px;
+  background-color: #eaeaec;
+  border-radius: 10px;
+  position: relative;
+
+  p {
+    color: #46309f;
+    position: absolute;
+    top: 15px;
+    left: 40px
+  }
+
+}
+
+.column-hr {
+  background-color: #46309f;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 50px
+}
+.example-box {
+  width: 200px;
+  height: 100px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: 4px;
+  position: relative;
+  z-index: 1;
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0 2px 2px 0 rgba(0, 0, 0, 0.14),
+  0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.example-box:active {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
 
 
