@@ -12,11 +12,18 @@ import { Project } from 'src/app/core/interfaces';
 export class TaskComponent implements OnInit {
   myProjects: Project[] = [];
   myLastProject: Project;
+  task = '';
+
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
-    private boardFacadeService: BoardFacadeService
+    private boardFacadeService: BoardFacadeService,
+
   ) {}
+
+
+
+
 
   ngOnInit(): void {
     this.projectFacadeService
@@ -37,5 +44,8 @@ export class TaskComponent implements OnInit {
         })
       )
       .subscribe((projects) => {});
+
   }
+
+
 }
