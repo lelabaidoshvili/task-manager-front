@@ -19,11 +19,13 @@ export class ProjectFacadeService {
     return project ? JSON.parse(project) : null;
   }
 
-  getSavedProjects(): Project[] {
-    return JSON.parse(localStorage.getItem('user')).projects;
+  // getSavedProjects(): Project[] {
+  //   return JSON.parse(localStorage.getItem('user')).projects;
+  // }
+
+  getMyProjects() {
+    return this.projectHttpService.getMyProjects();
   }
-
-
   getProjects() {
     return this.projectHttpService.getAllProjects();
   }
