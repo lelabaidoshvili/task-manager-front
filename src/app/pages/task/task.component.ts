@@ -13,7 +13,7 @@ export class TaskComponent implements OnInit {
   myProjects: Project[] = [];
   myLastProject: Project;
   task = '';
-
+  project$ = this.projectFacadeService.getProject()
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
@@ -26,6 +26,7 @@ export class TaskComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getMyProjects();
     this.projectFacadeService
       .getMyProjects()
       .pipe(
@@ -47,5 +48,8 @@ export class TaskComponent implements OnInit {
 
   }
 
+getMyProjects() {
+    this.projectFacadeService.getOnlyMyProjects$().subscribe()
+}
 
 }

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../core/interfaces';
 import { ProjectHttpService } from '../core/services/project-http.service';
+import {BehaviorSubject, Observable, tap} from "rxjs";
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectFacadeService {
+
+  myProjects: BehaviorSubject<Project[]> = new BehaviorSubject<Project[]>([])
   constructor(private projectHttpService: ProjectHttpService) {}
 
   setProject(project: Project): void {
@@ -40,5 +44,11 @@ export class ProjectFacadeService {
 
   deleteProject(id: number) {
     return this.projectHttpService.deleteProject(id);
+  }
+  getOnlyMyProjects$(): Observable<Project[]> {
+    return this.projectHttpService.getMyProjects()
+      .pipe(
+        tap( projects => this.myProjects.next(projects))
+      )
   }
 }

@@ -9,6 +9,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule} from "@angular/material/dialog";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+
+
 @NgModule({
   exports: [
     MatButtonModule,
@@ -21,6 +26,11 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     MatFormFieldModule,
     MatTabsModule,
+    MatDialogModule,
+    MatSidenavModule,
+    DragDropModule,
+
+
   ],
 })
 export class MaterialModule {}
