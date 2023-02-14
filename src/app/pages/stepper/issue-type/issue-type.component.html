@@ -27,9 +27,23 @@
           : "sentiment_very_satisfied"
       }}</mat-icon>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Icon</mat-label>
       <input type="text" matInput placeholder="icon" formControlName="icon" />
+      <mat-icon matSuffix>{{
+        issueTypeFormGroup.get("icon").invalid &&
+        issueTypeFormGroup.get("icon").touched
+          ? "mood_bad"
+          : "sentiment_very_satisfied"
+      }}</mat-icon>
+    </mat-form-field> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Icon</mat-label>
+      <mat-select class="form-control" formControlName="icon">
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <img class="icon" src="{{ icon }}" />
+        </mat-option>
+      </mat-select>
       <mat-icon matSuffix>{{
         issueTypeFormGroup.get("icon").invalid &&
         issueTypeFormGroup.get("icon").touched
@@ -191,4 +205,3 @@
 >
   Next
 </button>
-

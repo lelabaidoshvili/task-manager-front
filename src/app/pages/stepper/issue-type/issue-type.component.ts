@@ -17,6 +17,14 @@ export class IssueTypeComponent implements OnInit {
   issueEnum = [];
   issueTypeFormGroup: FormGroup;
   columnGroup: FormGroup;
+  icons: string[] = [
+    'assets/images/Bug.png',
+    'assets/images/Task.png',
+    'assets/images/Sub-Task.png',
+    'assets/images/Spike.png',
+    'assets/images/Task.png',
+    'assets/images/Task.png',
+  ];
 
   constructor(private issueTypeFacadeService: IssueTypeFacadeService) {
     this.issueEnum = Object.keys(this.issues);
