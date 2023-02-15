@@ -24,10 +24,10 @@ export class ProjectFacadeService {
     const project = localStorage.getItem('project');
     return project ? JSON.parse(project) : null;
   }
-  // //needs to be changed in tasks,change into getOnlyMyProjects$()
-  // getMyProjects() {
-  //   return this.projectHttpService.getMyProjects();
-  // }
+  //needs to be changed in tasks,change into getOnlyMyProjects$()
+  getMyProjects() {
+    return this.projectHttpService.getMyProjects();
+  }
 
   getProjects() {
     return this.projectHttpService.getAllProjects();

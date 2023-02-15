@@ -12,7 +12,7 @@ import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
 
-  myProjects = [];
+  // myProjects = [];
 
   currentProject?: Project = this.projectFacadeService.getProject();
 
