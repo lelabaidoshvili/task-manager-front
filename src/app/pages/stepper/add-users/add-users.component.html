@@ -1,70 +1,80 @@
-<form [formGroup]="usersFormGroup">
-  <div class="wrapper">
-    <mat-form-field appearance="outline">
-      <mat-label>Add Name</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="firstName"
-        formControlName="firstName"
-      />
-      <mat-icon matSuffix>{{
-        usersFormGroup.get("firstName").invalid &&
-        usersFormGroup.get("firstName").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
+<button
+  class="add-user"
+  mat-raised-button
+  color="primary"
+  (click)="toggleUserForm()"
+>
+  Add User
+</button>
+<ng-container *ngIf="createUser">
+  <form [formGroup]="usersFormGroup">
+    <div class="wrapper">
+      <mat-form-field appearance="outline">
+        <mat-label>Add Name</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="firstName"
+          formControlName="firstName"
+        />
+        <mat-icon matSuffix>{{
+          usersFormGroup.get("firstName").invalid &&
+          usersFormGroup.get("firstName").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Add lastName</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="lastName"
-        formControlName="lastName"
-      />
-      <mat-icon matSuffix>{{
-        usersFormGroup.get("lastName").invalid &&
-        usersFormGroup.get("lastName").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Add lastName</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="lastName"
+          formControlName="lastName"
+        />
+        <mat-icon matSuffix>{{
+          usersFormGroup.get("lastName").invalid &&
+          usersFormGroup.get("lastName").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Add Email</mat-label>
-      <input
-        type="email"
-        matInput
-        placeholder="email"
-        formControlName="email"
-      />
-      <mat-icon matSuffix>{{
-        usersFormGroup.get("email").invalid &&
-        usersFormGroup.get("email").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Add Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="email"
+          formControlName="email"
+        />
+        <mat-icon matSuffix>{{
+          usersFormGroup.get("email").invalid &&
+          usersFormGroup.get("email").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Add Phone</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="mobileNumber"
-        formControlName="mobileNumber"
-      />
-      <mat-icon matSuffix>{{
-        usersFormGroup.get("mobileNumber").invalid &&
-        usersFormGroup.get("mobileNumber").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
-  </div>
-</form>
+      <mat-form-field appearance="outline">
+        <mat-label>Add Phone</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="mobileNumber"
+          formControlName="mobileNumber"
+        />
+        <mat-icon matSuffix>{{
+          usersFormGroup.get("mobileNumber").invalid &&
+          usersFormGroup.get("mobileNumber").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+</ng-container>
 
 <button
   class="user"

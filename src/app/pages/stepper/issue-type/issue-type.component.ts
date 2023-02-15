@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { IssueTypeEnum } from 'src/app/core/enums/issue-type.enum';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 
@@ -25,8 +26,13 @@ export class IssueTypeComponent implements OnInit {
     'assets/images/Task.png',
     'assets/images/Task.png',
   ];
+  goNextStep: boolean;
+  createIssueType: boolean = false;
 
-  constructor(private issueTypeFacadeService: IssueTypeFacadeService) {
+  constructor(
+    private issueTypeFacadeService: IssueTypeFacadeService,
+    private _snackBar: MatSnackBar
+  ) {
     this.issueEnum = Object.keys(this.issues);
   }
 
@@ -39,12 +45,7 @@ export class IssueTypeComponent implements OnInit {
       color: new FormControl(null, Validators.required),
       // isActive: new FormControl(null, Validators.required),
       type: new FormControl(null, Validators.required),
-      issueTypeColumns: new FormArray([
-        new FormGroup({
-          name: new FormControl(null, Validators.required),
-          filedName: new FormControl(null, Validators.required),
-        }),
-      ]),
+      issueTypeColumns: new FormArray([]),
     });
   }
 
@@ -65,14 +66,29 @@ export class IssueTypeComponent implements OnInit {
   deleteInputsRow(index: number) {
     this.issueTypeColumnArray.removeAt(index);
   }
-  submit() {
+
+  toggleIssueForm() {
+    this.createIssueType = !this.createIssueType;
+    this.goNextStep = false;
+  }
+
+  saveIssueType() {
+    this.issueTypeFormGroup.markAllAsTouched();
+    if (this.issueTypeFormGroup.invalid) return;
+
     if (this.issueTypeFormGroup.valid) {
-      this.stepperService.goToStep(3);
+      this.goNextStep = true;
       this.issueTypeFacadeService
         .createIssueType(this.issueTypeFormGroup.value)
         .subscribe((res) => {
+          this._snackBar.open('IssueType Created', 'Close', { duration: 1000 });
+          this.createIssueType = false;
           console.log(res);
         });
     }
+    this.issueTypeFormGroup.reset();
+  }
+  submit() {
+    this.stepperService.goToStep(3);
   }
 }

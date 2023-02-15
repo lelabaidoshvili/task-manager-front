@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Project } from '../core/interfaces';
 import { ProjectHttpService } from '../core/services/project-http.service';
 
@@ -8,24 +9,26 @@ import { ProjectHttpService } from '../core/services/project-http.service';
 export class ProjectFacadeService {
   constructor(private projectHttpService: ProjectHttpService) {}
 
-  setProject(project: Project): void {
-    if (project) {
-      localStorage.setItem('project', JSON.stringify(project));
-    }
+  myProjects: BehaviorSubject<Project[]> = new BehaviorSubject<Project[]>([]);
+  myProjects$ = this.myProjects.asObservable();
+
+  setProject(projectId: number): void {
+    this.projectHttpService
+      .getProjectById(projectId)
+      .subscribe((project: Project) => {
+        localStorage.setItem('project', JSON.stringify(project));
+      });
   }
 
   getProject(): Project {
     const project = localStorage.getItem('project');
     return project ? JSON.parse(project) : null;
   }
-
-  // getSavedProjects(): Project[] {
-  //   return JSON.parse(localStorage.getItem('user')).projects;
-  // }
-
+  //needs to be changed in tasks,change into getOnlyMyProjects$()
   getMyProjects() {
     return this.projectHttpService.getMyProjects();
   }
+
   getProjects() {
     return this.projectHttpService.getAllProjects();
   }
@@ -40,5 +43,11 @@ export class ProjectFacadeService {
 
   deleteProject(id: number) {
     return this.projectHttpService.deleteProject(id);
+  }
+
+  getOnlyMyProjects$(): Observable<Project[]> {
+    return this.projectHttpService
+      .getMyProjects()
+      .pipe(tap((projects) => this.myProjects.next(projects)));
   }
 }

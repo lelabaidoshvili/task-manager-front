@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Project } from 'src/app/core/interfaces';
 import { ProjectHttpService } from 'src/app/core/services/project-http.service';
-import { tap } from 'rxjs';
 import { ProjectFacadeService } from '../../../facades/project.facade.service';
 
 @Injectable({
@@ -13,12 +12,6 @@ export class CreateProjectService extends ProjectHttpService {
     super();
   }
   override createProject(payload: Project) {
-    return super.createProject(payload).pipe(
-      tap((res) => {
-        if (res) {
-          this.projectFacade.setProject(res);
-        }
-      })
-    );
+    return super.createProject(payload);
   }
 }

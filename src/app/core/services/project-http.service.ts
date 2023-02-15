@@ -28,9 +28,9 @@ export class ProjectHttpService extends BaseService {
     return this.get<Project[]>('project/all');
   }
 
-  // getProject(): Observable<Project> {
-  //   return this.get<Project>('project');
-  // }
+  getProject(): Observable<Project> {
+    return this.get<Project>('project');
+  }
 
   getMyProjects(): Observable<Project[]> {
     return this.get<Project[]>('project/my');

@@ -1,5 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
@@ -19,13 +20,17 @@ export class BoardComponent implements OnInit, OnDestroy {
   tasks = TaskStatus;
   taskEnum = [];
 
+  goNextStep: boolean;
+  createBoard: boolean = false;
+
   boardFormGroup: FormGroup;
   columnGroup: FormGroup;
   sub$ = new Subject<any>();
   constructor(
     private boardFacadeService: BoardFacadeService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {
     this.taskEnum = Object.keys(this.tasks);
   }
@@ -89,8 +94,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   deleteInputsRow(index: number) {
     this.boardColumnArray.removeAt(index);
   }
-
-  submit() {
+  toggleForm() {
+    this.goNextStep = false;
+    this.createBoard = !this.createBoard;
+  }
+  saveBoard() {
     this.boardFormGroup.markAllAsTouched();
     if (this.boardFormGroup.invalid) return;
 
@@ -98,14 +106,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.boardFacadeService
         .createBoard(this.boardFormGroup.value)
         .subscribe((res) => {
+          this._snackBar.open('Board Created', 'Close', { duration: 1000 });
           console.log(res);
-          console.log(this.boardColumnArray);
+          this.createBoard = false;
+          this.goNextStep = true;
+          this.boardFormGroup.reset();
         });
-      this.stepperService.goToStep(2);
     } else {
-      console.log('Data from board form:');
-      console.log(this.boardFormGroup.value);
-
       this.boardFacadeService
         .updateBoardById(
           this.boardFormGroup.value.id,
@@ -113,12 +120,25 @@ export class BoardComponent implements OnInit, OnDestroy {
         )
         .pipe(takeUntil(this.sub$))
         .subscribe((response: BoardResponse) => {
+          this.goNextStep = true;
+          this.createBoard = false;
+          this.boardFormGroup.reset();
+
           console.log('updated Board:');
           console.log(response);
         });
 
       this.router.navigate(['/tables']);
     }
+  }
+
+  toggleBoardForm() {
+    this.createBoard = !this.createBoard;
+    this.goNextStep = false;
+  }
+
+  submit() {
+    this.stepperService.goToStep(2);
   }
 
   ngOnDestroy(): void {
