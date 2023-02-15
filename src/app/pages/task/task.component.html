@@ -1,19 +1,25 @@
 <div class="container">
   <div class="hr"></div>
-  <h1>Projects - {{ myLastProject.name }}</h1>
-  <p class="abr">{{ myLastProject.abbreviation }} - BOARD</p>
-  <div class="columns">
-    <div class="column">
-      <p>TO DO</p>
-      <div class="column-hr"></div>
-    </div>
-    <div class="column">
-      <p>IN PROGRESS</p>
-      <div class="column-hr"></div>
-    </div>
-    <div class="column">
-      <p>DONE</p>
-      <div class="column-hr"></div>
-    </div>
-  </div>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side"> Sidenav content </mat-sidenav>
+    <mat-sidenav-content>
+      <h1>Projects - {{ myLastProject.name }}</h1>
+      <p class="abr">{{ myLastProject.abbreviation }} - BOARD</p>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon color="primary">menu</mat-icon>
+      </button>
+      <div class="columns">
+        <div class="column">
+          <p>TODO</p>
+          <div class="column-hr"></div>
+        </div>
+        <div class="column"></div>
+        <div class="column">
+          <p>DONE</p>
+
+          <div class="column-hr"></div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

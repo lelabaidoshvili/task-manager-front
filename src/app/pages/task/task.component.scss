@@ -5,9 +5,11 @@
   position: relative;
 }
 .hr {
-  width: 1540px;
-  height: 2px;
-  background-color: #46309f;
+  color: #d5d2d2;
+  font-size: 18px;
+  font-style: italic;
+  position: absolute;
+  left: 100px;
 }
 h1 {
   margin-top: 30px;
@@ -41,7 +43,7 @@ h1 {
     color: #46309f;
     position: absolute;
     top: 15px;
-    left: 40px;
+    // left: 40px;
   }
 }
 
