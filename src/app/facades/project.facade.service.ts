@@ -7,10 +7,10 @@ import { ProjectHttpService } from '../core/services/project-http.service';
   providedIn: 'root',
 })
 export class ProjectFacadeService {
-  constructor(private projectHttpService: ProjectHttpService) {}
-
   myProjects: BehaviorSubject<Project[]> = new BehaviorSubject<Project[]>([]);
-  myProjects$ = this.myProjects.asObservable();
+  projects$ = this.myProjects.asObservable();
+
+  constructor(private projectHttpService: ProjectHttpService) {}
 
   setProject(projectId: number): void {
     this.projectHttpService
@@ -24,10 +24,10 @@ export class ProjectFacadeService {
     const project = localStorage.getItem('project');
     return project ? JSON.parse(project) : null;
   }
-  //needs to be changed in tasks,change into getOnlyMyProjects$()
-  getMyProjects() {
-    return this.projectHttpService.getMyProjects();
-  }
+  // //needs to be changed in tasks,change into getOnlyMyProjects$()
+  // getMyProjects() {
+  //   return this.projectHttpService.getMyProjects();
+  // }
 
   getProjects() {
     return this.projectHttpService.getAllProjects();
