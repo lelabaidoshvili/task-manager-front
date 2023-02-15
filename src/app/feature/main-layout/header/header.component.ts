@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   currentProject?: Project = this.projectFacadeService.getProject();
 
-  projects$ = this.projectFacadeService.myProjects$;
+  projects$ = this.projectFacadeService.projects$;
 
   get loggedIn() {
     return this.authFacadeService.token;
