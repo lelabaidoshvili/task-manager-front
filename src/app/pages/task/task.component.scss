@@ -29,7 +29,8 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1250px;
+  width: 900px;
+  margin-left: 50px;
 }
 .column {
   width: 235px;
@@ -37,7 +38,8 @@ h1 {
   background-color: #eaeaec;
   border-radius: 10px;
   position: relative;
-  margin: 70px;
+  margin-top: 70px;
+
 
   p {
     color: #46309f;
