@@ -73,10 +73,18 @@
       </mat-list>
     </div>
   </div>
-  <button mat-raised-button color="primary" (click)="submit()">
-    {{ updateState ? "Update" : "Save" }}
-  </button>
-  <button mat-raised-button color="primary" (click)="submit()">
-    {{ updateState ? "Update" : "Next" }}
-  </button>
+
+  <div>
+    <button
+      *ngIf="!active"
+      [disabled]="projectFormGroup.invalid"
+      mat-raised-button
+      color="primary"
+      (click)="submit()"
+    >
+      {{ updateState ? "Update" : "Save" }}
+    </button>
+
+    <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
+  </div>
 </form>

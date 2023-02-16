@@ -19,6 +19,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
   projectFormGroup: FormGroup;
   sub$ = new Subject<any>();
   updateState: boolean = false;
+  active: boolean = false;
 
   myProjects$ = this.projectFacadeService.projects$;
 
@@ -74,12 +75,14 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
           switchMap(() => this.projectFacadeService.getOnlyMyProjects$())
         )
         .subscribe((response) => {
-          this._snackBar.open('Project Created', 'Close', { duration: 1000 });
+          this.active = true;
+          this._snackBar.open('Project Created', 'Close', { duration: 2000 });
+          setTimeout(() => {
+            this.stepperService.goToStep(1);
+          }, 3000);
 
           console.log(response);
         });
-
-      this.stepperService.goToStep(1);
     } else {
       this.projectFacadeService
         .updateProject(

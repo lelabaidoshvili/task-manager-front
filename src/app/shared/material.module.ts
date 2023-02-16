@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -34,6 +35,7 @@ import { MatListModule } from '@angular/material/list';
     MatSidenavModule,
     DragDropModule,
     MatListModule,
+    MatProgressBarModule,
   ],
 })
 export class MaterialModule {}
