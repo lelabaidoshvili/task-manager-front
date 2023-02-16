@@ -64,16 +64,18 @@
         }}</mat-icon>
       </mat-form-field>
     </div>
-    <div>
+    <div class="scroll">
+      <mat-label class="label">My Projects</mat-label>
       <mat-list class="example-list-wrapping">
         <mat-list-item *ngFor="let project of myProjects$ | async" lines="3">
-          <span matListItemTitle>{{ project.name }}</span>
-          <span>({{ project.description }})</span>
+          <span matListItemTitle>{{ project.name | titlecase }}</span>
         </mat-list-item>
       </mat-list>
     </div>
   </div>
-
+  <button mat-raised-button color="primary" (click)="submit()">
+    {{ updateState ? "Update" : "Save" }}
+  </button>
   <button mat-raised-button color="primary" (click)="submit()">
     {{ updateState ? "Update" : "Next" }}
   </button>
