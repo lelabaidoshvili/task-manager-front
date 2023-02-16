@@ -1,68 +1,79 @@
 <form [formGroup]="projectFormGroup" class="center">
   <p *ngIf="updateState" class="text-purple-800">Update project</p>
-  <div class="wrapper">
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input type="text" matInput placeholder="name" formControlName="name" />
-      <mat-icon matSuffix>{{
-        projectFormGroup.get("name").invalid &&
-        projectFormGroup.get("name").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Abbr</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="abbr"
-        formControlName="abbreviation"
-      />
-      <mat-icon matSuffix>{{
-        projectFormGroup.get("abbreviation").invalid &&
-        projectFormGroup.get("abbreviation").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="desc"
-        formControlName="description"
-      />
-      <mat-icon matSuffix>{{
-        projectFormGroup.get("description").invalid &&
-        projectFormGroup.get("description").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Color</mat-label>
-      <div class="align">
+  <div class="container">
+    <div class="wrapper">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput placeholder="name" formControlName="name" />
+        <mat-icon matSuffix>{{
+          projectFormGroup.get("name").invalid &&
+          projectFormGroup.get("name").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Abbr</mat-label>
         <input
-          class="color"
-          type="color"
+          type="text"
           matInput
-          placeholder="color"
-          formControlName="color"
+          placeholder="abbr"
+          formControlName="abbreviation"
         />
+        <mat-icon matSuffix>{{
+          projectFormGroup.get("abbreviation").invalid &&
+          projectFormGroup.get("abbreviation").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="desc"
+          formControlName="description"
+        />
+        <mat-icon matSuffix>{{
+          projectFormGroup.get("description").invalid &&
+          projectFormGroup.get("description").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Color</mat-label>
+        <div class="align">
+          <input
+            class="color"
+            type="color"
+            matInput
+            placeholder="color"
+            formControlName="color"
+          />
 
-        <span>{{ projectFormGroup.get("color").value }}</span>
-      </div>
+          <span>{{ projectFormGroup.get("color").value }}</span>
+        </div>
 
-      <mat-icon matSuffix>{{
-        projectFormGroup.get("color").invalid &&
-        projectFormGroup.get("color").touched
-          ? "mood_bad"
-          : "sentiment_very_satisfied"
-      }}</mat-icon>
-    </mat-form-field>
+        <mat-icon matSuffix>{{
+          projectFormGroup.get("color").invalid &&
+          projectFormGroup.get("color").touched
+            ? "mood_bad"
+            : "sentiment_very_satisfied"
+        }}</mat-icon>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-list class="example-list-wrapping">
+        <mat-list-item *ngFor="let project of myProjects$ | async" lines="3">
+          <span matListItemTitle>{{ project.name }}</span>
+          <span>({{ project.description }})</span>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </div>
+
   <button mat-raised-button color="primary" (click)="submit()">
     {{ updateState ? "Update" : "Next" }}
   </button>

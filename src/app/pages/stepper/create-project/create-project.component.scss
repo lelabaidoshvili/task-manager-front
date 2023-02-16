@@ -4,6 +4,10 @@
   align-items: flex-start;
 }
 
+.container {
+  display: flex;
+  gap: 8rem;
+}
 .color {
   // width: 80px;
   // height: 80px;
@@ -29,4 +33,10 @@ span {
 .text-purple-800 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+}
+
+mat-list {
+  max-height: 18rem;
+  max-width: 15rem;
+  overflow: auto;
 }

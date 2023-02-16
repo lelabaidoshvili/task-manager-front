@@ -21,6 +21,8 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
   sub$ = new Subject<any>();
   updateState: boolean = false;
 
+  myProjects$ = this.projectFacadeService.projects$;
+
   constructor(
     private route: ActivatedRoute,
     private projectFacadeService: ProjectFacadeService,
@@ -74,14 +76,12 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
         )
         .subscribe((response) => {
           this._snackBar.open('Project Created', 'Close', { duration: 1000 });
+
           console.log(response);
         });
 
       this.stepperService.goToStep(1);
     } else {
-      console.log('Data from form:');
-      console.log(this.projectFormGroup.value);
-
       this.projectFacadeService
         .updateProject(
           this.projectFormGroup.value.id,
@@ -92,10 +92,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
           tap((res) => this.projectFacadeService.setProject(res.id)),
           switchMap(() => this.projectFacadeService.getOnlyMyProjects$())
         )
-        .subscribe((response) => {
-          console.log('updated project:');
-          console.log(response);
-        });
+        .subscribe((response) => {});
 
       this.router.navigate(['/tables']);
     }
