@@ -27,8 +27,8 @@ export class IssueTypeHttpService extends BaseService {
     return this.delete<IssueDeletedResponse>(`issue-type/${id}`);
   }
 
-  getIssueTypes(): Observable<IssueTypeResponse> {
-    return this.get<IssueTypeResponse>('issue-type');
+  getIssueTypes(): Observable<IssueTypeResponse[]> {
+    return this.get<IssueTypeResponse[]>('issue-type');
   }
 
   getIssueTypeById(id: number): Observable<IssueTypeResponse> {

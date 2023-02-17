@@ -21,8 +21,8 @@ export class UsersHttpService extends BaseService {
     return this.get<UsersResponse[]>('users/all');
   }
 
-  getUsers(): Observable<UsersDataResponse> {
-    return this.get<UsersDataResponse>('users');
+  getUsers(): Observable<UsersDataResponse[]> {
+    return this.get<UsersDataResponse[]>('users');
   }
 
   createUsersRoles(payload: UsersRole): Observable<UsersResponse> {
@@ -46,3 +46,4 @@ export class UsersHttpService extends BaseService {
   // }
   //---------
 }
+

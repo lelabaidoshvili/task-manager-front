@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectFacadeService } from '../../facades/project.facade.service';
 import { BoardFacadeService } from '../../facades/board-facade.service';
 import { map } from 'rxjs';
-import { Project } from 'src/app/core/interfaces';
+import {Project, UsersResponse} from 'src/app/core/interfaces';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ViewChild } from '@angular/core';
 import {
@@ -10,6 +10,10 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import {IssueTypeFacadeService} from "../../facades/issue-type.facade.service";
+import {IssueTypeResponse} from "../../core/interfaces/issuetype.interface";
+import {UsersFacadeService} from "../../facades/users-facade.service";
+import {BoardResponse, UsersDataResponse} from "src/app/core/interfaces";
 
 @Component({
   selector: 'app-task',
@@ -50,15 +54,36 @@ export class TaskComponent implements OnInit {
   myProjects: Project[] = [];
   myLastProject: Project;
   task = '';
-  project$ = this.projectFacadeService.getProject();
+  myBoard: BoardResponse[] =[]
+  myIssue: IssueTypeResponse[] =[]
+  usersData: UsersDataResponse[] =[]
+
+
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
-    private boardFacadeService: BoardFacadeService
+    private boardFacadeService: BoardFacadeService,
+    private IssueTypeFacadeService: IssueTypeFacadeService,
+    private userFacadeService: UsersFacadeService
   ) {}
 
   ngOnInit(): void {
-    this.getMyProjects();
+
+    this.userFacadeService.getUsers().subscribe((user) => {
+      console.log(user)
+      this.usersData = user
+    })
+    this.IssueTypeFacadeService.getIssueTypes().subscribe((Issue) => {
+      console.log(Issue)
+      this.myIssue = Issue
+
+
+    })
+    this.boardFacadeService.getBoards().subscribe((Board) => {
+      console.log(Board)
+      this.myBoard =Board
+
+    })
     this.projectFacadeService
       .getMyProjects()
       .pipe(
@@ -79,7 +104,5 @@ export class TaskComponent implements OnInit {
       .subscribe((projects) => {});
   }
 
-  getMyProjects() {
-    this.projectFacadeService.getOnlyMyProjects$().subscribe();
-  }
+
 }

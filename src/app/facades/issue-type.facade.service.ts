@@ -22,7 +22,7 @@ export class IssueTypeFacadeService {
   }
 
   getIssueTypes() {
-    this.issueTypeHttpService.getIssueTypes();
+    return this.issueTypeHttpService.getIssueTypes();
   }
 
   getIssueTypeById(id: number) {
