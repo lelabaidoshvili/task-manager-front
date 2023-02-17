@@ -19,12 +19,15 @@ export class BoardComponent implements OnInit, OnDestroy {
   update: boolean = false;
   tasks = TaskStatus;
   taskEnum = [];
+  active: boolean = false;
 
   goNextStep: boolean;
   createBoard: boolean = false;
+  myBoards: BoardResponse[] = [];
 
   boardFormGroup: FormGroup;
   columnGroup: FormGroup;
+
   sub$ = new Subject<any>();
   constructor(
     private boardFacadeService: BoardFacadeService,
@@ -36,7 +39,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.taskEnum);
+    // console.log(this.taskEnum);
+
     this.boardFormGroup = new FormGroup({
       id: new FormControl(null),
       name: new FormControl(null, Validators.required),
@@ -74,6 +78,10 @@ export class BoardComponent implements OnInit, OnDestroy {
           });
         }
       });
+
+    this.boardFacadeService.getMyBoards$().subscribe((res) => {
+      this.myBoards = res;
+    });
   }
 
   get boardColumnArray() {
@@ -106,6 +114,12 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.boardFacadeService
         .createBoard(this.boardFormGroup.value)
         .subscribe((res) => {
+          this.active = true;
+          this.boardFacadeService.getMyBoards$().subscribe((res) => {
+            this.active = false;
+            this.myBoards = res;
+            console.log(res);
+          });
           this._snackBar.open('Board Created', 'Close', { duration: 1000 });
           console.log(res);
           this.createBoard = false;

@@ -1,7 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { IssueTypeEnum } from 'src/app/core/enums/issue-type.enum';
+import { IssueTypeResponse } from 'src/app/core/interfaces/issuetype.interface';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 
 import { StepperService } from '../stepper.service';
@@ -11,11 +13,15 @@ import { StepperService } from '../stepper.service';
   templateUrl: './issue-type.component.html',
   styleUrls: ['./issue-type.component.scss'],
 })
-export class IssueTypeComponent implements OnInit {
+export class IssueTypeComponent implements OnInit, OnDestroy {
   stepperService: StepperService = inject(StepperService);
 
   issues = IssueTypeEnum;
   issueEnum = [];
+  sub$ = new Subject<any>();
+  active: boolean = false;
+  issueTypes: IssueTypeResponse[] = [];
+
   issueTypeFormGroup: FormGroup;
   columnGroup: FormGroup;
   icons: string[] = [
@@ -47,6 +53,10 @@ export class IssueTypeComponent implements OnInit {
       type: new FormControl(null, Validators.required),
       issueTypeColumns: new FormArray([]),
     });
+
+    this.issueTypeFacadeService.getMyIssueTypes$().subscribe((res) => {
+      this.issueTypes = res;
+    });
   }
 
   get issueTypeColumnArray() {
@@ -77,12 +87,18 @@ export class IssueTypeComponent implements OnInit {
     if (this.issueTypeFormGroup.invalid) return;
 
     if (this.issueTypeFormGroup.valid) {
-      this.goNextStep = true;
       this.issueTypeFacadeService
         .createIssueType(this.issueTypeFormGroup.value)
         .subscribe((res) => {
-          this._snackBar.open('IssueType Created', 'Close', { duration: 1000 });
+          this.active = true;
+          this.issueTypeFacadeService.getMyIssueTypes$().subscribe((res) => {
+            this.issueTypes = res;
+            this.active = false;
+          });
+          this.goNextStep = true;
+          this._snackBar.open('IssueType Created', 'Close', { duration: 2000 });
           this.createIssueType = false;
+          this.issueTypeFormGroup.reset();
           console.log(res);
         });
     }
@@ -90,5 +106,10 @@ export class IssueTypeComponent implements OnInit {
   }
   submit() {
     this.stepperService.goToStep(3);
+  }
+
+  ngOnDestroy(): void {
+    this.sub$.next(null);
+    this.sub$.complete();
   }
 }

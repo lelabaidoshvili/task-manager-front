@@ -6,6 +6,7 @@
 >
   Add Issue Type
 </button>
+
 <ng-container *ngIf="createIssueType">
   <form [formGroup]="issueTypeFormGroup">
     <div class="wrapper">
@@ -194,21 +195,37 @@
     </div>
   </form>
 </ng-container>
-<button
-  class="user"
-  [disabled]="issueTypeFormGroup.invalid"
-  mat-raised-button
-  color="basic"
-  (click)="saveIssueType()"
->
-  Save
-</button>
-<button
-  class="next"
-  [disabled]="!goNextStep"
-  mat-raised-button
-  color="primary"
-  (click)="submit()"
->
-  Next
-</button>
+<div class="container">
+  <button
+    *ngIf="!active"
+    class="user"
+    [disabled]="issueTypeFormGroup.invalid"
+    mat-raised-button
+    color="basic"
+    (click)="saveIssueType()"
+  >
+    Save
+  </button>
+  <button
+    class="next"
+    [disabled]="!goNextStep"
+    mat-raised-button
+    color="primary"
+    (click)="submit()"
+  >
+    Next
+  </button>
+  <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
+
+  <div class="scroll">
+    <mat-label class="label">My Issues</mat-label>
+    <mat-list class="example-list-wrapping">
+      <mat-list-item
+        *ngFor="let issue of issueTypes.slice().reverse()"
+        lines="3"
+      >
+        <span matListItemTitle>{{ issue.name | titlecase }}</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

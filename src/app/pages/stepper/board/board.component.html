@@ -6,9 +6,10 @@
 >
   Add Board
 </button>
-<ng-container *ngIf="createBoard">
+<ng-container class="form-container" *ngIf="createBoard">
   <form [formGroup]="boardFormGroup">
     <p *ngIf="update" class="text-purple-800">Update Board</p>
+
     <div class="wrapper">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -206,24 +207,40 @@
         </tfoot>
       </table>
     </div>
+
     <!------------------------- Table------------------------------->
   </form>
 </ng-container>
-<button
-  class="board-save"
-  [disabled]="boardFormGroup.invalid"
-  mat-raised-button
-  color="basic"
-  (click)="saveBoard()"
->
-  Save
-</button>
-<button
-  [disabled]="!goNextStep"
-  class="next"
-  mat-raised-button
-  color="primary"
-  (click)="submit()"
->
-  Next
-</button>
+<div class="container">
+  <div>
+    <button
+      class="board-save"
+      [disabled]="boardFormGroup.invalid"
+      mat-raised-button
+      color="basic"
+      (click)="saveBoard()"
+    >
+      Save
+    </button>
+    <button
+      *ngIf="!active"
+      [disabled]="!goNextStep"
+      class="next"
+      mat-raised-button
+      color="primary"
+      (click)="submit()"
+    >
+      Next
+    </button>
+    <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <div class="scroll">
+    <mat-label class="label">My Boards</mat-label>
+    <mat-list class="example-list-wrapping">
+      <mat-list-item *ngFor="let board of myBoards.slice().reverse()" lines="3">
+        <span matListItemTitle>{{ board.name | titlecase }}</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
