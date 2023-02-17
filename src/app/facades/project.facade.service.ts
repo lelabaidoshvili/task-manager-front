@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+
 import { Project, ProjectUsers, UsersResponse } from '../core/interfaces';
+
 import { ProjectHttpService } from '../core/services/project-http.service';
 
 @Injectable({
@@ -9,7 +11,6 @@ import { ProjectHttpService } from '../core/services/project-http.service';
 export class ProjectFacadeService {
   myProjects: BehaviorSubject<Project[]> = new BehaviorSubject<Project[]>([]);
   projects$ = this.myProjects.asObservable();
-
   myUsers: BehaviorSubject<UsersResponse[]> = new BehaviorSubject<
     UsersResponse[]
   >([]);

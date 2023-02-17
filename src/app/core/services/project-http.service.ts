@@ -6,8 +6,10 @@ import {
   ProjectUsers,
   UsersResponse,
 } from '../interfaces';
+
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
+import { PaginationResponse } from '../interfaces/pagination-response';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +35,8 @@ export class ProjectHttpService extends BaseService {
     return this.get<Project[]>('project/all');
   }
 
-  getProject(): Observable<Project> {
-    return this.get<Project>('project');
+  getProjects(): Observable<PaginationResponse<Project>> {
+    return this.get<PaginationResponse<Project>>('project');
   }
 
   getMyProjects(): Observable<Project[]> {
