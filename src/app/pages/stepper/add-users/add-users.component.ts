@@ -1,22 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StepperService } from '../stepper.service';
 import { UsersFacadeService } from '../../../facades/users-facade.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject, switchMap, takeUntil } from 'rxjs';
+import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
+import { Project, ProjectUsers, UsersResponse } from 'src/app/core/interfaces';
+import { AuthFacadeService } from '../../auth/auth-facade.service';
 
 @Component({
   selector: 'app-add-users',
   templateUrl: './add-users.component.html',
   styleUrls: ['./add-users.component.scss'],
 })
-export class AddUsersComponent implements OnInit {
+export class AddUsersComponent implements OnInit, OnDestroy {
   usersFormGroup: FormGroup;
   goNextStep: boolean;
   createUser: boolean = false;
+  active: boolean = false;
+  sub$ = new Subject<any>();
+  currentProject?: Project;
+  projectUsers = [];
+
+  addedUsers = [];
 
   constructor(
     private stepperService: StepperService,
     private usersFacadeService: UsersFacadeService,
+    private projectFacadeService: ProjectFacadeService,
+    private authFacadeService: AuthFacadeService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -35,9 +47,16 @@ export class AddUsersComponent implements OnInit {
       this.goNextStep = true;
       this.usersFacadeService
         .createUsers(this.usersFormGroup.value)
+        .pipe(takeUntil(this.sub$))
         .subscribe((res) => {
-          this._snackBar.open('User Created', 'Close', { duration: 1000 });
+          console.log('user response');
           console.log(res);
+          this.currentProject = this.projectFacadeService.getProject();
+          this.setProjectUsers(res);
+          this.projectUsers.push(res);
+
+          this._snackBar.open('User Created', 'Close', { duration: 1000 });
+
           this.createUser = false;
         });
     }
@@ -52,5 +71,20 @@ export class AddUsersComponent implements OnInit {
     if (this.goNextStep) {
       this.stepperService.goToStep(4);
     }
+  }
+
+  setProjectUsers(res: UsersResponse) {
+    this.addedUsers.push(`${res.id}`);
+    this.projectFacadeService
+      .addUsersToProject({
+        projectId: this.currentProject.id,
+        userIds: [`${this.authFacadeService.user.id}`, ...this.addedUsers],
+      })
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.sub$.next(null);
+    this.sub$.complete();
   }
 }

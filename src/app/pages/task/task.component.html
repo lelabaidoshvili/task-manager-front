@@ -3,8 +3,8 @@
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side"> Sidenav content </mat-sidenav>
     <mat-sidenav-content>
-      <h1>Projects - {{ myLastProject.name }}</h1>
-      <p class="abr">{{ myLastProject.abbreviation }} - BOARD</p>
+      <h1>Projects - {{ myLastProject?.name }}</h1>
+      <p class="abr">{{ myLastProject?.abbreviation }} - BOARD</p>
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon color="primary">menu</mat-icon>
       </button>

@@ -78,10 +78,6 @@ export class BoardComponent implements OnInit, OnDestroy {
           });
         }
       });
-
-    this.boardFacadeService.getMyBoards$().subscribe((res) => {
-      this.myBoards = res;
-    });
   }
 
   get boardColumnArray() {
@@ -113,17 +109,20 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (!this.boardFormGroup.value.id) {
       this.boardFacadeService
         .createBoard(this.boardFormGroup.value)
+        .pipe(
+          takeUntil(this.sub$),
+          switchMap(() => this.boardFacadeService.getMyBoards$())
+        )
         .subscribe((res) => {
           this.active = true;
-          this.boardFacadeService.getMyBoards$().subscribe((res) => {
-            this.active = false;
-            this.myBoards = res;
-            console.log(res);
-          });
+          this.myBoards = res;
           this._snackBar.open('Board Created', 'Close', { duration: 1000 });
-          console.log(res);
+          setTimeout(() => {
+            this.active = false;
+            this.goNextStep = true;
+          }, 3000);
+
           this.createBoard = false;
-          this.goNextStep = true;
           this.boardFormGroup.reset();
         });
     } else {

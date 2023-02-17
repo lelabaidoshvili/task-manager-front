@@ -10,3 +10,8 @@ export interface ProjectDeleteResponse {
   deleted: boolean;
   message: string;
 }
+
+export interface ProjectUsers {
+  projectId: number;
+  userIds: string[];
+}

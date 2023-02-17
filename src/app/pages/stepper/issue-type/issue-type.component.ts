@@ -53,10 +53,6 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
       type: new FormControl(null, Validators.required),
       issueTypeColumns: new FormArray([]),
     });
-
-    this.issueTypeFacadeService.getMyIssueTypes$().subscribe((res) => {
-      this.issueTypes = res;
-    });
   }
 
   get issueTypeColumnArray() {
@@ -89,17 +85,20 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
     if (this.issueTypeFormGroup.valid) {
       this.issueTypeFacadeService
         .createIssueType(this.issueTypeFormGroup.value)
+        .pipe(
+          takeUntil(this.sub$),
+          switchMap(() => this.issueTypeFacadeService.getMyIssueTypes$())
+        )
         .subscribe((res) => {
           this.active = true;
-          this.issueTypeFacadeService.getMyIssueTypes$().subscribe((res) => {
-            this.issueTypes = res;
+          this.issueTypes = res;
+          this._snackBar.open('Issue Created', 'Close', { duration: 1000 });
+          setTimeout(() => {
             this.active = false;
-          });
-          this.goNextStep = true;
-          this._snackBar.open('IssueType Created', 'Close', { duration: 2000 });
+            this.goNextStep = true;
+          }, 3000);
+
           this.createIssueType = false;
-          this.issueTypeFormGroup.reset();
-          console.log(res);
         });
     }
     this.issueTypeFormGroup.reset();

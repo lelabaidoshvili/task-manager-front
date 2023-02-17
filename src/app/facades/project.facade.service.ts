@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { Project } from '../core/interfaces';
+import { Project, ProjectUsers, UsersResponse } from '../core/interfaces';
 import { ProjectHttpService } from '../core/services/project-http.service';
 
 @Injectable({
@@ -9,6 +9,12 @@ import { ProjectHttpService } from '../core/services/project-http.service';
 export class ProjectFacadeService {
   myProjects: BehaviorSubject<Project[]> = new BehaviorSubject<Project[]>([]);
   projects$ = this.myProjects.asObservable();
+
+  myUsers: BehaviorSubject<UsersResponse[]> = new BehaviorSubject<
+    UsersResponse[]
+  >([]);
+
+  users$ = this.myUsers.asObservable();
 
   constructor(private projectHttpService: ProjectHttpService) {}
 
@@ -24,7 +30,7 @@ export class ProjectFacadeService {
     const project = localStorage.getItem('project');
     return project ? JSON.parse(project) : null;
   }
-  //needs to be changed in tasks,change into getOnlyMyProjects$()
+  //needs to be changed ,change into getOnlyMyProjects$()
   getMyProjects() {
     return this.projectHttpService.getMyProjects();
   }
@@ -49,5 +55,17 @@ export class ProjectFacadeService {
     return this.projectHttpService
       .getMyProjects()
       .pipe(tap((projects) => this.myProjects.next(projects)));
+  }
+
+  getProjectUsers$(): Observable<UsersResponse[]> {
+    return this.projectHttpService.getProjectUsers().pipe(
+      tap((projectUsers) => {
+        this.myUsers.next(projectUsers);
+      })
+    );
+  }
+
+  addUsersToProject(payload: ProjectUsers) {
+    return this.projectHttpService.addUsersToProject(payload);
   }
 }

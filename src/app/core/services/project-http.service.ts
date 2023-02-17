@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { Project, ProjectDeleteResponse } from '../interfaces';
+import {
+  Project,
+  ProjectDeleteResponse,
+  ProjectUsers,
+  UsersResponse,
+} from '../interfaces';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 
@@ -12,7 +17,7 @@ export class ProjectHttpService extends BaseService {
     return this.post<Project>('project', payload);
   }
 
-  addProjectToUsers(payload: Project): Observable<Project> {
+  addUsersToProject(payload: ProjectUsers): Observable<Project> {
     return this.post<Project>('project/users', payload);
   }
 
@@ -37,5 +42,9 @@ export class ProjectHttpService extends BaseService {
   }
   getProjectById(id: number): Observable<Project> {
     return this.get<Project>(`project/${id}`);
+  }
+
+  getProjectUsers(): Observable<UsersResponse[]> {
+    return this.get<UsersResponse[]>('project/users');
   }
 }
