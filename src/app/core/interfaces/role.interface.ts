@@ -23,7 +23,7 @@ export interface RoleResponse {
   permissions: string[];
 }
 
-export interface RoleListInterface {
+export interface RoleListResponse {
   data: RoleResponse[];
   totalCount: number;
   page: number;
