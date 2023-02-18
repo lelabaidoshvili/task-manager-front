@@ -16,12 +16,18 @@ export class ProjectFacadeService {
   >([]);
 
   users$ = this.myUsers.asObservable();
-
+  //--------------
+  current: BehaviorSubject<Project> = new BehaviorSubject<Project>(
+    this.getProject()
+  );
+  current$ = this.current.asObservable();
+  //-------------
   constructor(private projectHttpService: ProjectHttpService) {}
 
   setProject(projectId: number): void {
     this.projectHttpService
       .getProjectById(projectId)
+      .pipe(tap((res) => this.current.next(res)))
       .subscribe((project: Project) => {
         localStorage.setItem('project', JSON.stringify(project));
       });
@@ -31,6 +37,7 @@ export class ProjectFacadeService {
     const project = localStorage.getItem('project');
     return project ? JSON.parse(project) : null;
   }
+
   //needs to be changed ,change into getOnlyMyProjects$()
   getMyProjects() {
     return this.projectHttpService.getMyProjects();

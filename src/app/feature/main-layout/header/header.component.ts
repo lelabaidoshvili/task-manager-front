@@ -12,8 +12,6 @@ import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
 
-  // myProjects = [];
-
   currentProject?: Project = this.projectFacadeService.getProject();
 
   projects$ = this.projectFacadeService.projects$;
@@ -37,7 +35,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  selectProject(projectId: any) {
+  selectProject(projectId: number) {
     this.projectFacadeService.setProject(projectId);
   }
   getMyProjects() {

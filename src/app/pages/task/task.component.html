@@ -4,40 +4,27 @@
     <mat-sidenav #sidenav mode="side">
       <div class="sidenav-container">
         <div class="sidenav-header">
-          <h2>{{ myLastProject.name }} <small>- software project</small></h2>
+          <h2>{{ currentProject?.name }}<small>- software project</small></h2>
         </div>
         <div class="board-info">
           <div *ngFor="let board of myBoard">
             <p class="board-name">Board - {{ board.name }}</p>
-            <div *ngFor="let iss of myIssue">
-              <img [src]="iss.icon" alt="1" />
-            </div>
-            <div class="board-info-buttons">
-              <button routerLink="/stepper/boards/edit/:id">
-                <p class="board-info-button">+ Add Board</p>
-              </button>
-              <button routerLink="/stepper/boards/edit/:id">
-                <p class="board-info-button">+ Add Issue</p>
-              </button>
-            </div>
-            <div class="board-info-hr"></div>
+          </div>
+          <div class="board-info-buttons">
+            <button (click)="openBoardForm()">
+              <p class="board-info-button">+ Add Board</p>
+            </button>
           </div>
         </div>
       </div>
       <div>
         <p class="project-users">Project Users ---</p>
-<!--        <div *ngFor="let user of usersData">-->
-<!--          {{ user.totalCount }}-->
-<!--          <ng-container *ngFor="let data of user.data">-->
-<!--            <p>{{ data.email }}</p>-->
-<!--          </ng-container>-->
-<!--        </div>-->
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
-      <h1>Projects - {{ myLastProject.name }}</h1>
+      <h1>Projects - {{ currentProject?.name }}</h1>
 
-      <p class="abr">Abbreviation-{{ myLastProject.abbreviation }}</p>
+      <p class="abr">Abbreviation-{{ currentProject?.abbreviation }}</p>
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon color="primary">menu</mat-icon>
       </button>

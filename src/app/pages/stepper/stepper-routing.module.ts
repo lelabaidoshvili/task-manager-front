@@ -13,6 +13,7 @@ const routes: Routes = [
     path: 'projects/edit/:id',
     component: CreateProjectComponent,
   },
+
   {
     path: 'boards/edit/:id',
     component: BoardComponent,

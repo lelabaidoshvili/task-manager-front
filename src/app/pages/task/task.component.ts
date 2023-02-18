@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectFacadeService } from '../../facades/project.facade.service';
 import { BoardFacadeService } from '../../facades/board-facade.service';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Project } from 'src/app/core/interfaces';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ViewChild } from '@angular/core';
@@ -14,6 +14,8 @@ import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service'
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { UsersFacadeService } from '../../facades/users-facade.service';
 import { BoardResponse, UsersDataResponse } from 'src/app/core/interfaces';
+import { StepperService } from '../stepper/stepper.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task',
@@ -51,8 +53,12 @@ export class TaskComponent implements OnInit {
     }
   }
 
+  //---
+
+  currentProject: Project;
+
+  //--
   myProjects: Project[] = [];
-  myLastProject: Project;
   task = '';
   myBoard: BoardResponse[] = [];
   myIssue: IssueTypeResponse[] = [];
@@ -62,10 +68,22 @@ export class TaskComponent implements OnInit {
     private projectFacadeService: ProjectFacadeService,
     private boardFacadeService: BoardFacadeService,
     private IssueTypeFacadeService: IssueTypeFacadeService,
-    private userFacadeService: UsersFacadeService
+    private userFacadeService: UsersFacadeService,
+    private stepperService: StepperService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    //------
+    this.projectFacadeService.current$.subscribe((res) => {
+      this.currentProject = res;
+
+      console.log(res);
+
+      console.log(this.currentProject);
+    });
+    //-----------
+
     this.IssueTypeFacadeService.getIssueTypes().subscribe((Issue) => {
       console.log(Issue);
       this.myIssue = Issue;
@@ -83,14 +101,14 @@ export class TaskComponent implements OnInit {
 
             console.log('my projects');
             console.log(projects);
-
-            this.myLastProject = projects[0];
-
-            console.log('my last project');
-            console.log(this.myLastProject);
           }
         })
       )
       .subscribe((projects) => {});
+  }
+
+  openBoardForm() {
+    this.router.navigate(['/stepper']);
+    this.stepperService.goToStep(1);
   }
 }
