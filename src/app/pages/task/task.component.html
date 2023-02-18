@@ -26,12 +26,12 @@
       </div>
       <div>
         <p class="project-users">Project Users ---</p>
-        <div *ngFor="let user of usersData">
-          {{ user.totalCount }}
-          <ng-container *ngFor="let data of user.data">
-            <p>{{ data.email }}</p>
-          </ng-container>
-        </div>
+<!--        <div *ngFor="let user of usersData">-->
+<!--          {{ user.totalCount }}-->
+<!--          <ng-container *ngFor="let data of user.data">-->
+<!--            <p>{{ data.email }}</p>-->
+<!--          </ng-container>-->
+<!--        </div>-->
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -42,7 +42,7 @@
         <mat-icon color="primary">menu</mat-icon>
       </button>
 
-      <div class="all-columns">
+      <div class="columns">
         <div class="column">
           <p>My Task</p>
           <div class="column-hr"></div>

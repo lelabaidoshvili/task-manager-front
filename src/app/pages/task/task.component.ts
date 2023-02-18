@@ -66,10 +66,6 @@ export class TaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userFacadeService.getUsers().subscribe((user) => {
-      console.log(user);
-      this.usersData = user;
-    });
     this.IssueTypeFacadeService.getIssueTypes().subscribe((Issue) => {
       console.log(Issue);
       this.myIssue = Issue;
