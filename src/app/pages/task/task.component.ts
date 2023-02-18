@@ -1,19 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ProjectFacadeService } from '../../facades/project.facade.service';
 import { BoardFacadeService } from '../../facades/board-facade.service';
 import { map } from 'rxjs';
 import { Project } from 'src/app/core/interfaces';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ViewChild } from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
-import { UsersFacadeService } from '../../facades/users-facade.service';
-import { BoardResponse, UsersDataResponse } from 'src/app/core/interfaces';
+import { BoardResponse } from 'src/app/core/interfaces';
+
+
 
 @Component({
   selector: 'app-task',
@@ -21,9 +17,12 @@ import { BoardResponse, UsersDataResponse } from 'src/app/core/interfaces';
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
+
+
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   reason = '';
+  currentProject;
 
   close(reason: string) {
     this.reason = reason;
@@ -34,38 +33,27 @@ export class TaskComponent implements OnInit {
     window.location.host
   );
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
-  }
+
 
   myProjects: Project[] = [];
   myLastProject: Project;
   task = '';
   myBoard: BoardResponse[] = [];
   myIssue: IssueTypeResponse[] = [];
-  usersData: UsersDataResponse[] = [];
+
+
+
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
     private boardFacadeService: BoardFacadeService,
     private IssueTypeFacadeService: IssueTypeFacadeService,
-    private userFacadeService: UsersFacadeService
+
+
   ) {}
 
   ngOnInit(): void {
+    this.currentProject = this.projectFacadeService.getProject();
     this.IssueTypeFacadeService.getIssueTypes().subscribe((Issue) => {
       console.log(Issue);
       this.myIssue = Issue;
@@ -93,4 +81,7 @@ export class TaskComponent implements OnInit {
       )
       .subscribe((projects) => {});
   }
+
+
+
 }
