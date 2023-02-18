@@ -41,9 +41,7 @@ export class UsersHttpService extends BaseService {
     return this.delete<UsersDeleteResponse>(`users/${id}`);
   }
 
-  // updateUsersPassword(payload: UserPasswordUpdate): Observable<UsersResponse> {
-  //   return this.post<UsersResponse>('users/passwordUpdate');
-  // }
-  //---------
+  updateUsersPassword(payload: UserPasswordUpdate) {
+    return this.post('users/passwordUpdate');
+  }
 }
-

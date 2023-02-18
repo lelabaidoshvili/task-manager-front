@@ -1,31 +1,35 @@
 import { Injectable } from '@angular/core';
-import {Task, Tasks} from "../interfaces/task";
-import {Observable} from "rxjs";
-import {BaseService} from "./base.service";
-import {Users, UsersDataResponse, UsersDeleteResponse, UsersResponse} from "../interfaces";
-
+import {
+  TaskDeleteResponse,
+  TaskInterface,
+  TaskPutInterface,
+  TasksResponse,
+} from '../interfaces/task';
+import { Observable } from 'rxjs';
+import { BaseService } from './base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskHttpService extends BaseService {
-
-  createTask(payload: Task): Observable<Tasks> {
-    return this.post<Tasks>('task', payload);
+  createTask(payload: TaskInterface): Observable<TasksResponse> {
+    return this.post<TasksResponse>('task', payload);
   }
 
-  getTask(): Observable<Tasks[]> {
-    return this.get<Tasks[]>('task');
+  getTasks(): Observable<TasksResponse[]> {
+    return this.get<TasksResponse[]>('task');
   }
 
-  getTaskById(id: number): Observable<Tasks[]> {
-    return this.get<Tasks[]>(`task/${id}`);
-
+  getTaskById(id: number): Observable<TasksResponse> {
+    return this.get<TasksResponse>(`task/${id}`);
   }
-  updateTaskById(id: number, payload: Task): Observable<Tasks[]> {
-    return this.put<Tasks[]>(`task/${id}`, payload);
+  updateTaskById(
+    id: number,
+    payload: TaskPutInterface
+  ): Observable<TasksResponse> {
+    return this.put<TasksResponse>(`task/${id}`, payload);
   }
-  deleteTaskById(id: number): Observable<Tasks[]> {
-    return this.delete<Tasks[]>(`task/${id}`);
+  deleteTaskById(id: string): Observable<TaskDeleteResponse> {
+    return this.delete<TaskDeleteResponse>(`task/${id}`);
   }
 }

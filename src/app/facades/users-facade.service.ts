@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Users, UsersRole } from '../core/interfaces/users.interface';
+import {
+  UserPasswordUpdate,
+  Users,
+  UsersRole,
+} from '../core/interfaces/users.interface';
 import { UsersHttpService } from '../core/services/users-http.service';
 
 @Injectable({
@@ -32,5 +36,9 @@ export class UsersFacadeService {
 
   deleteUserById(id: number) {
     return this.usersHttpService.deleteUserById(id);
+  }
+
+  updateUsersPassword(payload: UserPasswordUpdate) {
+    return this.usersHttpService.updateUsersPassword(payload);
   }
 }
