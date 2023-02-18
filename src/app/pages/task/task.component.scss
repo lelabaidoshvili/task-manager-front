@@ -1,0 +1,142 @@
+.container {
+  width: 1500px;
+  height: 800px;
+  margin: auto;
+  position: relative;
+}
+.hr {
+  color: #d5d2d2;
+  font-size: 18px;
+  font-style: italic;
+  position: absolute;
+  left: 85px;
+}
+h1 {
+  margin-top: 30px;
+  color: #d5d2d2;
+  font-size: 18px;
+  font-style: italic;
+  position: absolute;
+  left: 100px;
+}
+.abr {
+  color: #46309f;
+  font-weight: bold;
+  position: absolute;
+  left: 100px;
+  top: 5px;
+}
+.columns {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 40%;
+}
+
+.column {
+  width: 285px;
+  height: 500px;
+  background-color: #b2cacc;
+  border-radius: 10px;
+  position: relative;
+  margin-top: 70px;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+
+  .task-button {
+    color: #889b92;
+    font-style: italic;
+    background-color: #e7d9d9;
+    font-size: 15px;
+    position: absolute;
+    top: 100px;
+    width: 140px;
+    height: 70px;
+    left: 75px;
+    border-radius: 5px;
+  }
+
+  p {
+    color: #504a8f;
+    position: absolute;
+    top: 15px;
+    left: 39%;
+    font-weight: bold;
+  }
+}
+
+.column-hr {
+  background-color: #e7d9d9;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 50px;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+mat-sidenav {
+  width: 300px;
+}
+h2 {
+  color: #d5d2d2;
+  margin-left: 60px;
+  small {
+    color: #d5d2d2;
+    font-style: italic;
+  }
+}
+.sidenav-container {
+  display: flex;
+  flex-direction: column;
+}
+.sidenav-header {
+  background-color: #504a90;
+  width: 100%;
+}
+.board-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  margin-left: 30px;
+}
+.board-name {
+  color: #46309f;
+  font-weight: bold;
+  font-style: italic;
+}
+.board-info-hr {
+  width: 270px;
+  height: 1px;
+  background-color: #504a90;
+}
+.board-info-button {
+  border: solid 1px transparent;
+  color: #cff1d9;
+  font-size: 10px;
+}
+.project-users {
+  margin-left: 30px;
+  color: #779d82;
+}
+img {
+  width: 30px;
+  height: 30px;
+}
+.issue-info {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.board-info-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  margin-top: 15px;
+}
+.task-container {
+  width: 1500px;
+  height: 800px;
+}

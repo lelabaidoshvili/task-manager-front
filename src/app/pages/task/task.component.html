@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="hr"></div>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side">
+      <div class="sidenav-container">
+        <div class="sidenav-header">
+          <h2>{{ currentProject.name }} <small>- software project</small></h2>
+        </div>
+        <div class="board-info">
+          <div *ngFor="let board of myBoard">
+            <p class="board-name">Board - {{ board.name }}</p>
+            <button routerLink="/task/project-board">Select</button>
+            <div *ngFor="let iss of myIssue">
+              <img [src]="iss.icon" alt="1" />
+            </div>
+            <div class="board-info-buttons">
+              <button routerLink="/stepper/boards/edit/:id">
+                <p (click)="openBoardForm()" class="board-info-button">
+                  + Add Board
+                </p>
+              </button>
+              <button routerLink="/stepper/boards/edit/:id">
+                <p class="board-info-button">+ Add Issue</p>
+              </button>
+            </div>
+            <div class="board-info-hr"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="project-users">Project Users ---</p>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div
+        class="task-container"
+        style="
+          background-image: url('/assets/images/background.img.jpeg');
+          background-size: cover;
+        "
+      >
+        <h1>Projects - {{ currentProject?.name }}</h1>
+        <p class="abr">Abbreviation-{{ currentProject.abbreviation }}</p>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon color="primary">menu</mat-icon>
+        </button>
+
+        <div class="columns">
+          <div class="column">
+            <p>My Task</p>
+            <div class="column-hr"></div>
+            <button type="text" class="task-button" routerLink="/task/add-task">
+              Add Task
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
