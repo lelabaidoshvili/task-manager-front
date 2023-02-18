@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectFacadeService } from '../../facades/project.facade.service';
 import { BoardFacadeService } from '../../facades/board-facade.service';
 import { Project } from 'src/app/core/interfaces';
@@ -7,17 +7,16 @@ import { ViewChild } from '@angular/core';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
-import { map, Subject } from 'rxjs';
+import { map, Subject, switchMap, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
-import { takeUntil } from 'rxjs-compat/operator/takeUntil';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   reason = '';
@@ -47,40 +46,45 @@ export class TaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.projectFacadeService.current$.subscribe((res) => {
-      this.currentProject = res;
-
-      console.log(res);
-
-      console.log(this.currentProject);
-    });
-
-    this.IssueTypeFacadeService.getIssueTypes().subscribe((Issue) => {
-      console.log(Issue);
-      this.myIssue = Issue;
-    });
-
-    this.boardFacadeService.getBoards().subscribe((Board) => {
-      console.log(Board);
-      this.myBoard = Board;
-    });
+    this.IssueTypeFacadeService.getIssueTypes()
+      .pipe(
+        takeUntil(this.sub$),
+        map((issues) => (this.myIssue = issues)),
+        switchMap(() => this.boardFacadeService.getBoards())
+      )
+      .subscribe((boards) => {
+        console.log(boards);
+        this.myBoard = boards;
+      });
 
     this.projectFacadeService
       .getMyProjects()
       .pipe(
+        takeUntil(this.sub$),
         map((projects) => {
           if (projects.length > 0) {
             this.myProjects = projects;
-            console.log('my projects');
+
+            console.log('My Projects');
             console.log(projects);
           }
-        })
+        }),
+        switchMap(() => this.projectFacadeService.current$)
       )
-      .subscribe((projects) => {});
+      .subscribe((res) => {
+        this.currentProject = res;
+        console.log(res);
+        console.log(this.currentProject);
+      });
   }
 
   openBoardForm() {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(1);
+  }
+
+  ngOnDestroy(): void {
+    this.sub$.next(null);
+    this.sub$.complete();
   }
 }
