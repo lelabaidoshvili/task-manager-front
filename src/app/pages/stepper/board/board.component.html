@@ -223,6 +223,7 @@
       Save
     </button>
     <button
+      *ngIf="!additionalBoard"
       [disabled]="!goNextStep"
       class="next"
       mat-raised-button

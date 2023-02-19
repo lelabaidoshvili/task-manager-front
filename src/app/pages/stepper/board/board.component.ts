@@ -28,6 +28,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   boardFormGroup: FormGroup;
   columnGroup: FormGroup;
 
+  additionalBoard: boolean = false;
+
   sub$ = new Subject<any>();
   constructor(
     private boardFacadeService: BoardFacadeService,
@@ -78,6 +80,12 @@ export class BoardComponent implements OnInit, OnDestroy {
           });
         }
       });
+
+    this.boardFacadeService.additional$.subscribe((res) => {
+      this.additionalBoard = res;
+      console.log(res);
+      console.log(this.additionalBoard);
+    });
   }
 
   get boardColumnArray() {
@@ -119,6 +127,9 @@ export class BoardComponent implements OnInit, OnDestroy {
           this._snackBar.open('Board Created', 'Close', { duration: 1000 });
           setTimeout(() => {
             this.active = false;
+            if (this.additionalBoard) {
+              this.router.navigate(['/task']);
+            }
             this.goNextStep = true;
           }, 3000);
 

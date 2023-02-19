@@ -31,11 +31,13 @@ export class TaskComponent implements OnInit, OnDestroy {
   );
 
   currentProject: Project;
+  currentBoards: BoardResponse[];
+
   myProjects: Project[] = [];
-  sub$ = new Subject<any>();
-  task = '';
   myBoard: BoardResponse[] = [];
   myIssue: IssueTypeResponse[] = [];
+  sub$ = new Subject<any>();
+  task = '';
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
@@ -46,17 +48,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.IssueTypeFacadeService.getIssueTypes()
-      .pipe(
-        takeUntil(this.sub$),
-        map((issues) => (this.myIssue = issues)),
-        switchMap(() => this.boardFacadeService.getBoards())
-      )
-      .subscribe((boards) => {
-        console.log(boards);
-        this.myBoard = boards;
-      });
-
     this.projectFacadeService
       .getMyProjects()
       .pipe(
@@ -76,11 +67,32 @@ export class TaskComponent implements OnInit, OnDestroy {
         console.log(res);
         console.log(this.currentProject);
       });
+
+    this.boardFacadeService
+      .getMyBoards$()
+      .pipe(
+        takeUntil(this.sub$),
+        map((boards) => {
+          this.currentBoards = boards;
+          console.log('look at this');
+          console.log(boards);
+          console.log(this.currentBoards);
+        })
+      )
+      .subscribe((res) => {});
+
+    this.IssueTypeFacadeService.getIssueTypes()
+      .pipe(
+        takeUntil(this.sub$),
+        map((issues) => (this.myIssue = issues))
+      )
+      .subscribe(() => {});
   }
 
   openBoardForm() {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(1);
+    this.boardFacadeService.additional.next(true);
   }
 
   ngOnDestroy(): void {

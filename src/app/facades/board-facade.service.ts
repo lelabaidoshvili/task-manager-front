@@ -7,6 +7,9 @@ import { BoardHttpService } from '../core/services/board-http.service';
   providedIn: 'root',
 })
 export class BoardFacadeService {
+  additional: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  additional$ = this.additional.asObservable();
+
   myBoards: BehaviorSubject<BoardResponse[]> = new BehaviorSubject<
     BoardResponse[]
   >([]);
@@ -17,7 +20,7 @@ export class BoardFacadeService {
   createBoard(payload: Board) {
     return this.boardHttpService.createBoard(payload);
   }
-  //needs to be removed
+
   getBoards() {
     return this.boardHttpService.getBoards();
   }

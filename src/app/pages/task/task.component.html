@@ -7,7 +7,7 @@
           <h2>{{ currentProject?.name }} <small>- software project</small></h2>
         </div>
         <div class="board-info">
-          <div *ngFor="let board of myBoard">
+          <div *ngFor="let board of currentBoards">
             <p class="board-name">Board - {{ board.name }}</p>
             <button routerLink="/task/project-board">Select</button>
             <div *ngFor="let iss of myIssue">
