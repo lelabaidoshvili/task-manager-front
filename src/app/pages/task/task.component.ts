@@ -36,6 +36,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   task = '';
   myBoard: BoardResponse[] = [];
   myIssue: IssueTypeResponse[] = [];
+  number = 0;
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
@@ -86,5 +87,20 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();
+  }
+  goToBoard() {
+    if(this.myBoard.length >1) {
+      this.router.navigate(['/task/project-board'])
+    } else {
+      this.router.navigate(['/task/add-task'])
+    }
+  }
+  goToSelectedBoard(id: number) {
+    this.boardFacadeService.getBoardById(id).subscribe(res => {
+      console.log(res);
+      this.number  = res.id
+      console.log(this.number)
+      this.router.navigate([`/task/project-board`, id])
+    })
   }
 }

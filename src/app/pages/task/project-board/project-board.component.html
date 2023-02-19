@@ -1,16 +1,24 @@
 
-
-  <div *ngFor="let board of myBoard">
-    <div class="all-columns">
-      <ng-container *ngFor="let column of board.columns">
-        <div class="column">
-          <p>{{ column.taskStatus }}</p>
-          <div class="column-hr"></div>
-        </div>
-      </ng-container>
+<div class="container">
+  <div class="column-container">
+    <div *ngFor="let board of myBoard">
+      <div class="all-columns">
+        <ng-container *ngFor="let column of board.columns">
+          <div class="column">
+            <p>{{ column.taskStatus }}</p>
+            <div class="column-hr"></div>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
-  <button routerLink="/stepper/boards/edit/:id">
-    <p class="add-column_button">+ Add Column</p>
-</button>
 
+  <div class="buttons">
+    <button routerLink="/task">
+      <p class="add-column_button"> - Go BACK</p>
+    </button>
+    <button routerLink="/stepper/boards/edit/:id">
+      <p class="add-column_button">+ Add Column</p>
+    </button>
+  </div>
+</div>
