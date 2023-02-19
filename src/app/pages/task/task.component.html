@@ -9,7 +9,8 @@
         <div class="board-info">
           <div *ngFor="let board of myBoard">
             <p class="board-name">Board - {{ board.name }}</p>
-            <button (click)="goToSelectedBoard(board.id)"> <p class="board-info-button">+ Select Board</p></button>
+<!--            <button (click)="goToSelectedBoard(board.id)"> <p class="board-info-button">+ Select Board</p></button>-->
+            <button routerLink="/task/project-board"> <p class="board-info-button">+ Select Board</p></button>
             <div *ngFor="let iss of myIssue">
               <img [src]="iss.icon" alt="1" />
             </div>
