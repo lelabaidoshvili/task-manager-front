@@ -7,7 +7,7 @@ import { ViewChild } from '@angular/core';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
-import { map, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
 
@@ -34,11 +34,13 @@ export class TaskComponent implements OnInit, OnDestroy {
   currentBoards: BoardResponse[];
   projectUsers = [];
 
-  myProjects: Project[] = [];
   myBoard: BoardResponse[] = [];
   myIssue: IssueTypeResponse[] = [];
+
   sub$ = new Subject<any>();
   task = '';
+
+  number = 0;
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
@@ -49,20 +51,8 @@ export class TaskComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.projectFacadeService
-      .getMyProjects()
-      .pipe(
-        takeUntil(this.sub$),
-        map((projects) => {
-          if (projects.length > 0) {
-            this.myProjects = projects;
-
-            console.log('My Projects');
-            console.log(projects);
-          }
-        }),
-        switchMap(() => this.projectFacadeService.current$)
-      )
+    this.projectFacadeService.current$
+      .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
         this.currentProject = res;
         console.log(res);
@@ -93,17 +83,24 @@ export class TaskComponent implements OnInit, OnDestroy {
     });
 
     this.IssueTypeFacadeService.getIssueTypes()
-      .pipe(
-        takeUntil(this.sub$),
-        map((issues) => (this.myIssue = issues))
-      )
-      .subscribe(() => {});
+      .pipe(takeUntil(this.sub$))
+      .subscribe((issues) => {
+        this.myIssue = issues;
+      });
   }
 
   openBoardForm() {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(1);
     this.boardFacadeService.additional.next(true);
+  }
+
+  goToBoard() {
+    if (this.myBoard.length > 1) {
+      this.router.navigate(['/task/board-select']);
+    } else {
+      this.router.navigate(['/task/add-task']);
+    }
   }
 
   ngOnDestroy(): void {

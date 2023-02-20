@@ -1,1 +1,22 @@
+<div class="container">
+  <div class="column-container">
+    <h1>{{ boards.name }}</h1>
+    <div class="all-columns">
+      <ng-container *ngFor="let column of boards.columns">
+        <div class="column">
+          <p>{{ column.name }}</p>
+          <div class="column-hr"></div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
 
+<div class="buttons">
+  <button routerLink="/task">
+    <p class="add-column_button">- Go BACK</p>
+  </button>
+  <button routerLink="/stepper/boards/edit/:id">
+    <p class="add-column_button">+ Add Column</p>
+  </button>
+</div>
