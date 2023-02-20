@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  height: 700px;
+  margin: auto;
+  background-color: #e4e4e4;
+}
+.header {
+  background-color: #504a90;
+  height: 60px;
+  border-radius: 5px;
+  position: relative;
+}
+h1 {
+  color: #e4e4e4;
+  position: absolute;
+  left:43%;
+  top: 10px;
+  font-size: 30px;
+  font-weight: bold;
+}
+.board {
+  width: 195px;
+  height: 100px;
+  background-color: #a9a6a6;
+  margin-top: 150px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.board:hover {
+  background-color: #504a90;
+  transition: background-color 0.3s ease;
+  width: 205px;
+  height: 115px;
+}
+
+
+.myBoards {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+}
+.board-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+.board-info-button {
+  width: 100px;
+  height: 25px;
+  border: 1px solid white;
+  border-radius: 20px;
+
+
+}
