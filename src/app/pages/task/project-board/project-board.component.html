@@ -1,11 +1,12 @@
 
 <div class="container">
   <div class="column-container">
-    <div *ngFor="let board of myBoard">
+
+      <h1>{{boards.name}}</h1>
       <div class="all-columns">
-        <ng-container *ngFor="let column of board.columns">
+        <ng-container *ngFor="let column of boards.columns">
           <div class="column">
-            <p>{{ column.taskStatus }}</p>
+            <p>{{ column.name }}</p>
             <div class="column-hr"></div>
           </div>
         </ng-container>
@@ -21,4 +22,4 @@
       <p class="add-column_button">+ Add Column</p>
     </button>
   </div>
-</div>
+

@@ -4,6 +4,7 @@ import { TaskComponent } from './task.component';
 import {SharedModule} from "../../shared/shared.module";
 import { AddTaskComponent } from './add-task/add-task.component';
 import { ProjectBoardComponent } from './project-board/project-board.component';
+import { BoardSelectComponent } from './board-select/board-select.component';
 
 
 
@@ -13,6 +14,7 @@ import { ProjectBoardComponent } from './project-board/project-board.component';
     TaskComponent,
     AddTaskComponent,
     ProjectBoardComponent,
+    BoardSelectComponent,
 
 
   ],

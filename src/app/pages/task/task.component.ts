@@ -8,7 +8,7 @@ import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service'
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
 import { map, Subject, switchMap, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
 
 @Component({
@@ -38,15 +38,19 @@ export class TaskComponent implements OnInit, OnDestroy {
   myIssue: IssueTypeResponse[] = [];
   number = 0;
 
+
+
   constructor(
     private projectFacadeService: ProjectFacadeService,
     private boardFacadeService: BoardFacadeService,
     private IssueTypeFacadeService: IssueTypeFacadeService,
     private router: Router,
-    private stepperService: StepperService
+    private stepperService: StepperService,
+
   ) {}
 
   ngOnInit(): void {
+
     this.IssueTypeFacadeService.getIssueTypes()
       .pipe(
         takeUntil(this.sub$),
@@ -90,17 +94,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
   goToBoard() {
     if(this.myBoard.length >1) {
-      this.router.navigate(['/task/project-board'])
+      this.router.navigate(['/task/board-select'])
     } else {
       this.router.navigate(['/task/add-task'])
     }
   }
-  goToSelectedBoard(id: number) {
-    this.boardFacadeService.getBoardById(id).subscribe(res => {
-      console.log(res);
-      this.number  = res.id
-      console.log(this.number)
-      this.router.navigate([`/task/project-board`, id])
-    })
-  }
+
 }
