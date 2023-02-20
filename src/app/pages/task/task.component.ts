@@ -7,7 +7,7 @@ import { ViewChild } from '@angular/core';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
-import { map, Subject, switchMap, takeUntil } from 'rxjs';
+import { map, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
 
@@ -32,6 +32,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   currentProject: Project;
   currentBoards: BoardResponse[];
+  projectUsers = [];
 
   myProjects: Project[] = [];
   myBoard: BoardResponse[] = [];
@@ -68,18 +69,28 @@ export class TaskComponent implements OnInit, OnDestroy {
         console.log(this.currentProject);
       });
 
-    this.boardFacadeService
-      .getMyBoards$()
-      .pipe(
-        takeUntil(this.sub$),
-        map((boards) => {
-          this.currentBoards = boards;
-          console.log('look at this');
-          console.log(boards);
-          console.log(this.currentBoards);
-        })
-      )
-      .subscribe((res) => {});
+    this.projectFacadeService.activateCurrent.subscribe((res) => {
+      if (res) {
+        this.boardFacadeService
+          .getMyBoards$()
+          .pipe(takeUntil(this.sub$))
+
+          .subscribe((boards) => {
+            this.currentBoards = boards;
+          });
+      }
+    });
+    this.projectFacadeService.activateCurrent.subscribe((res) => {
+      if (res) {
+        this.projectFacadeService
+          .getProjectUsers$()
+          .pipe(takeUntil(this.sub$))
+          .subscribe((users) => {
+            this.projectUsers = users;
+            console.log(users);
+          });
+      }
+    });
 
     this.IssueTypeFacadeService.getIssueTypes()
       .pipe(

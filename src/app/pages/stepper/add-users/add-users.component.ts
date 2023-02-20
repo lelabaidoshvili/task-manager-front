@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StepperService } from '../stepper.service';
 import { UsersFacadeService } from '../../../facades/users-facade.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject, switchMap, take, takeUntil } from 'rxjs';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { Project, ProjectUsers, UsersResponse } from 'src/app/core/interfaces';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
@@ -40,6 +40,8 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       mobileNumber: new FormControl(null, Validators.required),
     });
     this.goNextStep = false;
+
+    this.projectUsers.push(this.authFacadeService.user);
   }
 
   saveUser() {
@@ -53,7 +55,7 @@ export class AddUsersComponent implements OnInit, OnDestroy {
           console.log(res);
           this.currentProject = this.projectFacadeService.getProject();
           this.setProjectUsers(res);
-          this.projectUsers.push(res);
+          this.getProjectUsers();
 
           this._snackBar.open('User Created', 'Close', { duration: 1000 });
 
@@ -80,9 +82,18 @@ export class AddUsersComponent implements OnInit, OnDestroy {
         projectId: this.currentProject.id,
         userIds: [`${this.authFacadeService.user.id}`, ...this.addedUsers],
       })
+      .pipe(takeUntil(this.sub$))
       .subscribe();
   }
 
+  getProjectUsers() {
+    this.projectFacadeService
+      .getProjectUsers$()
+      .pipe(takeUntil(this.sub$))
+      .subscribe((users) => {
+        this.projectUsers = users;
+      });
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

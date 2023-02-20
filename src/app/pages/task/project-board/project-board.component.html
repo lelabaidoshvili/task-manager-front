@@ -1,16 +1,1 @@
 
-
-  <div *ngFor="let board of myBoard">
-    <div class="all-columns">
-      <ng-container *ngFor="let column of board.columns">
-        <div class="column">
-          <p>{{ column.taskStatus }}</p>
-          <div class="column-hr"></div>
-        </div>
-      </ng-container>
-    </div>
-  </div>
-  <button routerLink="/stepper/boards/edit/:id">
-    <p class="add-column_button">+ Add Column</p>
-</button>
-

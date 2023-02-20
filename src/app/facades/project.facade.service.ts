@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Project, ProjectUsers, UsersResponse } from '../core/interfaces';
 
 import { ProjectHttpService } from '../core/services/project-http.service';
+import { BoardFacadeService } from './board-facade.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,10 @@ export class ProjectFacadeService {
   );
   current$ = this.current.asObservable();
   //-------------
+
+  activateCurrent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
   constructor(private projectHttpService: ProjectHttpService) {}
 
   setProject(projectId: number): void {
@@ -30,6 +35,7 @@ export class ProjectFacadeService {
       .pipe(tap((res) => this.current.next(res)))
       .subscribe((project: Project) => {
         localStorage.setItem('project', JSON.stringify(project));
+        this.activateCurrent.next(true);
       });
   }
 

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Project } from 'src/app/core/interfaces';
+import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private projectFacadeService: ProjectFacadeService
+    private projectFacadeService: ProjectFacadeService,
+    private boardFacadeService: BoardFacadeService
   ) {}
 
   ngOnInit(): void {
