@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TaskComponent } from './task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { ProjectBoardComponent } from './project-board/project-board.component';
-// import {BoardSelectComponent} from "./board-select/board-select.component";
+import { BoardSelectComponent } from './board-select/board-select.component';
 
 const routes: Routes = [
   {
@@ -18,10 +18,10 @@ const routes: Routes = [
     path: 'project-board/:id',
     component: ProjectBoardComponent,
   },
-  // {
-  //   path: 'board-select',
-  //   component: BoardSelectComponent
-  // }
+  {
+    path: 'board-select',
+    component: BoardSelectComponent,
+  },
 ];
 
 @NgModule({

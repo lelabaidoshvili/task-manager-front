@@ -7,18 +7,23 @@
           <h2>{{ currentProject?.name }} <small>- software project</small></h2>
         </div>
         <div class="board-info">
+          <p class="side-head">Select Board &#10534;</p>
+
           <div *ngFor="let board of currentBoards">
-            <p class="board-name">Board - {{ board.name }}</p>
-
-            <button [routerLink]="['/task/project-board', board.id]">
-              <p class="board-info-button">+ Select Board</p>
-            </button>
-            <div *ngFor="let iss of myIssue">
+            <!-- <div class="issues" *ngFor="let iss of myIssue">
               <img [src]="iss.icon" alt="1" />
-            </div>
+            </div> -->
+            <button
+              [routerLink]="['/task/project-board', board.id]"
+              mat-button
+              class="board-name"
+            >
+              {{ board.name }}
+            </button>
 
-            <div class="board-info-hr"></div>
+            <!-- <div class="board-info-hr"></div> -->
           </div>
+
           <div class="board-info-buttons">
             <button (click)="openBoardForm()">
               <p class="board-info-button">+ Add Board</p>
@@ -26,8 +31,12 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let user of projectUsers">
-        <p class="project-users">{{ user.email }}</p>
+      <p class="side-users">Project Users &#10534;</p>
+      <div class="users" *ngFor="let user of projectUsers">
+        <div class="circle">{{ user.firstName.slice(0, 1).toUpperCase() }}</div>
+        <div class="project-users">
+          {{ user.email }}
+        </div>
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -38,7 +47,7 @@
           background-size: cover;
         "
       >
-        <h1>Projects - {{ currentProject?.name }}</h1>
+        <h1>Project - {{ currentProject?.name }}</h1>
         <p class="abr">Abbreviation-{{ currentProject?.abbreviation }}</p>
         <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon color="primary">menu</mat-icon>
