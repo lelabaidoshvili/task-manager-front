@@ -175,11 +175,21 @@ img {
 }
 .board-info-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 150px;
   margin-top: 15px;
 }
 .task-container {
   width: 1500px;
   height: 800px;
+}
+.user-info-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 150px;
+  margin-top: 15px;
+}
+.user-button {
+  color: #6b9577;
+  font-size: 14px;
 }

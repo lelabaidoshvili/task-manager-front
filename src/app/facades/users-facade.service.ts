@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {
   UserPasswordUpdate,
   Users,
@@ -11,6 +12,10 @@ import { UsersHttpService } from '../core/services/users-http.service';
 })
 export class UsersFacadeService {
   constructor(private usersHttpService: UsersHttpService) {}
+  additionalUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  additionalUser$ = this.additionalUser.asObservable();
 
   createUsers(payload: Users) {
     return this.usersHttpService.createUsers(payload);

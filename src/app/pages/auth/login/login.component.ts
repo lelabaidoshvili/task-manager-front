@@ -3,6 +3,7 @@ import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthFacadeService } from '../auth-facade.service';
+import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private authFacadeService: AuthFacadeService,
+    private projectFacadeService: ProjectFacadeService,
     private readonly fb: NonNullableFormBuilder
   ) {
     this.loginForm = fb.group({
@@ -33,12 +35,20 @@ export class LoginComponent implements OnInit, OnDestroy {
       .login(this.loginForm.value)
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
+        this.navigateToPages();
         console.log(res);
-
-        this.router.navigate(['/stepper']);
       });
   }
 
+  navigateToPages() {
+    this.projectFacadeService.getMyProjects().subscribe((projects) => {
+      if (projects.length > 0) {
+        this.router.navigate(['/task']);
+      } else {
+        this.router.navigate(['/stepper']);
+      }
+    });
+  }
   ngOnDestroy() {
     this.sub$.next(null);
     this.sub$.complete();

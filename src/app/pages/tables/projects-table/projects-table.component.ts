@@ -28,7 +28,7 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.projectFacadeService
-      .getProjects()
+      .getMyProjects()
       .pipe(takeUntil(this.sub$))
       .subscribe((projects) => {
         console.log(projects);

@@ -10,6 +10,7 @@ import { BoardResponse } from 'src/app/core/interfaces';
 import { map, Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
+import { UsersFacadeService } from 'src/app/facades/users-facade.service';
 
 @Component({
   selector: 'app-task',
@@ -47,7 +48,8 @@ export class TaskComponent implements OnInit, OnDestroy {
     private boardFacadeService: BoardFacadeService,
     private IssueTypeFacadeService: IssueTypeFacadeService,
     private router: Router,
-    private stepperService: StepperService
+    private stepperService: StepperService,
+    private usersFacadeService: UsersFacadeService
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,12 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(1);
     this.boardFacadeService.additional.next(true);
+  }
+
+  openUserForm() {
+    this.router.navigate(['/stepper']);
+    this.stepperService.goToStep(3);
+    this.usersFacadeService.additionalUser.next(true);
   }
 
   goToBoard() {
