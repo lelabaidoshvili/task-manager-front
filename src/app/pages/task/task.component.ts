@@ -107,7 +107,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   goToBoard() {
     if (this.myBoard.length <2) {
       this.router.navigate(['/task/add-task']);
-      console.log(this.myBoard.length, 'hgifgujflkgkfl;kglfkg')
+      console.log(this.myBoard.length)
     } else  {
       this.router.navigate(['/task/board-select']);
     }
