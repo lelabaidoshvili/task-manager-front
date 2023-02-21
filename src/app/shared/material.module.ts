@@ -9,14 +9,13 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
-
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
   exports: [
@@ -36,6 +35,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     DragDropModule,
     MatListModule,
     MatProgressBarModule,
+    MatCardModule
   ],
 })
 export class MaterialModule {}

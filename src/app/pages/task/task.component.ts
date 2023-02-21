@@ -89,6 +89,7 @@ export class TaskComponent implements OnInit, OnDestroy {
       .subscribe((issues) => {
         this.myIssue = issues;
       });
+
   }
 
   openBoardForm() {
@@ -104,10 +105,11 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   goToBoard() {
-    if (this.myBoard.length > 1) {
-      this.router.navigate(['/task/board-select']);
-    } else {
+    if (this.myBoard.length <2) {
       this.router.navigate(['/task/add-task']);
+      console.log(this.myBoard.length, 'hgifgujflkgkfl;kglfkg')
+    } else  {
+      this.router.navigate(['/task/board-select']);
     }
   }
 
