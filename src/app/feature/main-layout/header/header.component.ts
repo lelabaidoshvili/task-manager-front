@@ -4,6 +4,7 @@ import { Project } from 'src/app/core/interfaces';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
+import { StepperService } from 'src/app/pages/stepper/stepper.service';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +25,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private projectFacadeService: ProjectFacadeService,
-    private boardFacadeService: BoardFacadeService
+    private boardFacadeService: BoardFacadeService,
+    private stepperService: StepperService
   ) {}
 
   ngOnInit(): void {
@@ -42,5 +44,10 @@ export class HeaderComponent implements OnInit {
   }
   getMyProjects() {
     this.projectFacadeService.getOnlyMyProjects$().subscribe();
+  }
+
+  goToStepper() {
+    this.router.navigate(['/stepper']);
+    this.stepperService.goToStep(0);
   }
 }

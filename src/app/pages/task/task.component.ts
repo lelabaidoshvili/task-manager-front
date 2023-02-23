@@ -35,7 +35,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   currentBoards: BoardResponse[];
   projectUsers = [];
 
-  myBoard: BoardResponse[] = [];
+  // myBoard: BoardResponse[] = [];
   myIssue: IssueTypeResponse[] = [];
 
   sub$ = new Subject<any>();
@@ -104,7 +104,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   goToBoard() {
-    if (this.myBoard.length > 1) {
+    if (this.currentBoards.length > 1) {
       this.router.navigate(['/task/board-select']);
     } else {
       this.router.navigate(['/task/add-task']);

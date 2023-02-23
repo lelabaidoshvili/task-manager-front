@@ -1,5 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, takeUntil } from 'rxjs';
@@ -7,6 +9,7 @@ import { Subject } from 'rxjs';
 import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { BoardResponse } from 'src/app/core/interfaces';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
+import { DialogComponent } from '../dialog/dialog';
 import { StepperService } from '../stepper.service';
 
 @Component({
@@ -35,14 +38,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     private boardFacadeService: BoardFacadeService,
     private router: Router,
     private route: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public matDialog: MatDialog
   ) {
     this.taskEnum = Object.keys(this.tasks);
   }
 
   ngOnInit(): void {
-    // console.log(this.taskEnum);
-
     this.boardFormGroup = new FormGroup({
       id: new FormControl(null),
       name: new FormControl(null, Validators.required),
@@ -128,7 +130,8 @@ export class BoardComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.active = false;
             if (this.additionalBoard) {
-              this.router.navigate(['/task']);
+              // this.router.navigate(['/task']);
+              this.openDialog();
             }
             this.goNextStep = true;
           }, 3000);
@@ -163,6 +166,15 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   submit() {
     this.stepperService.goToStep(2);
+  }
+
+  openDialog() {
+    let dialogRef = this.matDialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.router.navigate(['/task']);
+      }
+    });
   }
 
   ngOnDestroy(): void {

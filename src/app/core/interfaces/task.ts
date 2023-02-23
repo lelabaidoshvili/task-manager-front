@@ -23,7 +23,7 @@ export interface TaskInterface {
   boardColumnId?: number;
   isBacklog: boolean;
   priority: Priority[];
-  taskStatus: string;
+  taskStatus: TaskStatusEnumInterface[];
   assigneeId: number;
   reporterId: number;
 }

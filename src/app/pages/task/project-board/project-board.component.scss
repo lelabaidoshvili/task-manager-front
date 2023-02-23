@@ -63,3 +63,24 @@ h1 {
   color: #504a8f;
   font-weight: bold;
 }
+
+//------------
+.taskForm {
+  width: 60%;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 0.8rem;
+}
+
+.backlog {
+  align-self: center;
+}
+
+.btn {
+  width: 6rem;
+}

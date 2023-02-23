@@ -13,7 +13,7 @@
 h1 {
   color: #e4e4e4;
   position: absolute;
-  left:43%;
+  left: 43%;
   top: 10px;
   font-size: 30px;
   font-weight: bold;
@@ -30,16 +30,17 @@ h1 {
   align-items: center;
 }
 .board:hover {
+  cursor: pointer;
   background-color: #504a90;
   transition: background-color 0.3s ease;
   width: 205px;
   height: 115px;
 }
 
-
 .myBoards {
   display: flex;
-  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
   width: 80%;
   margin: auto;
 }
@@ -52,6 +53,4 @@ h1 {
   height: 25px;
   border: 1px solid white;
   border-radius: 20px;
-
-
 }

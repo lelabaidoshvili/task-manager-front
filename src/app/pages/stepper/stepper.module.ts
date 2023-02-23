@@ -8,6 +8,7 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { BoardComponent } from './board/board.component';
 import { IssueTypeComponent } from './issue-type/issue-type.component';
 import { AddUsersComponent } from './add-users/add-users.component';
+import { DialogComponent } from './dialog/dialog';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { AddUsersComponent } from './add-users/add-users.component';
     BoardComponent,
     IssueTypeComponent,
     AddUsersComponent,
+    DialogComponent,
   ],
+  entryComponents: [DialogComponent],
   imports: [CommonModule, StepperRoutingModule, SharedModule],
 })
 export class StepperModule {}
