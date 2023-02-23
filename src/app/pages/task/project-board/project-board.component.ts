@@ -22,12 +22,10 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   //-----------
   taskFormGroup: FormGroup;
   taskPropertyGroup: FormGroup;
-
   priority = TaskPriority;
   priorityEnum = [];
   tasks = TaskStatus;
   taskEnum = [];
-  //-----------
   sub$ = new Subject<any>();
   myBoards: BoardResponse[] = [];
   activeBoard: BoardResponse;
@@ -39,7 +37,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   activeIssues?: IssueTypeResponse[];
   issueTypeColumns;
   taskPropertyArr = [];
-
+  //-----------
   constructor(
     private boardFacadeService: BoardFacadeService,
     private route: ActivatedRoute,
