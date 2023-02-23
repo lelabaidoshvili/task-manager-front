@@ -44,12 +44,10 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   taskPropertyArr = [];
   //-----------
 
-  myBoard: BoardResponse[] = [];
-  boards: BoardResponse;
-  column: any;
+  // column: any;
 
   tasksA: any = {
-    378: [
+    365: [
       {
         id: 1,
         title: 'todo1',
@@ -151,6 +149,9 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
         .subscribe(
           (board) => {
             this.activeBoard = board;
+            //-----------------
+            // this.boards = board;
+
             this.activeBoardColumns = this.activeBoard.columns;
             this.initialColumnId = this.activeBoardColumns[0].id;
 
@@ -174,7 +175,8 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       .subscribe(
         (boards) => {
           // console.log(boards);
-          this.myBoards = boards;
+          // this.myBoards = boards;
+          // this.column = this.activeBoard?.columns;
         },
         (error) => {
           console.error(error);
@@ -232,7 +234,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   }
   drop1(event: CdkDragDrop<any, any>) {
     moveItemInArray(
-      this.boards.columns,
+      this.activeBoard.columns,
       event.previousIndex,
       event.currentIndex
     );

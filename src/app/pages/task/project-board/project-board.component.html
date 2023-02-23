@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>{{ boards.name }}</h1>
+  <h1>{{ activeBoard?.name }}</h1>
   <div class="column-container">
     <div
       class="all-columns"
@@ -8,26 +8,22 @@
       (cdkDropListDropped)="drop1($event)"
       cdkDropListGroup
     >
-      <ng-container *ngFor="let column of boards?.columns">
+      <ng-container *ngFor="let column of activeBoard?.columns">
         <div
           class="column"
           cdkDrag
           cdkDropList
-          [cdkDropListData]="tasks[column.id] || []"
+          [cdkDropListData]="tasksA[365] || []"
           (cdkDropListDropped)="drop($event)"
         >
           <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
 
           <p>{{ column.name }}</p>
-          <div
-            class="card"
-            *ngFor="let card of tasksA[column.id] || []"
-            cdkDrag
-          >
+          <div class="card" *ngFor="let card of tasksA[365] || []" cdkDrag>
             {{ card.id }}
             {{ card.title }}
           </div>
-          <div *ngIf="column.id === 378">
+          <div *ngIf="column.id === 365">
             <div class="card-button">
               <button class="task-button" (click)="openAddTaskDialog()">
                 Add Task
