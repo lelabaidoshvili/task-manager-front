@@ -29,7 +29,6 @@
     top: 10px;
     left: 35%;
     font-weight: bold;
-
   }
 }
 example-custom-placeholder {
@@ -43,7 +42,6 @@ example-custom-placeholder {
   justify-content: space-between;
   gap: 50px;
 }
-
 
 .add-column_button {
   font-size: 15px;
@@ -67,8 +65,6 @@ h1 {
   color: #504a8f;
   font-weight: bold;
   padding: 40px;
-
-
 }
 .example-container {
   width: 400px;
@@ -106,8 +102,7 @@ h1 {
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-  0 8px 10px 1px rgba(0, 0, 0, 0.14),
-  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cdk-drag-placeholder {
@@ -125,6 +120,9 @@ h1 {
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+.text {
+  margin-bottom: 5px;
+}
 .card {
   width: 200px;
   height: 40px;
@@ -132,10 +130,14 @@ h1 {
   border-radius: 10px;
   border: 1px solid #d0cece;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .task-button {
-  border: 1px solid  #d0cece;
+  border: 1px solid #d0cece;
   width: 80px;
   height: 30px;
   margin: auto;

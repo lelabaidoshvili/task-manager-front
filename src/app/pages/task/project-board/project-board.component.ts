@@ -17,6 +17,7 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { TasksResponse } from 'src/app/core/interfaces/task';
 
 @Component({
   selector: 'app-project-board',
@@ -42,29 +43,11 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   activeIssues?: IssueTypeResponse[];
   issueTypeColumns;
   taskPropertyArr = [];
+  taskCreateResponse?: TasksResponse;
+  taskResponseArr: TasksResponse[] = [];
+  // boardColumnId: number;
+
   //-----------
-
-  // column: any;
-
-  tasksA: any = {
-    365: [
-      {
-        id: 1,
-        title: 'todo1',
-      },
-      {
-        id: 2,
-        title: 'todo2',
-      },
-      {
-        id: 3,
-        title: 'todo3',
-      },
-    ],
-    379: [],
-    380: [],
-    381: [],
-  };
 
   constructor(
     private boardFacadeService: BoardFacadeService,
@@ -173,11 +156,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       .getBoards()
       .pipe(takeUntil(this.sub$))
       .subscribe(
-        (boards) => {
-          // console.log(boards);
-          // this.myBoards = boards;
-          // this.column = this.activeBoard?.columns;
-        },
+        (boards) => {},
         (error) => {
           console.error(error);
         }
@@ -211,7 +190,11 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       .createTask(this.taskFormGroup.value)
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
-        console.log(res);
+        this.taskCreateResponse = res;
+        // this.boardColumnId = res.boardColumnId;
+        this.taskResponseArr.push(this.taskCreateResponse);
+        console.log(this.taskCreateResponse);
+        console.log(this.taskResponseArr);
       });
   }
 

@@ -13,17 +13,16 @@
           class="column"
           cdkDrag
           cdkDropList
-          [cdkDropListData]="tasksA[365] || []"
+          [cdkDropListData]="initialColumnId || []"
           (cdkDropListDropped)="drop($event)"
         >
           <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
 
-          <p>{{ column.name }}</p>
-          <div class="card" *ngFor="let card of tasksA[365] || []" cdkDrag>
-            {{ card.id }}
-            {{ card.title }}
+          <p class="text">{{ column.name }}</p>
+          <div class="card" *ngFor="let task of taskResponseArr || []" cdkDrag>
+            {{ task.name }}
           </div>
-          <div *ngIf="column.id === 365">
+          <div *ngIf="column.id === initialColumnId">
             <div class="card-button">
               <button class="task-button" (click)="openAddTaskDialog()">
                 Add Task
