@@ -1,20 +1,19 @@
 <div class="container">
+  <h1>{{ boards.name }}</h1>
   <div class="column-container">
-    <h1>{{ boards.name }}</h1>
-    <div class="all-columns">
-      <ng-container *ngFor="let column of boards.columns">
-        <div class="column">
+    <div class="all-columns" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop1($event)" cdkDropListGroup>
+      <ng-container *ngFor="let column of boards?.columns" >
+        <div class="column" cdkDrag cdkDropList [cdkDropListData]="tasks[column.id] || []" (cdkDropListDropped)="drop($event)">
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
           <p>{{ column.name }}</p>
-          <div class="column-hr"></div>
-          <div
-          cdkDropList
-          #{{column.name}}="cdkDropList"
-          [cdkDropListData]="boards.columns"
-          [cdkDropListConnectedTo]="[column.taskStatus]"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let column of boards.columns" cdkDrag></div>
-
+          <div class="card" *ngFor="let card of tasks[column.id] || []" cdkDrag >
+            {{card.id}}
+            {{card.title}}
+          </div>
+          <div *ngIf="column.id ===378">
+            <div class="card-button">
+              <button class="task-button" (click)="openAddTaskDialog()" >Add Task</button>
+            </div>
           </div>
         </div>
       </ng-container>

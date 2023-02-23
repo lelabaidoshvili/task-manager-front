@@ -35,7 +35,8 @@ import { MatCardModule } from "@angular/material/card";
     DragDropModule,
     MatListModule,
     MatProgressBarModule,
-    MatCardModule
+    MatCardModule,
+
   ],
 })
 export class MaterialModule {}
