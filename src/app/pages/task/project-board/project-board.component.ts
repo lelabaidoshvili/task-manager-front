@@ -12,6 +12,11 @@ import { IssueTypeResponse } from 'src/app/core/interfaces/issuetype.interface';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
   selector: 'app-project-board',
@@ -38,13 +43,39 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   issueTypeColumns;
   taskPropertyArr = [];
   //-----------
+
+  myBoard: BoardResponse[] = [];
+  boards: BoardResponse;
+  column: any;
+
+  tasksA: any = {
+    378: [
+      {
+        id: 1,
+        title: 'todo1',
+      },
+      {
+        id: 2,
+        title: 'todo2',
+      },
+      {
+        id: 3,
+        title: 'todo3',
+      },
+    ],
+    379: [],
+    380: [],
+    381: [],
+  };
+
   constructor(
     private boardFacadeService: BoardFacadeService,
     private route: ActivatedRoute,
     private taskFacadeService: TasksFacadeService,
     private issueTypeFacadeService: IssueTypeFacadeService,
     private authFacadeService: AuthFacadeService,
-    private projectFacadeService: ProjectFacadeService
+    private projectFacadeService: ProjectFacadeService,
+    public dialog: MatDialog
   ) {
     //------------
 
@@ -180,6 +211,41 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         console.log(res);
       });
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    console.log(event);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+  drop1(event: CdkDragDrop<any, any>) {
+    moveItemInArray(
+      this.boards.columns,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
+  openAddTaskDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '600px';
+    dialogConfig.height = '400px';
+    const dialogRef = this.dialog.open(AddTaskComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 
   ngOnDestroy(): void {

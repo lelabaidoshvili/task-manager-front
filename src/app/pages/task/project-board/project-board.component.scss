@@ -5,28 +5,38 @@
   background: white;
   margin: auto;
   height: 800px;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 .column-container {
   display: flex;
-  justify-items: center;
+  justify-content: space-between;
   padding: 50px;
 }
 
 .column {
   width: 235px;
-  height: 500px;
+  height: 100%;
   background-color: #eaeaec;
   border-radius: 10px;
   position: relative;
   margin-top: 50px;
+  padding: 20px;
 
   p {
     color: #46309f;
     position: absolute;
-    top: 15px;
+    top: 10px;
     left: 35%;
     font-weight: bold;
+
   }
+}
+example-custom-placeholder {
+  width: 235px;
+  height: 500px;
+  background-color: #6161ec;
+  border-radius: 10px;
 }
 .all-columns {
   display: flex;
@@ -34,13 +44,7 @@
   gap: 50px;
 }
 
-.column-hr {
-  background-color: #46309f;
-  width: 100%;
-  height: 1px;
-  position: absolute;
-  top: 50px;
-}
+
 .add-column_button {
   font-size: 15px;
   color: #46309f;
@@ -57,11 +61,92 @@
   display: flex;
   justify-content: space-between;
   width: 1000px;
-  margin-left: 50px;
+  padding: 100px;
 }
 h1 {
   color: #504a8f;
   font-weight: bold;
+  padding: 40px;
+
+
+}
+.example-container {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.example-list {
+  border: solid 1px #ccc;
+  min-height: 80px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+  margin-top: 52px;
+}
+
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.card {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #d0cece;
+  margin-top: 10px;
+}
+
+.task-button {
+  border: 1px solid  #d0cece;
+  width: 80px;
+  height: 30px;
+  margin: auto;
+  border-radius: 5px;
+}
+.task-button:hover {
+  background-color: white;
+  color: #a9a6a6;
+}
+.card-button {
+  padding: 50px;
 }
 
 //------------
