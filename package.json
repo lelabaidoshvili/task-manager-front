@@ -22,6 +22,7 @@
     "@angular/router": "^14.2.0",
     "cookie-service": "^0.0.0",
     "input-mask-angular": "^2.0.1",
+    "lodash": "^4.17.21",
     "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
