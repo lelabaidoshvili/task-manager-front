@@ -1,3 +1,4 @@
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import {
@@ -97,32 +98,32 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     this.taskFormGroup
       ?.get('issueTypeId')
       ?.valueChanges.subscribe((issueId) => {
-        console.log(issueId);
-        this.issueTypeFacadeService
-          .getIssueTypeById(issueId)
-          .pipe(takeUntil(this.sub$))
-          .subscribe((res) => {
-            this.issueTypeColumns = res.issueTypeColumns;
-            console.log(this.issueTypeColumns);
+      console.log(issueId);
+      this.issueTypeFacadeService
+        .getIssueTypeById(issueId)
+        .pipe(takeUntil(this.sub$))
+        .subscribe((res) => {
+          this.issueTypeColumns = res.issueTypeColumns;
+          console.log(this.issueTypeColumns);
 
-            this.issueTypeColumns.forEach((element) => {
-              this.taskPropertyGroup = new FormGroup({
-                name: new FormControl(element?.name, Validators.required),
-                filedName: new FormControl(
-                  element?.filedName,
-                  Validators.required
-                ),
-                value: new FormControl(null, Validators.required),
-                isRequired: new FormControl(
-                  element?.isRequired,
-                  Validators.required
-                ),
-              });
-              this.taskPropertyArr.push(this.taskPropertyGroup.value);
-              console.log(this.taskPropertyArr);
+          this.issueTypeColumns.forEach((element) => {
+            this.taskPropertyGroup = new FormGroup({
+              name: new FormControl(element?.name, Validators.required),
+              filedName: new FormControl(
+                element?.filedName,
+                Validators.required
+              ),
+              value: new FormControl(null, Validators.required),
+              isRequired: new FormControl(
+                element?.isRequired,
+                Validators.required
+              ),
             });
+            this.taskPropertyArr.push(this.taskPropertyGroup.value);
+            console.log(this.taskPropertyArr);
           });
-      });
+        });
+    });
   }
   getBoardById() {
     this.route.params.subscribe((params) => {

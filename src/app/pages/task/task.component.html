@@ -62,9 +62,11 @@
           <div class="column">
             <p>My Task</p>
             <div class="column-hr"></div>
-            <button type="text" class="task-button" (click)="goToBoard()">
-              Add Task
-            </button>
+            <div *ngFor="let board of currentBoards">
+              <button type="text" class="task-button" (click)="goToBoard(board.id)">
+                Add Task
+              </button>
+            </div>
           </div>
         </div>
       </div>

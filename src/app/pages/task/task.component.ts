@@ -103,11 +103,12 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.usersFacadeService.additionalUser.next(true);
   }
 
-  goToBoard() {
-    if (this.currentBoards.length > 1) {
+  goToBoard(id: number) {
+    if (this.currentBoards.length <2) {
+      this.router.navigate([`/task/project-board/${id}`]);
+      console.log(this.currentBoards.length)
+    } else  {
       this.router.navigate(['/task/board-select']);
-    } else {
-      this.router.navigate(['/task/add-task']);
     }
   }
 
