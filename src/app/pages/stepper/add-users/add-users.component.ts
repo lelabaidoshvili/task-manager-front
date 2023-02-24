@@ -46,7 +46,7 @@ export class AddUsersComponent implements OnInit, OnDestroy {
 
     // this.projectUsers.push(this.authFacadeService.user);
 
-    this.getProjectUsers();
+    // this.getProjectUsers();
 
     this.usersFacadeService.additionalUser$.subscribe((res) => {
       this.additionalUser = res;
