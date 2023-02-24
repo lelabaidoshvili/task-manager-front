@@ -52,6 +52,7 @@
   width: 20px;
   height: 20px;
   justify-content: center;
+
   margin: 0;
 }
 .row {
@@ -72,6 +73,7 @@
   background-color: #eaeaec;
   border-radius: 10px;
   padding: 20px;
+  overflow: scroll;
 }
 .example-custom-placeholder {
   width: 235px;
