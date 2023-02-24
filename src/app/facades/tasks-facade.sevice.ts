@@ -12,8 +12,8 @@ export class TasksFacadeService {
     return this.taskHttpService.createTask(payload);
   }
 
-  getTasks() {
-    return this.taskHttpService.getTasks();
+  getTasks(boardId: number) {
+    return this.taskHttpService.getTasks(boardId);
   }
 
   getTaskById(id: number) {

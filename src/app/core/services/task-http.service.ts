@@ -16,8 +16,8 @@ export class TaskHttpService extends BaseService {
     return this.post<TasksResponse>('task', payload);
   }
 
-  getTasks(): Observable<TasksResponse[]> {
-    return this.get<TasksResponse[]>('task');
+  getTasks(boardId: number): Observable<TasksResponse[]> {
+    return this.get<TasksResponse[]>(`task?boardId=${boardId}`);
   }
 
   getTaskById(id: number): Observable<TasksResponse> {

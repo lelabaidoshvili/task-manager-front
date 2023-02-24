@@ -1,37 +1,78 @@
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
-  background: white;
-  margin: auto;
-  height: 800px;
+  background: #fefefe;
+  height: 640px;
+  padding: 25px 20px 10px 20px;
+}
+.column-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  gap: 25px;
+  padding: 5px 30px 15px 30px;
   overflow-x: scroll;
   overflow-y: hidden;
 }
-.column-container {
+.header {
+  width: 80%;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
-  padding: 50px;
-}
+  gap: 5rem;
 
-.column {
-  width: 235px;
-  height: 100%;
-  background-color: #eaeaec;
-  border-radius: 10px;
-  position: relative;
-  margin-top: 50px;
-  padding: 20px;
+  h3 {
+    color: #555;
+    font-weight: 500;
+    margin-left: 20px;
+  }
 
-  p {
-    color: #46309f;
-    position: absolute;
-    top: 10px;
-    left: 35%;
-    font-weight: bold;
+  h1 {
+    color: #504a8f;
+    font-weight: 600;
+    margin-left: 20px;
   }
 }
-example-custom-placeholder {
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #7659e9;
+  color: #fff;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 3px solid rgb(255, 255, 255);
+  margin-left: -10px;
+}
+.circe.ass {
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.mat-icon {
+  cursor: pointer;
+  color: #b4b3b3;
+}
+.add-col {
+  height: 2.3rem;
+}
+.column {
+  width: 20rem;
+  height: auto;
+  min-height: 30rem;
+  background-color: #eaeaec;
+  border-radius: 10px;
+  padding: 20px;
+}
+.example-custom-placeholder {
   width: 235px;
   height: 500px;
   background-color: #6161ec;
@@ -61,11 +102,7 @@ example-custom-placeholder {
   width: 1000px;
   padding: 100px;
 }
-h1 {
-  color: #504a8f;
-  font-weight: bold;
-  padding: 40px;
-}
+
 .example-container {
   width: 400px;
   max-width: 100%;
@@ -124,16 +161,44 @@ h1 {
   margin-bottom: 5px;
 }
 .card {
-  width: 200px;
-  height: 40px;
+  width: 100%;
+  height: 80px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid #d0cece;
-  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 15px;
+}
+.card p,
+.card h4 {
+  margin: 0;
+}
+
+.icons-ed {
+  // display: flex;
+  // gap: 10px;
+  font-size: 18px;
+}
+
+.left {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 15px;
+}
+
+.right {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 15px;
+}
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
 .task-button {
@@ -149,6 +214,13 @@ h1 {
 }
 .card-button {
   padding: 50px;
+}
+
+.column-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: start;
 }
 
 //------------

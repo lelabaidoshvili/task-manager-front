@@ -1,47 +1,67 @@
 <div class="container">
-  <h1>{{ activeBoard?.name }}</h1>
-  <div class="column-container">
+  <div class="header">
+    <div>
+      <h3>Projects / {{ currentProject.name }}</h3>
+      <h1>{{ activeBoard?.name }}</h1>
+    </div>
+    <div class="row">
+      <div *ngFor="let user of assignee">
+        <div class="circle">
+          {{ user.firstName.slice(0, 1).toUpperCase() }}
+        </div>
+      </div>
+
+      <!-- <mat-icon color="primary">add_circle</mat-icon> -->
+      <mat-icon>account_circle</mat-icon>
+    </div>
+  </div>
+
+  <div class="column-container" cdkDropListGroup>
     <div
-      class="all-columns"
+      class="column"
       cdkDropList
-      cdkDropListOrientation="horizontal"
-      (cdkDropListDropped)="drop1($event)"
-      cdkDropListGroup
+      *ngFor="let column of activeBoard?.columns"
+      [cdkDropListData]="activeTasks[column.id] || []"
+      (cdkDropListDropped)="drop($event)"
     >
-      <ng-container *ngFor="let column of activeBoard?.columns">
+      <div class="column-head">
+        <h2>{{ column.name }}</h2>
+      </div>
+      <div>
         <div
-          class="column"
+          class="card"
+          *ngFor="let card of activeTasks[column.id] || []"
           cdkDrag
-          cdkDropList
-          [cdkDropListData]="initialColumnId || []"
-          (cdkDropListDropped)="drop($event)"
         >
           <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-
-          <p class="text">{{ column.name }}</p>
-          <div class="card" *ngFor="let task of taskResponseArr || []" cdkDrag>
-            {{ task.name }}
+          <div class="left">
+            <p class="cardText">{{ card.name }}</p>
+            <img class="icon" [src]="card.issueType['icon']" alt="icon" />
           </div>
-          <div *ngIf="column.id === initialColumnId">
-            <div class="card-button">
-              <button class="task-button" (click)="openAddTaskDialog()">
-                Add Task
-              </button>
+          <div class="right">
+            <div class="icons-ed">
+              <p>...</p>
+            </div>
+
+            <div class="circle ass">
+              {{ card.assignee["firstName"].slice(0, 1).toUpperCase() }}
             </div>
           </div>
         </div>
-      </ng-container>
+        <button
+          class="btn"
+          mat-button
+          color="primary"
+          (click)="addTask(column)"
+        >
+          Add Task
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="buttons">
-    <button routerLink="/task">
-      <p class="add-column_button">- Go BACK</p>
-    </button>
-    <button routerLink="/stepper/boards/edit/:id">
-      <p class="add-column_button">+ Add Column</p>
-    </button>
+    <button class="add-col" mat-button color="primary">+ Add Column</button>
   </div>
 </div>
+
 <!-------------------------Task Form------------------------>
 <div class="taskForm">
   <div class="cont">
@@ -99,7 +119,12 @@
         <mat-form-field appearance="outline">
           <mat-label>Board col</mat-label>
           <mat-select class="form-control" formControlName="boardColumnId">
-            <mat-option [value]="initialColumnId"> To Do </mat-option>
+            <mat-option
+              *ngFor="let column of activeBoardColumns"
+              [value]="column.id"
+            >
+              {{ column.name }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -122,6 +147,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+
         <mat-checkbox class="backlog" formControlName="isBacklog"
           >Is Backlog</mat-checkbox
         >

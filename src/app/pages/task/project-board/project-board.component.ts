@@ -1,6 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { BoardResponse, UsersResponse } from '../../../core/interfaces';
+import {
+  BoardResponse,
+  Project,
+  UsersResponse,
+} from '../../../core/interfaces';
 import { BoardFacadeService } from '../../../facades/board-facade.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +22,7 @@ import { transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { TasksResponse } from 'src/app/core/interfaces/task';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'app-project-board',
   templateUrl: './project-board.component.html',
@@ -28,25 +32,22 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   //-----------
   taskFormGroup: FormGroup;
   taskPropertyGroup: FormGroup;
+  currentProject: Project;
   priority = TaskPriority;
   priorityEnum = [];
   tasks = TaskStatus;
   taskEnum = [];
   sub$ = new Subject<any>();
-  myBoards: BoardResponse[] = [];
+  // myBoards: BoardResponse[] = [];
   activeBoard: BoardResponse;
   activeBoardId: number;
   activeBoardColumns;
-  initialColumnId: number;
   reporterId: number;
   assignee: UsersResponse[] = [];
   activeIssues?: IssueTypeResponse[];
   issueTypeColumns;
   taskPropertyArr = [];
-  taskCreateResponse?: TasksResponse;
-  taskResponseArr: TasksResponse[] = [];
-  // boardColumnId: number;
-
+  activeTasks;
   //-----------
 
   constructor(
@@ -68,9 +69,11 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getBoardById();
     this.getActiveIssues();
-    this.getBoards();
+    this.currentProject = this.projectFacadeService.getProject();
+
     this.reporterId = this.authFacadeService.user.id;
     this.getProjectUsers();
+    this.getTasks();
 
     this.taskFormGroup = new FormGroup({
       name: new FormControl(null, Validators.required),
@@ -132,17 +135,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
         .subscribe(
           (board) => {
             this.activeBoard = board;
-            //-----------------
-            // this.boards = board;
-
             this.activeBoardColumns = this.activeBoard.columns;
-            this.initialColumnId = this.activeBoardColumns[0].id;
-
-            console.log(board);
-            console.log(' board columns');
-            console.log(this.activeBoardColumns);
-            console.log(' Initial column id');
-            console.log(this.initialColumnId);
           },
           (error) => {
             console.error(error);
@@ -151,17 +144,17 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     });
   }
 
-  getBoards() {
-    this.boardFacadeService
-      .getBoards()
-      .pipe(takeUntil(this.sub$))
-      .subscribe(
-        (boards) => {},
-        (error) => {
-          console.error(error);
-        }
-      );
-  }
+  // getBoards() {
+  //   this.boardFacadeService
+  //     .getBoards()
+  //     .pipe(takeUntil(this.sub$))
+  //     .subscribe(
+  //       (boards) => {},
+  //       (error) => {
+  //         console.error(error);
+  //       }
+  //     );
+  // }
 
   getActiveIssues() {
     this.issueTypeFacadeService
@@ -190,12 +183,16 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       .createTask(this.taskFormGroup.value)
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
-        this.taskCreateResponse = res;
-        // this.boardColumnId = res.boardColumnId;
-        this.taskResponseArr.push(this.taskCreateResponse);
-        console.log(this.taskCreateResponse);
-        console.log(this.taskResponseArr);
+        this.getTasks();
+        console.log(res);
       });
+  }
+
+  getTasks() {
+    this.taskFacadeService.getTasks(this.activeBoardId).subscribe((tasks) => {
+      this.activeTasks = _.groupBy(tasks, 'boardColumnId');
+      console.log(this.activeTasks);
+    });
   }
 
   drop(event: CdkDragDrop<any>) {
@@ -215,14 +212,14 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       );
     }
   }
-  drop1(event: CdkDragDrop<any, any>) {
-    moveItemInArray(
-      this.activeBoard.columns,
-      event.previousIndex,
-      event.currentIndex
-    );
-  }
-  openAddTaskDialog() {
+  // drop1(event: CdkDragDrop<any, any>) {
+  //   moveItemInArray(
+  //     this.activeBoard.columns,
+  //     event.previousIndex,
+  //     event.currentIndex
+  //   );
+  // }
+  addTask(column) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '600px';
     dialogConfig.height = '400px';
