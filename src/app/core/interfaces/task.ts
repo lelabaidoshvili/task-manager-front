@@ -34,6 +34,7 @@ export interface Priority {
   HIGH: string;
 }
 export interface TaskProperty {
+  id: number;
   name: string;
   filedName: string;
   value: string;
@@ -106,6 +107,7 @@ export interface TasksResponse {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
+  taskProperty: TaskProperty[];
 }
 export interface TaskDeleteResponse {
   deleted: boolean;

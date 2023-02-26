@@ -11,7 +11,6 @@
         </div>
       </div>
 
-      <!-- <mat-icon color="primary">add_circle</mat-icon> -->
       <mat-icon>account_circle</mat-icon>
     </div>
   </div>
@@ -60,112 +59,5 @@
       </div>
     </div>
     <button class="add-col" mat-button color="primary">+ Add Column</button>
-  </div>
-</div>
-
-<!-------------------------Task Form------------------------>
-<div class="taskForm">
-  <div class="cont">
-    <form [formGroup]="taskFormGroup">
-      <div class="wrapper">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="name"
-            formControlName="name"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>IssueType </mat-label>
-          <mat-select class="form-control" formControlName="issueTypeId">
-            <mat-option
-              *ngFor="let issue of activeIssues; let i = index"
-              [value]="issue.id"
-            >
-              {{ issue.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Description</mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="description"
-            formControlName="description"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Assignee</mat-label>
-          <mat-select class="form-control" formControlName="assigneeId">
-            <mat-option *ngFor="let user of assignee" [value]="user">
-              {{ user.email }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <!-- <mat-form-field appearance="outline">
-        <mat-label>Epic Id</mat-label>
-        <input
-          type="number"
-          matInput
-          placeholder="epicId"
-          formControlName="epicId"
-        />
-      </mat-form-field> -->
-
-        <mat-form-field appearance="outline">
-          <mat-label>Board col</mat-label>
-          <mat-select class="form-control" formControlName="boardColumnId">
-            <mat-option
-              *ngFor="let column of activeBoardColumns"
-              [value]="column.id"
-            >
-              {{ column.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Priority</mat-label>
-          <mat-select class="form-control" formControlName="priority">
-            <mat-option
-              *ngFor="let priority of priorityEnum"
-              [value]="priority"
-            >
-              {{ priority }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Task Status</mat-label>
-          <mat-select class="form-control" formControlName="taskStatus">
-            <mat-option *ngFor="let task of taskEnum" [value]="task">
-              {{ task }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-checkbox class="backlog" formControlName="isBacklog"
-          >Is Backlog</mat-checkbox
-        >
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Reporter Id</mat-label>
-          <input
-            type="number"
-            matInput
-            placeholder="reporterId"
-            formControlName="reporterId"
-          />
-        </mat-form-field> -->
-      </div>
-    </form>
-
-    <button class="btn" (click)="submit()" mat-raised-button color="primary">
-      Save
-    </button>
   </div>
 </div>
