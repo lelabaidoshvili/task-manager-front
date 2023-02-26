@@ -1,8 +1,8 @@
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import {
   BoardResponse,
+  ColumnResponse,
   Project,
   UsersResponse,
 } from '../../../core/interfaces';
@@ -22,8 +22,9 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
-import { TasksResponse } from 'src/app/core/interfaces/task';
+import { TaskInterface } from 'src/app/core/interfaces/task';
 import * as _ from 'lodash';
+
 @Component({
   selector: 'app-project-board',
   templateUrl: './project-board.component.html',
@@ -98,32 +99,32 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     this.taskFormGroup
       ?.get('issueTypeId')
       ?.valueChanges.subscribe((issueId) => {
-      console.log(issueId);
-      this.issueTypeFacadeService
-        .getIssueTypeById(issueId)
-        .pipe(takeUntil(this.sub$))
-        .subscribe((res) => {
-          this.issueTypeColumns = res.issueTypeColumns;
-          console.log(this.issueTypeColumns);
+        console.log(issueId);
+        this.issueTypeFacadeService
+          .getIssueTypeById(issueId)
+          .pipe(takeUntil(this.sub$))
+          .subscribe((res) => {
+            this.issueTypeColumns = res.issueTypeColumns;
+            console.log(this.issueTypeColumns);
 
-          this.issueTypeColumns.forEach((element) => {
-            this.taskPropertyGroup = new FormGroup({
-              name: new FormControl(element?.name, Validators.required),
-              filedName: new FormControl(
-                element?.filedName,
-                Validators.required
-              ),
-              value: new FormControl(null, Validators.required),
-              isRequired: new FormControl(
-                element?.isRequired,
-                Validators.required
-              ),
+            this.issueTypeColumns.forEach((element) => {
+              this.taskPropertyGroup = new FormGroup({
+                name: new FormControl(element?.name, Validators.required),
+                filedName: new FormControl(
+                  element?.filedName,
+                  Validators.required
+                ),
+                value: new FormControl(null, Validators.required),
+                isRequired: new FormControl(
+                  element?.isRequired,
+                  Validators.required
+                ),
+              });
+              this.taskPropertyArr.push(this.taskPropertyGroup.value);
+              console.log(this.taskPropertyArr);
             });
-            this.taskPropertyArr.push(this.taskPropertyGroup.value);
-            console.log(this.taskPropertyArr);
           });
-        });
-    });
+      });
   }
   getBoardById() {
     this.route.params.subscribe((params) => {
@@ -196,8 +197,9 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     });
   }
 
-  drop(event: CdkDragDrop<any>) {
-    console.log(event);
+  drop(event: CdkDragDrop<any>, column: ColumnResponse) {
+    console.log(event.container);
+    console.log(column);
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -211,23 +213,59 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex
       );
+
+      const tasks = event.container.data.map(
+        (task: TaskInterface, index: number) => {
+          return {
+            ...task,
+            taskStatus: column.taskStatus,
+            boardColumnId: column.id,
+          };
+        }
+      );
+      console.log(tasks);
+      this.activeTasks[column.id] = tasks;
+      console.log(this.activeTasks);
+
+      const currentTask = tasks[event.currentIndex];
+      console.log(currentTask);
+      this.taskFacadeService
+        .updateTaskById(currentTask.id, currentTask)
+        .subscribe((task) => {
+          console.log(task);
+          this.getTasks();
+        });
     }
   }
-  // drop1(event: CdkDragDrop<any, any>) {
-  //   moveItemInArray(
-  //     this.activeBoard.columns,
-  //     event.previousIndex,
-  //     event.currentIndex
-  //   );
-  // }
+
   addTask(column) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '600px';
     dialogConfig.height = '400px';
     const dialogRef = this.dialog.open(AddTaskComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((task) => {
       console.log('The dialog was closed');
+      if (task) {
+        this.getTasks();
+      }
+    });
+  }
+
+  viewTask(task, column) {
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      width: '600px',
+      data: {
+        boardId: this.activeBoardId,
+        column: column,
+        task: task.id,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((task) => {
+      if (task) {
+        this.getTasks();
+      }
     });
   }
 
