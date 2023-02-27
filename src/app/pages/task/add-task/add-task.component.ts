@@ -5,11 +5,7 @@ import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { TasksFacadeService } from 'src/app/facades/tasks-facade.sevice';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  BoardResponse,
-  ColumnResponse,
-  UsersResponse,
-} from 'src/app/core/interfaces';
+import { ColumnResponse, UsersResponse } from 'src/app/core/interfaces';
 import { IssueTypeResponse } from 'src/app/core/interfaces/issuetype.interface';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
@@ -30,8 +26,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     issueTypeId: new FormControl(null, Validators.required),
     taskProperty: new FormArray([]),
     // epicId: new FormControl(null),
-    boardId: new FormControl(this.data.boardId, Validators.required),
-    boardColumnId: new FormControl(this.data.column.id, Validators.required),
+    boardId: new FormControl(null, Validators.required),
+    boardColumnId: new FormControl(null, Validators.required),
     isBacklog: new FormControl(false, Validators.required),
     priority: new FormControl(null, Validators.required),
     taskStatus: new FormControl(
