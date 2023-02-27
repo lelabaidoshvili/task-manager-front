@@ -20,7 +20,7 @@ export class TasksFacadeService {
     return this.taskHttpService.getTaskById(id);
   }
 
-  updateTaskById(id: number, payload: TaskPutInterface) {
+  updateTaskById(id: number, payload) {
     return this.taskHttpService.updateTaskById(id, payload);
   }
 

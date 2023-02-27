@@ -23,10 +23,7 @@ export class TaskHttpService extends BaseService {
   getTaskById(id: number): Observable<TasksResponse> {
     return this.get<TasksResponse>(`task/${id}`);
   }
-  updateTaskById(
-    id: number,
-    payload: TaskPutInterface
-  ): Observable<TasksResponse> {
+  updateTaskById(id: number, payload): Observable<TasksResponse> {
     return this.put<TasksResponse>(`task/${id}`, payload);
   }
   deleteTaskById(id: string): Observable<TaskDeleteResponse> {

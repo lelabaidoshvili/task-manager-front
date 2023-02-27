@@ -52,18 +52,6 @@
         />
       </mat-form-field> -->
 
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Board col</mat-label>
-          <mat-select class="form-control" formControlName="boardColumnId">
-            <mat-option
-              *ngFor="let column of activeBoardColumns"
-              [value]="column.id"
-            >
-              {{ column.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-
         <mat-form-field appearance="outline">
           <mat-label>Priority</mat-label>
           <mat-select class="form-control" formControlName="priority">
@@ -75,26 +63,44 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Reporter</mat-label>
+          <mat-select class="form-control" formControlName="reporterId">
+            <mat-option *ngFor="let user of assignee" [value]="user">
+              {{ user.email }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <mat-checkbox class="backlog" formControlName="isBacklog"
+        <mat-divider></mat-divider>
+
+        <!-- <mat-checkbox class="backlog" formControlName="isBacklog"
           >Is Backlog</mat-checkbox
+        > -->
+      </div>
+      <div class="row" formArrayName="taskProperty">
+        <div
+          *ngFor="let property of taskProperty.controls; let i = index"
+          [formGroupName]="i"
         >
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Reporter Id</mat-label>
-          <input
-            type="number"
-            matInput
-            placeholder="reporterId"
-            formControlName="reporterId"
-          />
-        </mat-form-field> -->
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [placeholder]="property.get('name')?.value"
+              formControlName="value"
+            />
+          </mat-form-field>
+        </div>
       </div>
     </form>
+    <div class="btn-group">
+      <button class="btn" (click)="submit()" mat-raised-button color="primary">
+        Save
+      </button>
 
-    <button class="btn" (click)="submit()" mat-raised-button color="primary">
-      Save
-    </button>
-
-    <button (click)="dialogRef.close()">Close Dialog</button>
+      <button class="btn" mat-stroked-button (click)="dialogRef.close()">
+        Close
+      </button>
+    </div>
   </div>
 </div>

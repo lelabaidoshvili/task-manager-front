@@ -80,16 +80,6 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       });
   }
 
-  // submit() {
-  //   this.taskFacadeService
-  //     .createTask(this.taskFormGroup.value)
-  //     .pipe(takeUntil(this.sub$))
-  //     .subscribe((res) => {
-  //       this.getTasks();
-  //       console.log(res);
-  //     });
-  // }
-
   getTasks() {
     this.taskFacadeService.getTasks(this.activeBoardId).subscribe((tasks) => {
       this.activeTasks = _.groupBy(tasks, 'boardColumnId');
@@ -161,7 +151,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       data: {
         boardId: this.activeBoardId,
         column: column,
-        task: task.id,
+        taskId: task.id,
       },
     });
 

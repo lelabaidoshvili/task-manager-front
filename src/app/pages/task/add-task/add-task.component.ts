@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskPriority } from 'src/app/core/enums/task-priority.enum';
 import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
@@ -16,15 +16,32 @@ import { AuthFacadeService } from '../../auth/auth-facade.service';
 import { ActivatedRoute } from '@angular/router';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
-import { TaskProperty } from 'src/app/core/interfaces/task';
 
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss'],
 })
-export class AddTaskComponent implements OnInit {
-  taskFormGroup: FormGroup;
+export class AddTaskComponent implements OnInit, OnDestroy {
+  taskFormGroup: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, Validators.required),
+    description: new FormControl(null, Validators.required),
+    issueTypeId: new FormControl(null, Validators.required),
+    taskProperty: new FormArray([]),
+    // epicId: new FormControl(null),
+    boardId: new FormControl(this.data.boardId, Validators.required),
+    boardColumnId: new FormControl(this.data.column.id, Validators.required),
+    isBacklog: new FormControl(false, Validators.required),
+    priority: new FormControl(null, Validators.required),
+    taskStatus: new FormControl(
+      this.data.column.taskStatus,
+      Validators.required
+    ),
+    assigneeId: new FormControl(null, Validators.required),
+    reporterId: new FormControl(null, Validators.required),
+  });
+
   taskPropertyGroup: FormGroup;
   priority = TaskPriority;
   priorityEnum = [];
@@ -34,7 +51,7 @@ export class AddTaskComponent implements OnInit {
   assignee: UsersResponse[] = [];
   activeIssues?: IssueTypeResponse[];
   activeBoardColumns;
-  reporterId: number;
+  // reporterId: number;
 
   constructor(
     private taskFacadeService: TasksFacadeService,
@@ -58,13 +75,13 @@ export class AddTaskComponent implements OnInit {
   ngOnInit(): void {
     this.getActiveIssues();
     this.getProjectUsers();
-    this.reporterId = this.authFacadeService.user.id;
+    // this.reporterId = this.authFacadeService.user.id;
 
     if (this.data.taskId) {
       this.getTask(this.data.taskId);
     } else {
       this.taskFormGroup
-        ?.get('issueTypeId')
+        .get('issueTypeId')
         .valueChanges.pipe(takeUntil(this.sub$))
         .subscribe((issueTypeId) => {
           this.getIssueTypeProperties(issueTypeId);
@@ -81,24 +98,24 @@ export class AddTaskComponent implements OnInit {
       });
     }
 
-    this.taskFormGroup = new FormGroup({
-      id: new FormControl(null),
-      name: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
-      issueTypeId: new FormControl(null, Validators.required),
-      taskProperty: new FormArray([]),
-      // epicId: new FormControl(null),
-      boardId: new FormControl(this.data.boardId, Validators.required),
-      boardColumnId: new FormControl(this.data.column.id, Validators.required),
-      isBacklog: new FormControl(false, Validators.required),
-      priority: new FormControl(null, Validators.required),
-      taskStatus: new FormControl(
-        this.data.column.taskStatus,
-        Validators.required
-      ),
-      assigneeId: new FormControl(null, Validators.required),
-      reporterId: new FormControl(this.reporterId, Validators.required),
-    });
+    // this.taskFormGroup = new FormGroup({
+    //   id: new FormControl(null),
+    //   name: new FormControl(null, Validators.required),
+    //   description: new FormControl(null, Validators.required),
+    //   issueTypeId: new FormControl(null, Validators.required),
+    //   taskProperty: new FormArray([]),
+    //   // epicId: new FormControl(null),
+    //   boardId: new FormControl(this.data.boardId, Validators.required),
+    //   boardColumnId: new FormControl(this.data.column.id, Validators.required),
+    //   isBacklog: new FormControl(false, Validators.required),
+    //   priority: new FormControl(null, Validators.required),
+    //   taskStatus: new FormControl(
+    //     this.data.column.taskStatus,
+    //     Validators.required
+    //   ),
+    //   assigneeId: new FormControl(null, Validators.required),
+    //   reporterId: new FormControl(null, Validators.required),
+    // });
   }
 
   getActiveIssues() {
@@ -133,13 +150,13 @@ export class AddTaskComponent implements OnInit {
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
         this.taskProperty.clear();
-        res.issueTypeColumns.forEach((property) => {
+        res.issueTypeColumns?.forEach((property) => {
           this.taskProperty.push(
             new FormGroup({
-              id: new FormControl(property.id),
+              id: new FormControl(null),
               name: new FormControl(property.name),
               filedName: new FormControl(property.filedName),
-              // value: new FormControl(null),
+              value: new FormControl(null),
               isRequired: new FormControl(property.isRequired),
             })
           );
@@ -153,13 +170,13 @@ export class AddTaskComponent implements OnInit {
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
         this.taskFormGroup.patchValue(res);
-        res.taskProperty.forEach((property) => {
+        res.taskProperty?.forEach((property) => {
           this.taskProperty.push(
             new FormGroup({
               id: new FormControl(property.id),
               name: new FormControl(property.name),
               filedName: new FormControl(property.filedName),
-              // value: new FormControl(property.value),
+              value: new FormControl(property.value),
               isRequired: new FormControl(property.isRequired),
             })
           );
@@ -188,5 +205,10 @@ export class AddTaskComponent implements OnInit {
           this.dialogRef.close(task);
         });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.sub$.next(null);
+    this.sub$.complete();
   }
 }
