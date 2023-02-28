@@ -25,6 +25,7 @@ export class UsersHttpService extends BaseService {
     return this.get<UsersDataResponse[]>('users');
   }
 
+
   createUsersRoles(payload: UsersRole): Observable<UsersResponse> {
     return this.post<UsersResponse>('users/roles', payload);
   }
