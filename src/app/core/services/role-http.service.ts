@@ -41,14 +41,14 @@ export class RoleHttpService extends BaseService {
   }
 
   getRoleById(id: string): Observable<any> {
-    return this.get<any>(`role${id}`);
+    return this.get<any>(`role/${id}`);
   }
   updateRoleById(id: string, payload: Role): Observable<RoleResponse> {
-    return this.put<RoleResponse>(`role${id}`);
+    return this.put<RoleResponse>(`role/${id}`);
   }
 
   deleteRoleById(id: string): Observable<RoleDeleteResponse> {
-    return this.delete<RoleDeleteResponse>(`role${id}`);
+    return this.delete<RoleDeleteResponse>(`role/${id}`);
   }
   setPermissions(params: {
     roleId: string, permissions: number[]
