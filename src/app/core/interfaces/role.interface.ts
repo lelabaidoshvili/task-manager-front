@@ -19,7 +19,7 @@ export interface RoleResponse {
   id: string;
   createdAt: Date;
   name: string;
-  type: RoleEnumInterface[];
+  type: string;
   permissions: string[];
 }
 

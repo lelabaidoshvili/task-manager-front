@@ -1,0 +1,13 @@
+.add-epic {
+  margin-bottom: 12px;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  column-gap: 0.5rem;
+}
+.epic {
+  margin: 20px;
+  color: #46309f;
+}

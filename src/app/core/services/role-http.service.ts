@@ -8,6 +8,7 @@ import {
   RoleResponse,
 } from '../interfaces/role.interface';
 import { BaseService } from './base.service';
+import { PaginationResponse } from '../interfaces/pagination-response';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +18,13 @@ export class RoleHttpService extends BaseService {
     return this.post<RoleResponse>('role', payload);
   }
 
-  getRole(): Observable<RoleListResponse> {
-    return this.get<RoleListResponse>('role');
+  getRole(params = {}): Observable<PaginationResponse<RoleResponse>> {
+    return this.get('role', params);
   }
-  // -- ??????????????????????????
-  // getRolePermission() {
-  //   return this.get('role/permission');
-  // }
+
+  getRolePermission(): Observable<any[]> {
+    return this.get('role/permission');
+  }
 
   getMyRole(): Observable<RoleListResponse> {
     return this.get<RoleListResponse>('role/my');
@@ -39,8 +40,8 @@ export class RoleHttpService extends BaseService {
     return this.post<RoleResponse>('role/permissions');
   }
 
-  getRoleById(id: string): Observable<RoleResponse> {
-    return this.get<RoleResponse>(`role/${id}`);
+  getRoleById(id: string): Observable<any> {
+    return this.get<any>(`role/${id}`);
   }
   updateRoleById(id: string, payload: Role): Observable<RoleResponse> {
     return this.put<RoleResponse>(`role/${id}`);
@@ -49,8 +50,10 @@ export class RoleHttpService extends BaseService {
   deleteRoleById(id: string): Observable<RoleDeleteResponse> {
     return this.delete<RoleDeleteResponse>(`role/${id}`);
   }
-  //------- ???????????????????????
-  // getPermissionsByRoleId(id: string): Observable<RoleResponse[]> {
-  //   return this.get<RoleResponse[]>(`role/permissions/${id}`);
-  // }
+  setPermissions(params: {
+    roleId: string;
+    permissions: number[];
+  }): Observable<any> {
+    return this.post(`role/permissions`, params);
+  }
 }

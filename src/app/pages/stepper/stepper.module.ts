@@ -9,6 +9,7 @@ import { BoardComponent } from './board/board.component';
 import { IssueTypeComponent } from './issue-type/issue-type.component';
 import { AddUsersComponent } from './add-users/add-users.component';
 import { DialogComponent } from './dialog/dialog';
+import { EpicsComponent } from './epics/epics.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DialogComponent } from './dialog/dialog';
     IssueTypeComponent,
     AddUsersComponent,
     DialogComponent,
+    EpicsComponent,
   ],
   entryComponents: [DialogComponent],
   imports: [CommonModule, StepperRoutingModule, SharedModule],

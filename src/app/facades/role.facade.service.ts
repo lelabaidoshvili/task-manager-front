@@ -42,4 +42,5 @@ export class RoleFacadeService {
   deleteRoleById(id: string) {
     return this.roleHttpService.deleteRoleById(id);
   }
+
 }
