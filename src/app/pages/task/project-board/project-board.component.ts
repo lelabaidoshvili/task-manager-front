@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TasksFacadeService } from 'src/app/facades/tasks-facade.sevice';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
-import { Subject, takeUntil } from 'rxjs';
+import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { TaskInterface } from 'src/app/core/interfaces/task';
 import * as _ from 'lodash';
+import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 
 @Component({
   selector: 'app-project-board',
@@ -165,15 +166,25 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   }
 
   deleteTask(taskId: number) {
-    this.taskFacadeService
-      .deleteTaskById(taskId)
-      .pipe(takeUntil(this.sub$))
-      .subscribe((res) => {
-        if (res) {
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef
+      .afterClosed()
+      .pipe(
+        takeUntil(this.sub$),
+        switchMap((result) => {
+          if (result) {
+            return this.taskFacadeService.deleteTaskById(taskId);
+          }
+          return of(null);
+        })
+      )
+      .subscribe((result) => {
+        if (result) {
           this.getTasks();
         }
       });
   }
+
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();
