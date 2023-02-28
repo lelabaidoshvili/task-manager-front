@@ -12,9 +12,9 @@ export class BaseService {
     return this.http.post<T>(this.apiUrl + url, body);
   }
 
-  get<T>(url: string, params?: any): Observable<T> {
+  get<T>(url: string, params = {}): Observable<T> {
     return this.http.get<T>(this.apiUrl + url, {
-      params: new HttpParams({ fromObject: params }),
+      params: params,
     });
   }
 

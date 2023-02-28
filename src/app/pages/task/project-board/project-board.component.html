@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <mat-icon>account_circle</mat-icon>
+      <mat-icon> person_add_alt_1</mat-icon>
     </div>
   </div>
 
@@ -38,11 +38,22 @@
             <p class="cardText">{{ task.name }}</p>
             <img class="icon" [src]="task.issueType['icon']" alt="icon" />
           </div>
-          <div class="right">
-            <div class="icons-ed">
-              <p>...</p>
-            </div>
 
+          <div class="right">
+            <div class="dots">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button class="del" (click)="deleteTask(task.id)" mat-menu-item>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
             <div class="circle ass">
               {{ task.assignee["firstName"].slice(0, 1).toUpperCase() }}
             </div>

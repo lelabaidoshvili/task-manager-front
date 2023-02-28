@@ -36,8 +36,14 @@ const routes: Routes = [
         path: 'task',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/task/task.module').then(
-            (m) => m.TaskModule
+          import('./pages/task/task.module').then((m) => m.TaskModule),
+      },
+
+      {
+        path: 'backlog',
+        loadComponent: () =>
+          import('./pages/backlog/backlog.component').then(
+            (m) => m.BacklogComponent
           ),
       },
     ],

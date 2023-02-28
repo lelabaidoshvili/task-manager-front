@@ -16,8 +16,12 @@ export class TaskHttpService extends BaseService {
     return this.post<TasksResponse>('task', payload);
   }
 
-  getTasks(boardId: number): Observable<TasksResponse[]> {
-    return this.get<TasksResponse[]>(`task?boardId=${boardId}`);
+  // getTasks(boardId: number): Observable<TasksResponse[]> {
+  //   return this.get<TasksResponse[]>(`task?boardId=${boardId}`);
+  // }
+
+  getTasks(params = {}): Observable<TasksResponse[]> {
+    return this.get<TasksResponse[]>(`task`, params);
   }
 
   getTaskById(id: number): Observable<TasksResponse> {
@@ -26,7 +30,7 @@ export class TaskHttpService extends BaseService {
   updateTaskById(id: number, payload): Observable<TasksResponse> {
     return this.put<TasksResponse>(`task/${id}`, payload);
   }
-  deleteTaskById(id: string): Observable<TaskDeleteResponse> {
+  deleteTaskById(id: number): Observable<TaskDeleteResponse> {
     return this.delete<TaskDeleteResponse>(`task/${id}`);
   }
 }

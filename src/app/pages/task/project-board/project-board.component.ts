@@ -15,7 +15,7 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { TaskInterface } from 'src/app/core/interfaces/task';
 import * as _ from 'lodash';
@@ -81,10 +81,12 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   }
 
   getTasks() {
-    this.taskFacadeService.getTasks(this.activeBoardId).subscribe((tasks) => {
-      this.activeTasks = _.groupBy(tasks, 'boardColumnId');
-      console.log(this.activeTasks);
-    });
+    this.taskFacadeService
+      .getTasks({ boardId: this.activeBoardId })
+      .subscribe((tasks) => {
+        this.activeTasks = _.groupBy(tasks, 'boardColumnId');
+        console.log(this.activeTasks);
+      });
   }
 
   drop(event: CdkDragDrop<any>, column: ColumnResponse) {
@@ -162,6 +164,16 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     });
   }
 
+  deleteTask(taskId: number) {
+    this.taskFacadeService
+      .deleteTaskById(taskId)
+      .pipe(takeUntil(this.sub$))
+      .subscribe((res) => {
+        if (res) {
+          this.getTasks();
+        }
+      });
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

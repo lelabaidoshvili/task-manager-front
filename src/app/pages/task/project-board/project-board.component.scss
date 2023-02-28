@@ -159,7 +159,7 @@
 }
 .card {
   width: 100%;
-  height: 80px;
+  height: 90px;
   background-color: white;
   border-radius: 8px;
   border: 1px solid #d0cece;
@@ -169,27 +169,40 @@
   justify-content: space-between;
   margin-bottom: 5px;
   padding: 15px;
+  position: relative;
 }
 .card p,
 .card h4 {
   margin: 0;
 }
 
-.icons-ed {
-  font-size: 18px;
+.dots {
+  position: absolute;
+  top: 2px;
+  right: 2px;
 }
 
 .left {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
 }
 
+.del {
+  text-align: center;
+}
+
+.ass {
+  width: 25px;
+  height: 25px;
+  border: none;
+  margin-top: 35px;
+  margin-right: -5px;
+}
 .right {
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
-  gap: 15px;
+  gap: 3px;
 }
 .icon {
   width: 20px;

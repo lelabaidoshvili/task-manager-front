@@ -12,7 +12,7 @@ export class TasksFacadeService {
     return this.taskHttpService.createTask(payload);
   }
 
-  getTasks(boardId: number) {
+  getTasks(boardId: any) {
     return this.taskHttpService.getTasks(boardId);
   }
 
@@ -24,7 +24,7 @@ export class TasksFacadeService {
     return this.taskHttpService.updateTaskById(id, payload);
   }
 
-  deleteTaskById(id: string) {
+  deleteTaskById(id: number) {
     return this.taskHttpService.deleteTaskById(id);
   }
 }

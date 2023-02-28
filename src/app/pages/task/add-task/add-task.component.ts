@@ -5,13 +5,18 @@ import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { TasksFacadeService } from 'src/app/facades/tasks-facade.sevice';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ColumnResponse, UsersResponse } from 'src/app/core/interfaces';
+import {
+  BoardResponse,
+  ColumnResponse,
+  UsersResponse,
+} from 'src/app/core/interfaces';
 import { IssueTypeResponse } from 'src/app/core/interfaces/issuetype.interface';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
 import { ActivatedRoute } from '@angular/router';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
+import { Observable } from 'rxjs-compat';
 
 @Component({
   selector: 'app-add-task',
@@ -26,12 +31,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     issueTypeId: new FormControl(null, Validators.required),
     taskProperty: new FormArray([]),
     // epicId: new FormControl(null),
-    boardId: new FormControl(null, Validators.required),
-    boardColumnId: new FormControl(null, Validators.required),
+    boardId: new FormControl(null),
+    boardColumnId: new FormControl(null),
     isBacklog: new FormControl(false, Validators.required),
     priority: new FormControl(null, Validators.required),
     taskStatus: new FormControl(
-      this.data.column.taskStatus,
+      this.data?.column?.taskStatus || 'ToDo',
       Validators.required
     ),
     assigneeId: new FormControl(null, Validators.required),
@@ -47,8 +52,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   assignee: UsersResponse[] = [];
   activeIssues?: IssueTypeResponse[];
   activeBoardColumns;
-  // reporterId: number;
-
+  boards: BoardResponse[];
   constructor(
     private taskFacadeService: TasksFacadeService,
     private issueTypeFacadeService: IssueTypeFacadeService,
@@ -62,6 +66,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       taskId: number;
       boardId: number;
       column: ColumnResponse;
+      isBacklog: boolean;
     }
   ) {
     this.priorityEnum = Object.keys(this.priority);
@@ -71,7 +76,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getActiveIssues();
     this.getProjectUsers();
-    // this.reporterId = this.authFacadeService.user.id;
+    this.boardFacadeService.getMyBoards$().subscribe((boards) => {
+      this.boards = boards;
+      console.log(boards);
+    });
 
     if (this.data.taskId) {
       this.getTask(this.data.taskId);
@@ -84,6 +92,20 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         });
     }
 
+    if (this.data.isBacklog) {
+      this.taskFormGroup.patchValue({ isBacklog: this.data.isBacklog });
+      this.taskFormGroup.get('boardId')?.clearValidators();
+      this.taskFormGroup.get('boardColumnId')?.clearValidators();
+    } else {
+      this.taskFormGroup.get('boardId')?.setValidators(Validators.required);
+      this.taskFormGroup
+        .get('boardColumnId')
+        ?.setValidators(Validators.required);
+    }
+
+    this.taskFormGroup.get('boardId')?.updateValueAndValidity();
+    this.taskFormGroup.get('boardColumnId')?.updateValueAndValidity();
+
     if (this.data.boardId) {
       this.taskFormGroup?.patchValue({ boardId: this.data.boardId });
     }
@@ -93,25 +115,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         boardColumnId: this.data.column.id,
       });
     }
-
-    // this.taskFormGroup = new FormGroup({
-    //   id: new FormControl(null),
-    //   name: new FormControl(null, Validators.required),
-    //   description: new FormControl(null, Validators.required),
-    //   issueTypeId: new FormControl(null, Validators.required),
-    //   taskProperty: new FormArray([]),
-    //   // epicId: new FormControl(null),
-    //   boardId: new FormControl(this.data.boardId, Validators.required),
-    //   boardColumnId: new FormControl(this.data.column.id, Validators.required),
-    //   isBacklog: new FormControl(false, Validators.required),
-    //   priority: new FormControl(null, Validators.required),
-    //   taskStatus: new FormControl(
-    //     this.data.column.taskStatus,
-    //     Validators.required
-    //   ),
-    //   assigneeId: new FormControl(null, Validators.required),
-    //   reporterId: new FormControl(null, Validators.required),
-    // });
   }
 
   getActiveIssues() {
