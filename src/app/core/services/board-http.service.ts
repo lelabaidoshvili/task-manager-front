@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
-import { Board, BoardResponse } from '../interfaces';
+import { Board, BoardResponse, ColumnResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -26,4 +26,8 @@ export class BoardHttpService extends BaseService {
   deleteBoardById(id: number): Observable<BoardResponse> {
     return this.delete<BoardResponse>(`board/${id}`);
   }
+
+  // getColumns(id: number): Observable<ColumnResponse[]> {
+  //   return this.get<ColumnResponse[]>(`board/${id}/columns`);
+  // }
 }

@@ -1,6 +1,6 @@
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 
   column-gap: 0.5rem;
 }
@@ -9,8 +9,13 @@
   display: flex;
   justify-content: space-between;
 }
+.update {
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+}
 .mat-form-field.sized {
-  width: 15rem;
+  width: 20rem;
   margin-top: 7px;
 }
 .add {

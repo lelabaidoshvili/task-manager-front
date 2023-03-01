@@ -1,14 +1,17 @@
-<button
-  class="add-board"
-  mat-raised-button
-  color="primary"
-  (click)="toggleForm()"
->
-  Add Board
-</button>
+<div [ngClass]="{ update: update }">
+  <button
+    class="add-board"
+    mat-raised-button
+    color="primary"
+    (click)="toggleForm()"
+  >
+    {{ update ? "Update Board" : "Add Board" }}
+  </button>
+</div>
+
 <ng-container class="form-container" *ngIf="createBoard">
-  <form [formGroup]="boardFormGroup">
-    <p *ngIf="update" class="text-purple-800">Update Board</p>
+  <form [ngClass]="{ update: update }" [formGroup]="boardFormGroup">
+    <!-- <p *ngIf="update" class="text-purple-800">Update Board</p> -->
 
     <div class="wrapper">
       <mat-form-field appearance="outline">
@@ -36,7 +39,7 @@
             : "sentiment_very_satisfied"
         }}</mat-icon>
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline">
         <mat-label>Position</mat-label>
         <input
           type="number"
@@ -50,7 +53,7 @@
             ? "mood_bad"
             : "sentiment_very_satisfied"
         }}</mat-icon>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
 
     <!------------------------- Table tailwind------------------------------->
@@ -59,6 +62,8 @@
       class="relative overflow-x-auto shadow-md sm:rounded-lg bg-violet-50 shadow-md rounded px-8 pt-6 pb-8"
     >
       <table
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
         formArrayName="columns"
         class="w-full text-sm text-left bg-violet-50 dark:text-grey-400"
       >
@@ -76,12 +81,12 @@
             >
               Description
             </th>
-            <th
+            <!-- <th
               scope="col"
               class="px-6 py-3 text-white Class Properties text-left text-align: left;"
             >
               Position
-            </th>
+            </th> -->
 
             <th
               scope="col"
@@ -104,8 +109,12 @@
               let i = index
             "
             [formGroupName]="i"
+            cdkDropList
+            [cdkDropListData]="boardColumnArray.controls"
+            cdkDrag
             class="bg-violet-50 dark:bg-gray-100"
           >
+            <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
             <td>
               <mat-form-field class="sized" appearance="outline">
                 <input
@@ -142,7 +151,7 @@
                 }}</mat-icon>
               </mat-form-field>
             </td>
-            <td>
+            <!-- <td>
               <mat-form-field class="sized" appearance="outline">
                 <input
                   type="number"
@@ -158,7 +167,7 @@
                     : "sentiment_very_satisfied"
                 }}</mat-icon>
               </mat-form-field>
-            </td>
+            </td> -->
 
             <td>
               <mat-form-field class="sized" appearance="outline">
@@ -211,7 +220,7 @@
     <!------------------------- Table------------------------------->
   </form>
 </ng-container>
-<div class="container">
+<div [ngClass]="{ update: update }" class="container">
   <div>
     <button
       class="board-save"
@@ -223,7 +232,7 @@
       Save
     </button>
     <button
-      *ngIf="!additionalBoard"
+      *ngIf="!update"
       [disabled]="!goNextStep"
       class="next"
       mat-raised-button
@@ -235,7 +244,7 @@
     <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
   </div>
 
-  <div class="scroll">
+  <div *ngIf="!update" class="scroll">
     <mat-label class="label">My Boards</mat-label>
     <mat-list class="example-list-wrapping">
       <mat-list-item *ngFor="let board of myBoards.slice().reverse()" lines="3">

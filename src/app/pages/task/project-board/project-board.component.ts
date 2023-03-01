@@ -63,6 +63,8 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
         .subscribe(
           (board) => {
             this.activeBoard = board;
+            console.log(board);
+
             this.activeBoardColumns = this.activeBoard.columns;
           },
           (error) => {

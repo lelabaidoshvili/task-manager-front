@@ -1,3 +1,5 @@
+import { group } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,15 +51,15 @@ export class BoardComponent implements OnInit, OnDestroy {
       id: new FormControl(null),
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
-      position: new FormControl(null, Validators.required),
+      // position: new FormControl(null, Validators.required),
       columns: new FormArray([
-        new FormGroup({
-          name: new FormControl(null, Validators.required),
-          description: new FormControl(null, Validators.required),
-          position: new FormControl(null, Validators.required),
-          // boardId: new FormControl(null, Validators.required),
-          taskStatus: new FormControl(null, Validators.required),
-        }),
+        // new FormGroup({
+        //   id: new FormControl(null),
+        //   name: new FormControl(null, Validators.required),
+        //   description: new FormControl(null, Validators.required),
+        //   position: new FormControl(null, Validators.required),
+        //   taskStatus: new FormControl(null, Validators.required),
+        // }),
       ]),
     });
 
@@ -66,19 +68,33 @@ export class BoardComponent implements OnInit, OnDestroy {
         switchMap((params: any) => {
           if (params['id']) {
             this.update = true;
+
             return this.boardFacadeService.getBoardById(params['id']);
           }
           return of(null);
         })
       )
       .subscribe((response) => {
-        console.log('board by id');
-        console.log(response);
-
         if (response) {
-          this.boardFormGroup.patchValue({
-            id: response.id,
-            ...response,
+          const boardColumns = response.columns;
+          const columnsArray = this.boardFormGroup.get('columns') as FormArray;
+          this.boardFormGroup.patchValue(response);
+          boardColumns.forEach((column, index) => {
+            columnsArray.push(
+              new FormGroup({
+                id: new FormControl(column.id),
+                name: new FormControl(column.name, Validators.required),
+                description: new FormControl(
+                  column.description,
+                  Validators.required
+                ),
+                position: new FormControl(column.position, Validators.required),
+                taskStatus: new FormControl(
+                  column.taskStatus,
+                  Validators.required
+                ),
+              })
+            );
           });
         }
       });
@@ -96,12 +112,16 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   addColumn() {
     this.columnGroup = new FormGroup({
+      id: new FormControl(null),
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
-      position: new FormControl(null, Validators.required),
-      // boardId: new FormControl(null, Validators.required),
+      position: new FormControl(
+        this.boardColumnArray.length + 1,
+        Validators.required
+      ),
       taskStatus: new FormControl(null, Validators.required),
     });
+
     this.boardColumnArray.push(this.columnGroup);
   }
 
@@ -140,6 +160,8 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.boardFormGroup.reset();
         });
     } else {
+      console.log(this.boardFormGroup.value);
+
       this.boardFacadeService
         .updateBoardById(
           this.boardFormGroup.value.id,
@@ -147,12 +169,11 @@ export class BoardComponent implements OnInit, OnDestroy {
         )
         .pipe(takeUntil(this.sub$))
         .subscribe((response: BoardResponse) => {
+          console.log(response);
+
           this.goNextStep = true;
           this.createBoard = false;
-          this.boardFormGroup.reset();
-
-          console.log('updated Board:');
-          console.log(response);
+          // this.boardFormGroup.reset();
         });
 
       this.router.navigate(['/tables']);
@@ -177,6 +198,25 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
   }
 
+  drop(event: CdkDragDrop<any>) {
+    console.log('Drop Event', event);
+
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        this.boardColumnArray.controls,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      this.boardColumnArray.controls.forEach((control, index) => {
+        control.get('position')?.setValue(index + 1);
+      });
+      console.log(
+        'updated Array',
+        this.boardColumnArray.controls.map((control) => control.value)
+      );
+    }
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

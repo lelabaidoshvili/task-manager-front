@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {Users, UsersResponse} from "../../core/interfaces";
-import {MatTableDataSource} from "@angular/material/table";
-import {UsersFacadeService} from "../../facades/users-facade.service";
-import {MatDialog} from "@angular/material/dialog";
-import {Subject} from "rxjs";
-import {AddUsersComponent} from "../stepper/add-users/add-users.component";
-import {takeUntil, of, switchMap} from "rxjs";
-import {ConfirmComponent} from "../../shared/confirm/confirm.component";
-import {Router} from "@angular/router";
-import {UsersEditComponent} from "./users-edit/users-edit.component";
-import {PageEvent} from "@angular/material/paginator";
+import { Users, UsersResponse } from '../../core/interfaces';
+import { MatTableDataSource } from '@angular/material/table';
+import { UsersFacadeService } from '../../facades/users-facade.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { AddUsersComponent } from '../stepper/add-users/add-users.component';
+import { takeUntil, of, switchMap } from 'rxjs';
+import { ConfirmComponent } from '../../shared/confirm/confirm.component';
+import { Router } from '@angular/router';
+import { UsersEditComponent } from './users-edit/users-edit.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
   displayedColumns = ['id', 'fullName', 'createdAt', 'actions'];
@@ -23,20 +23,17 @@ export class UsersComponent implements OnInit {
   pageIndex = 1;
   total = 0;
   pageSize = 10;
-  user: UsersResponse[] =[]
+  user: UsersResponse[] = [];
 
   constructor(
     private userService: UsersFacadeService,
     public dialog: MatDialog,
     private router: Router
-
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.getAllUsers()
+    this.getAllUsers();
     // this.getUsers()
-
   }
   // getUsers() {
   //   this.userService.getUsers({
@@ -50,30 +47,29 @@ export class UsersComponent implements OnInit {
   // }
 
   getAllUsers() {
-    this.userService.getAllUsers()
-      .subscribe( users => {
-        this.dataSource.data = users
-      })
+    this.userService.getAllUsers().subscribe((users) => {
+      this.dataSource.data = users;
+      console.log(users);
+    });
   }
   addUser(id?: number) {
     const dialogRef = this.dialog.open(AddUsersComponent, {
       data: {
-        userId: id
-      }
+        userId: id,
+      },
     });
 
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getAllUsers();
       }
-    })
-
+    });
   }
 
   delete(id: number) {
     const dialogRef = this.dialog.open(ConfirmComponent);
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(
         takeUntil(this.sub$),
         switchMap((result) => {
@@ -83,7 +79,7 @@ export class UsersComponent implements OnInit {
           return of(null);
         })
       )
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
           this.getAllUsers();
         }
@@ -92,16 +88,15 @@ export class UsersComponent implements OnInit {
   updateUser(id: number) {
     const dialogRef = this.dialog.open(UsersEditComponent, {
       data: {
-        userId: id
-      }
+        userId: id,
+      },
     });
 
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getAllUsers();
       }
-    })
+    });
   }
   // pageEvent($event: PageEvent) {
   //   console.log($event)
@@ -109,5 +104,4 @@ export class UsersComponent implements OnInit {
   //   this.pageSize = $event.pageSize;
   //   this.getUsers()
   // }
-
 }
