@@ -28,7 +28,6 @@ export class UsersFacadeService {
     return this.usersHttpService.getUsers();
   }
 
-
   getUserById(id: number) {
     return this.usersHttpService.getUserById(id);
   }
