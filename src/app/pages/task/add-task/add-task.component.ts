@@ -16,7 +16,7 @@ import { AuthFacadeService } from '../../auth/auth-facade.service';
 import { ActivatedRoute } from '@angular/router';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
-import { Observable } from 'rxjs-compat';
+
 
 @Component({
   selector: 'app-add-task',

@@ -9,6 +9,7 @@ import {
   UsersResponse,
   UsersRole,
 } from '../interfaces/users.interface';
+import {PaginationResponse} from "../interfaces/pagination-response";
 
 @Injectable({
   providedIn: 'root',
@@ -21,13 +22,12 @@ export class UsersHttpService extends BaseService {
     return this.get<UsersResponse[]>('users/all');
   }
 
-  getUsers(): Observable<UsersDataResponse[]> {
-    return this.get<UsersDataResponse[]>('users');
+  getUsers(params ={}): Observable<PaginationResponse<UsersResponse>> {
+    return this.get('users', params);
   }
 
-
-  createUsersRoles(payload: UsersRole): Observable<UsersResponse> {
-    return this.post<UsersResponse>('users/roles', payload);
+  createUsersRoles(payload: { userId: number, roleIds: number[] }): Observable<UsersResponse> {
+    return this.post('users/roles', payload);
   }
 
   getUserById(id: number): Observable<UsersResponse> {

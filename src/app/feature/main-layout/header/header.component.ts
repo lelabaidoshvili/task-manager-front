@@ -5,6 +5,7 @@ import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 import { StepperService } from 'src/app/pages/stepper/stepper.service';
+import {PermissionsDirective} from "../../../core/directives/permissions.directive";
 
 @Component({
   selector: 'app-header',

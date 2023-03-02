@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './feature/main-layout/main-layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import {PermissionGuard} from "./core/guards/permission.guard";
 
 const routes: Routes = [
   {
@@ -48,7 +49,10 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        canActivate: [AuthGuard],
+        canActivate: [PermissionGuard],
+        data: {
+          permissions: ['user:list']
+        },
         loadChildren: () =>
           import('./pages/users/users.module').then(
             (m) => m.UsersModule

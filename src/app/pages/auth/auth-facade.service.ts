@@ -42,6 +42,14 @@ export class AuthFacadeService extends AuthService {
       })
     );
   }
+  get roles(): string[] {
+    const roles = this.cookieStorageService.getCookie('roles')
+    return (roles ? JSON.parse(roles) : []) as string[];
+  }
+  get permissions(): string[] {
+    const permissions = localStorage.getItem('permissions')
+    return (permissions ? JSON.parse(permissions) : []) as string[];
+  }
 
   get token(): string {
     return this.cookieStorageService.getCookie('token');

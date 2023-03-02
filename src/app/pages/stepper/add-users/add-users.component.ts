@@ -8,6 +8,7 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { Project, UsersResponse } from 'src/app/core/interfaces';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
 import { Router } from '@angular/router';
+import {UsersHttpService} from "../../../core/services/users-http.service";
 
 @Component({
   selector: 'app-add-users',
@@ -24,6 +25,8 @@ export class AddUsersComponent implements OnInit, OnDestroy {
   projectUsers = [];
 
   addedUsers = [];
+  user:any;
+
 
   additionalUser: boolean = false;
   constructor(
@@ -32,7 +35,8 @@ export class AddUsersComponent implements OnInit, OnDestroy {
     private projectFacadeService: ProjectFacadeService,
     private authFacadeService: AuthFacadeService,
     private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private userService: UsersHttpService
   ) {}
 
   ngOnInit(): void {
@@ -44,9 +48,9 @@ export class AddUsersComponent implements OnInit, OnDestroy {
     });
     this.goNextStep = false;
 
-    // this.projectUsers.push(this.authFacadeService.user);
+    this.projectUsers.push(this.authFacadeService.user);
 
-    // this.getProjectUsers();
+    this.getProjectUsers();
 
     this.usersFacadeService.additionalUser$.subscribe((res) => {
       this.additionalUser = res;
@@ -60,6 +64,16 @@ export class AddUsersComponent implements OnInit, OnDestroy {
           });
       }
     });
+    this.getAllUsers()
+    this.addOldUsersToProject()
+
+
+  }
+  getAllUsers() {
+    this.usersFacadeService.getAllUsers().subscribe( user => {
+      console.log(user)
+      this.user =user
+    })
   }
 
   saveUser() {
@@ -100,6 +114,24 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       this.stepperService.goToStep(4);
     }
   }
+
+  addOldUsersToProject() {
+    this.userService.getAllUsers().subscribe(users => {
+      users.forEach(user => {
+        const newUser = { ...user };
+        this.usersFacadeService.createUsers(newUser).subscribe(res => {
+          this.currentProject = this.projectFacadeService.getProject();
+          this.setProjectUsers(res);
+          this.getProjectUsers();
+
+          this._snackBar.open('User Added to the Project', 'Close', { duration: 1000 });
+        });
+      });
+    });
+  }
+
+
+
 
   setProjectUsers(res: UsersResponse) {
     this.addedUsers.unshift(`${res.id}`);

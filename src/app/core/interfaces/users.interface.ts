@@ -1,4 +1,5 @@
 //payload
+import {RoleResponse} from "./role.interface";
 export interface Users {
   firstName: string;
   lastName: string;
@@ -18,7 +19,7 @@ export interface UsersResponse {
   mobileNumber: string;
   isActive: boolean;
   userPermissions: string[];
-  roles: string[];
+  roles: RoleResponse[];
   projects: string[];
 }
 
