@@ -14,6 +14,14 @@ body {
 .mat-step-header {
   pointer-events: none;
 }
+.mat-dialog-container {
+  background-color: transparent;
+}
+.dialog-container {
+  background-color: #f7f6f6;
+  padding: 0;
+  border-radius: 8px;
+}
 
 @tailwind base;
 @tailwind components;
