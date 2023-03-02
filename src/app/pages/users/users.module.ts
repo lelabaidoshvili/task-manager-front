@@ -3,12 +3,14 @@ import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import {SharedModule} from "../../shared/shared.module";
 import { UsersEditComponent } from './users-edit/users-edit.component';
+import { UsersRoleComponent } from './users-role/users-role.component';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
-    UsersEditComponent
+    UsersEditComponent,
+    UsersRoleComponent
   ],
   imports: [
     SharedModule,

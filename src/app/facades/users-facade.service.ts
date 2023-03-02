@@ -28,9 +28,7 @@ export class UsersFacadeService {
     return this.usersHttpService.getUsers();
   }
 
-  createUsersRoles(payload: UsersRole) {
-    return this.usersHttpService.createUsersRoles(payload);
-  }
+
   getUserById(id: number) {
     return this.usersHttpService.getUserById(id);
   }
