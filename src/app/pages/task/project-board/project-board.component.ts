@@ -6,7 +6,7 @@ import {
   UsersResponse,
 } from '../../../core/interfaces';
 import { BoardFacadeService } from '../../../facades/board-facade.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TasksFacadeService } from 'src/app/facades/tasks-facade.sevice';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
@@ -42,13 +42,20 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     private issueTypeFacadeService: IssueTypeFacadeService,
     private authFacadeService: AuthFacadeService,
     private projectFacadeService: ProjectFacadeService,
+    private router: Router,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
+    this.boardFacadeService.update$.subscribe((res) => {
+      if (res) {
+        this.getBoardById();
+      }
+    });
     this.getBoardById();
     this.currentProject = this.projectFacadeService.getProject();
     this.getProjectUsers();
+
     this.getTasks();
   }
 
@@ -74,6 +81,9 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     });
   }
 
+  addColumn(id: number) {
+    this.router.navigate([`stepper/boards/edit/${id}`]);
+  }
   getProjectUsers() {
     this.projectFacadeService
       .getProjectUsers$()

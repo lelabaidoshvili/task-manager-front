@@ -69,6 +69,13 @@
         </button>
       </div>
     </div>
-    <button class="add-col" mat-button color="primary">+ Add Column</button>
+    <button
+      (click)="addColumn(activeBoard.id)"
+      class="add-col"
+      mat-button
+      color="primary"
+    >
+      + Add Column
+    </button>
   </div>
 </div>

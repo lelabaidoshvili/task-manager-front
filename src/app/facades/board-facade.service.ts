@@ -15,7 +15,7 @@ export class BoardFacadeService {
     BoardResponse[]
   >([]);
   boards$ = this.myBoards.asObservable();
-
+  update$ = new BehaviorSubject<boolean>(false);
   constructor(private boardHttpService: BoardHttpService) {}
 
   createBoard(payload: Board) {

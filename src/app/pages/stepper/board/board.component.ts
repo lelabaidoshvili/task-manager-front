@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
+
 import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { BoardResponse } from 'src/app/core/interfaces';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
@@ -22,6 +23,7 @@ import { StepperService } from '../stepper.service';
 export class BoardComponent implements OnInit, OnDestroy {
   stepperService: StepperService = inject(StepperService);
   update: boolean = false;
+
   tasks = TaskStatus;
   taskEnum = [];
   active: boolean = false;
@@ -34,7 +36,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   columnGroup: FormGroup;
 
   additionalBoard: boolean = false;
-
+  boardId: number;
   sub$ = new Subject<any>();
   constructor(
     private boardFacadeService: BoardFacadeService,
@@ -68,7 +70,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         switchMap((params: any) => {
           if (params['id']) {
             this.update = true;
-
+            this.boardId = params['id'];
             return this.boardFacadeService.getBoardById(params['id']);
           }
           return of(null);
@@ -176,7 +178,9 @@ export class BoardComponent implements OnInit, OnDestroy {
           // this.boardFormGroup.reset();
         });
 
-      this.router.navigate(['/tables']);
+      // this.router.navigate(['/tables']);
+      this.router.navigate([`/task/project-board/${this.boardId}`]);
+      this.boardFacadeService.update$.next(true);
     }
   }
 
