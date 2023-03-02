@@ -15,11 +15,16 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { TaskInterface } from 'src/app/core/interfaces/task';
 import * as _ from 'lodash';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
+import { BoardSelectComponent } from '../board-select/board-select.component';
 
 @Component({
   selector: 'app-project-board',
@@ -161,14 +166,27 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   }
 
   viewTask(task, column) {
-    const dialogRef = this.dialog.open(AddTaskComponent, {
-      width: '600px',
-      data: {
-        boardId: this.activeBoardId,
-        column: column,
-        taskId: task.id,
-      },
-    });
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '600px';
+    dialogConfig.panelClass = 'dialog-container';
+    dialogConfig.data = {
+      boardId: this.activeBoardId,
+      column: column,
+      taskId: task.id,
+    };
+    const dialogRef = this.dialog.open(
+      AddTaskComponent,
+      dialogConfig
+      //    {
+      //   width: '600px',
+      //   data: {
+      //     boardId: this.activeBoardId,
+      //     column: column,
+      //     taskId: task.id,
+      //   },
+      // }
+    );
 
     dialogRef.afterClosed().subscribe((task) => {
       if (task) {
@@ -195,6 +213,20 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
           this.getTasks();
         }
       });
+  }
+
+  selectOtherBoards() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '700px';
+    dialogConfig.height = '600px';
+    dialogConfig.panelClass = 'dialog-container';
+
+    const dialogRef = this.dialog.open(BoardSelectComponent, dialogConfig);
+    dialogRef.componentInstance.dialogRef = dialogRef;
+    // dialogRef.afterClosed().subscribe((res) => {
+    //   console.log('The dialog was closed');
+    // });
   }
 
   ngOnDestroy(): void {

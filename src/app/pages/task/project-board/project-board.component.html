@@ -1,4 +1,12 @@
 <div class="container">
+  <button
+    class="more"
+    (click)="selectOtherBoards()"
+    mat-stroked-button
+    color="primary"
+  >
+    <span class="material-icons"> open_in_new </span> More Boards
+  </button>
   <div class="header">
     <div>
       <h3>Projects / {{ currentProject.name }}</h3>
