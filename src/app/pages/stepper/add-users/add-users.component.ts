@@ -21,11 +21,12 @@ export class AddUsersComponent implements OnInit, OnDestroy {
   createUser: boolean = false;
   active: boolean = false;
   sub$ = new Subject<any>();
-  currentProject?: Project;
+  currentProject?: Project = this.projectFacadeService.getProject();
   projectUsers = [];
 
   addedUsers = [];
-  user:any;
+  users:any;
+  x:any;
 
 
   additionalUser: boolean = false;
@@ -65,14 +66,14 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       }
     });
     this.getAllUsers()
-    this.addOldUsersToProject()
+
 
 
   }
   getAllUsers() {
     this.usersFacadeService.getAllUsers().subscribe( user => {
       console.log(user)
-      this.user =user
+      this.users =user
     })
   }
 
@@ -85,7 +86,6 @@ export class AddUsersComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           // console.log('user response');
           // console.log(res);
-          this.currentProject = this.projectFacadeService.getProject();
           this.setProjectUsers(res);
           this.getProjectUsers();
 
@@ -115,19 +115,14 @@ export class AddUsersComponent implements OnInit, OnDestroy {
     }
   }
 
-  addOldUsersToProject() {
-    this.userService.getAllUsers().subscribe(users => {
-      users.forEach(user => {
-        const newUser = { ...user };
-        this.usersFacadeService.createUsers(newUser).subscribe(res => {
-          this.currentProject = this.projectFacadeService.getProject();
-          this.setProjectUsers(res);
-          this.getProjectUsers();
+  addOldUsersToProject(user: any) {
+    this.projectFacadeService.addUsersToProject( {
+      projectId: this.currentProject.id,
+      userIds: [...this.addedUsers, user.id],
 
-          this._snackBar.open('User Added to the Project', 'Close', { duration: 1000 });
-        });
-      });
-    });
+    }).subscribe( res => {
+      console.log(res)
+    })
   }
 
 
