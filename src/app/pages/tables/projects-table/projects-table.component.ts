@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Project } from 'src/app/core/interfaces/project.interface';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
+import { WrapperComponent } from '../../stepper/wrapperStandalone/wrapperComponent';
 
 @Component({
   selector: 'app-projects-table',
@@ -11,19 +13,14 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 })
 export class ProjectsTableComponent implements OnInit, OnDestroy {
   allProjects: Project[] = [];
-  displayedColumns: string[] = [
-    'name',
-    'description',
-    // 'boards',
-    'users',
-    'actions',
-  ];
+  displayedColumns: string[] = ['name', 'description', 'actions'];
 
   sub$ = new Subject();
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +46,19 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           this.allProjects = res;
         });
+    });
+  }
+
+  openSettingsDialog(projectId) {
+    this.projectFacadeService.updateFromSettings.next(true);
+    const dialogRef = this.dialog.open(WrapperComponent, {
+      width: '600px',
+      height: '600px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((task) => {
+      console.log('The dialog was closed');
     });
   }
 
