@@ -21,7 +21,7 @@ export class PermissionGuard implements CanActivate {
 
     const hasPermission = userPermissions.some(permission => permissions.includes(permission));
     console.log(hasPermission)
-    return hasPermission ? true : this.router.createUrlTree(['/'])
+    return hasPermission ? true : this.router.createUrlTree(['/task'])
   }
 
 

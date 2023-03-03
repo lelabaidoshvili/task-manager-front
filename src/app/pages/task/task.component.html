@@ -36,6 +36,18 @@
         <div class="circle">{{ user.firstName.slice(0, 1).toUpperCase() }}</div>
         <div class="project-users">
           {{ user.email }}
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button class="del" (click)="deleteUser(user.id)" mat-menu-item>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
         </div>
       </div>
 

@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           const roles = res.user.roles.map((r: any) => r.name);
           this.cookieService.setCookie('roles', JSON.stringify(roles), );
           localStorage.setItem('user', JSON.stringify(res.user));
-          this.router.navigate(['/']);
+          this.router.navigate(['/task']);
         }),
         switchMap(() => this.roleService.getMyRole()
           .pipe(
@@ -75,7 +75,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.projectFacadeService.getMyProjects().subscribe((projects) => {
       if (projects.length > 0) {
         this.router.navigate(['/task']);
-      } else {
+      }
+      else {
         this.router.navigate(['/stepper']);
       }
     });

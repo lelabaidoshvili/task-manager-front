@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {
   UserPasswordUpdate,
-  Users,
+  Users, UsersResponse,
   UsersRole,
 } from '../core/interfaces/users.interface';
 import { UsersHttpService } from '../core/services/users-http.service';
@@ -43,4 +43,6 @@ export class UsersFacadeService {
   updateUsersPassword(payload: UserPasswordUpdate) {
     return this.usersHttpService.updateUsersPassword(payload);
   }
+
+
 }

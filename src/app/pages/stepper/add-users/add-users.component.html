@@ -112,15 +112,15 @@
     </mat-list>
   </div>
   <div class="scroll">
-    <mat-label class="label">Project Users</mat-label>
+    <mat-label class="label">All Users</mat-label>
     <mat-list class="example-list-wrapping">
       <mat-list-item
-        *ngFor="let user of user"
+        *ngFor="let user of users"
         lines="3"
       >
 
         <span matListItemTitle >{{ user.email }} </span>
-        <button  mat-raised-button (click)="addOldUsersToProject()">Add User</button>
+        <button  mat-raised-button (click)="addOldUsersToProject(user)">Add User</button>
       </mat-list-item>
     </mat-list>
   </div>
