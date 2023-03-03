@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Project } from 'src/app/core/interfaces/project.interface';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
-import { WrapperComponent } from '../../stepper/wrapperStandalone/wrapperComponent';
 
 @Component({
   selector: 'app-projects-table',
@@ -46,19 +45,6 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           this.allProjects = res;
         });
-    });
-  }
-
-  openSettingsDialog(projectId) {
-    this.projectFacadeService.updateFromSettings.next(true);
-    const dialogRef = this.dialog.open(WrapperComponent, {
-      width: '600px',
-      height: '600px',
-      data: {},
-    });
-
-    dialogRef.afterClosed().subscribe((task) => {
-      console.log('The dialog was closed');
     });
   }
 

@@ -26,7 +26,6 @@ export class AddUsersComponent implements OnInit, OnDestroy {
 
   addedUsers = [];
   user: any;
-  fromSettings: boolean = false;
 
   additionalUser: boolean = false;
   constructor(
@@ -40,9 +39,6 @@ export class AddUsersComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.projectFacadeService.updateFromSettings.subscribe((res) => {
-      this.fromSettings = res;
-    });
     this.usersFormGroup = new FormGroup({
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
