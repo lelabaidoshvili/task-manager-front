@@ -26,7 +26,7 @@ export class AddUsersComponent implements OnInit, OnDestroy {
 
   addedUsers = [];
   users:any;
-  x:any;
+
 
 
   additionalUser: boolean = false;
@@ -121,7 +121,10 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       userIds: [...this.addedUsers, user.id],
 
     }).subscribe( res => {
-      console.log(res)
+      console.log(res),
+        this.router.navigate(['/task'])
+
+
     })
   }
 

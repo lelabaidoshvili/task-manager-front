@@ -1,16 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectFacadeService } from '../../facades/project.facade.service';
 import { BoardFacadeService } from '../../facades/board-facade.service';
-import { Project } from 'src/app/core/interfaces';
+import {Project, UsersResponse} from 'src/app/core/interfaces';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ViewChild } from '@angular/core';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
-import { map, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil} from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
 import { UsersFacadeService } from 'src/app/facades/users-facade.service';
+import {MatDialog} from "@angular/material/dialog";
+
 
 @Component({
   selector: 'app-task',
@@ -42,6 +44,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   task = '';
 
   number = 0;
+  x =0;
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
@@ -49,7 +52,9 @@ export class TaskComponent implements OnInit, OnDestroy {
     private IssueTypeFacadeService: IssueTypeFacadeService,
     private router: Router,
     private stepperService: StepperService,
-    private usersFacadeService: UsersFacadeService
+    private usersFacadeService: UsersFacadeService,
+    public dialog: MatDialog,
+
   ) {}
 
   ngOnInit(): void {
@@ -89,8 +94,16 @@ export class TaskComponent implements OnInit, OnDestroy {
       .subscribe((issues) => {
         this.myIssue = issues;
       });
-  }
 
+  }
+  deleteUser(res: UsersResponse) {
+    const user = { id: res };
+    const index = this.projectUsers.findIndex((u) => u.id === user.id);
+    if (index !== -1) {
+      this.projectUsers.splice(index, 1);
+    }
+    console.log(res);
+  }
   openBoardForm() {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(1);

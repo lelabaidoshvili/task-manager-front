@@ -53,7 +53,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       id: new FormControl(null),
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
-      // position: new FormControl(null, Validators.required),
+      position: new FormControl(0),
       columns: new FormArray([
         // new FormGroup({
         //   id: new FormControl(null),
