@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Project, ProjectUsers, UsersResponse } from '../core/interfaces';
 
 import { ProjectHttpService } from '../core/services/project-http.service';
-import { BoardFacadeService } from './board-facade.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -79,7 +79,9 @@ export class ProjectFacadeService {
     );
   }
 
+
   addUsersToProject(payload: ProjectUsers) {
     return this.projectHttpService.addUsersToProject(payload);
   }
+
 }

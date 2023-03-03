@@ -19,6 +19,10 @@ const routes: Routes = [
     component: ProjectBoardComponent,
   },
   {
+    path: 'project-board',
+    component: ProjectBoardComponent,
+  },
+  {
     path: 'board-select',
     component: BoardSelectComponent,
   },

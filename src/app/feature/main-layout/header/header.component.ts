@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project } from 'src/app/core/interfaces';
+import {BoardResponse, Project} from 'src/app/core/interfaces';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
 
   currentProject?: Project = this.projectFacadeService.getProject();
+  currentBoards: any
 
   projects$ = this.projectFacadeService.projects$;
 
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit {
     private projectFacadeService: ProjectFacadeService,
     private boardFacadeService: BoardFacadeService,
     private stepperService: StepperService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getMyProjects();
@@ -43,6 +45,7 @@ export class HeaderComponent implements OnInit {
   selectProject(projectId: number) {
     this.projectFacadeService.setProject(projectId);
   }
+
   getMyProjects() {
     this.projectFacadeService.getOnlyMyProjects$().subscribe();
   }
@@ -51,4 +54,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(0);
   }
+
+
 }
