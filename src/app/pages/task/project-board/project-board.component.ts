@@ -265,6 +265,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     dialogConfig.width = '700px';
     dialogConfig.height = '600px';
     dialogConfig.panelClass = 'dialog-container';
+    dialogConfig.disableClose = true;
 
     const dialogRef = this.dialog.open(BoardSelectComponent, dialogConfig);
     dialogRef.componentInstance.dialogRef = dialogRef;
