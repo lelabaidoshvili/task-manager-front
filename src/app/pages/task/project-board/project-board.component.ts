@@ -39,11 +39,11 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   activeBoardColumns;
   assignee: UsersResponse[] = [];
   activeTasks;
-  //-----------------------------------------------------
+  //---
   activateDialog: boolean;
   boardColumnsUrl: string;
   isOnBoardColumnsPage: boolean = false;
-  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //+++
   constructor(
     private boardFacadeService: BoardFacadeService,
     private route: ActivatedRoute,
@@ -53,10 +53,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     private projectFacadeService: ProjectFacadeService,
     private router: Router,
     public dialog: MatDialog
-  ) {
-    //---------------------------------------------------------
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  }
+  ) {}
 
   ngOnInit(): void {
     //-----------------------dialog---------------------------
