@@ -4,6 +4,7 @@ import { UsersComponent } from './users.component';
 import {SharedModule} from "../../shared/shared.module";
 import { UsersEditComponent } from './users-edit/users-edit.component';
 import { UsersRoleComponent } from './users-role/users-role.component';
+import {PermissionsDirective} from "../../core/directives/permissions.directive";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { UsersRoleComponent } from './users-role/users-role.component';
   ],
   imports: [
     SharedModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    PermissionsDirective
   ]
 })
 export class UsersModule { }
