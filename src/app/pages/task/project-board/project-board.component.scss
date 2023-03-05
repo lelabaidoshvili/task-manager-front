@@ -190,7 +190,7 @@
 .left {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 6px;
 }
 
 .del {
@@ -234,4 +234,12 @@
   flex-direction: column;
   gap: 6px;
   align-items: flex-start;
+}
+.click {
+  width: 50px;
+  height: 25px;
+  border: solid 1px transparent;
+  border-radius: 20px;
+  background-color: #d5d1d1;
+  color: white;
 }

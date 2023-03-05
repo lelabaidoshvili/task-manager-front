@@ -7,11 +7,12 @@ import { ViewChild } from '@angular/core';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
-import { Subject, takeUntil} from 'rxjs';
+import { Subject, takeUntil, Observable, switchMap, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
 import { UsersFacadeService } from 'src/app/facades/users-facade.service';
 import {MatDialog} from "@angular/material/dialog";
+import {ProjectHttpService} from "../../core/services/project-http.service";
 
 
 @Component({
@@ -54,6 +55,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     private stepperService: StepperService,
     private usersFacadeService: UsersFacadeService,
     public dialog: MatDialog,
+    public projectService: ProjectHttpService
 
   ) {}
 
@@ -96,13 +98,16 @@ export class TaskComponent implements OnInit, OnDestroy {
       });
 
   }
-  deleteUser(res: UsersResponse) {
-    const user = { id: res };
-    const index = this.projectUsers.findIndex((u) => u.id === user.id);
-    if (index !== -1) {
-      this.projectUsers.splice(index, 1);
-    }
-    console.log(res);
+
+  deleteUser(id: number){
+    console.log(id);
+    this.projectUsers = this.projectUsers.filter(user => user.id !== id);
+    this.projectService.removeUserFromProject({
+      projectId: this.currentProject.id,
+      userId: id
+    }).subscribe( res => {
+      console.log(res)
+    })
   }
   openBoardForm() {
     this.router.navigate(['/stepper']);

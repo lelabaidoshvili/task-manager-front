@@ -18,6 +18,7 @@
 .btn-group {
   display: flex;
   gap: 0.8rem;
+  align-items: center;
 }
 
 .btn {
@@ -34,3 +35,14 @@
   flex-direction: row;
   gap: 1rem;
 }
+.custom-checkbox {
+
+}
+.task-status {
+  color: #67ba7f;
+  font-size: 17px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 10px;
+}
+

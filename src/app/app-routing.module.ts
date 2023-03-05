@@ -27,7 +27,10 @@ const routes: Routes = [
       },
       {
         path: 'tables',
-        canActivate: [AuthGuard],
+        canActivate: [PermissionGuard],
+        data: {
+          permissions: ['project:list']
+        },
         loadChildren: () =>
           import('./pages/tables/table-tabs/table-tabs.module').then(
             (m) => m.TableTabsModule
@@ -60,7 +63,10 @@ const routes: Routes = [
       },
       {
         path: 'roles',
-        canActivate: [AuthGuard],
+        canActivate: [PermissionGuard],
+        data: {
+          permissions: ['role:list']
+        },
         loadChildren: () =>
           import('./pages/roles/roles.module').then(
             (m) => m.RolesModule

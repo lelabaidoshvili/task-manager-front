@@ -6,12 +6,14 @@ import { ProjectBoardComponent } from './project-board/project-board.component';
 import { TaskRoutingModule } from './task-routing.module';
 import { TaskComponent } from './task.component';
 
+
 @NgModule({
   declarations: [
     TaskComponent,
     AddTaskComponent,
     ProjectBoardComponent,
     BoardSelectComponent,
+
   ],
   imports: [SharedModule, TaskRoutingModule],
 })

@@ -49,4 +49,8 @@ export class ProjectHttpService extends BaseService {
   getProjectUsers(): Observable<UsersResponse[]> {
     return this.get<UsersResponse[]>('project/users');
   }
+
+  removeUserFromProject(data: {projectId: any; userId: any; }): Observable<any> {
+    return this.delete(`project/users/${data.userId}`);
+  }
 }

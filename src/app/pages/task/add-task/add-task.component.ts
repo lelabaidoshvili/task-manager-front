@@ -23,6 +23,8 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
   styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
+
+  checked = false;
   taskFormGroup: FormGroup = new FormGroup({
     id: new FormControl(null),
     name: new FormControl(null, Validators.required),
@@ -52,6 +54,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   activeIssues?: IssueTypeResponse[];
   activeBoardColumns;
   boards: BoardResponse[];
+  allColumns: any;
+
   constructor(
     private taskFacadeService: TasksFacadeService,
     private issueTypeFacadeService: IssueTypeFacadeService,
@@ -72,12 +76,15 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.taskEnum = Object.keys(this.tasks);
   }
 
+
+
   ngOnInit(): void {
     this.getActiveIssues();
     this.getProjectUsers();
     this.boardFacadeService.getMyBoards$().subscribe((boards) => {
       this.boards = boards;
       console.log(boards);
+
     });
 
     if (this.data.taskId) {
@@ -92,7 +99,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     }
 
     if (this.data.isBacklog) {
-      this.taskFormGroup.patchValue({ isBacklog: this.data.isBacklog });
+      this.taskFormGroup.patchValue({isBacklog: this.data.isBacklog});
       this.taskFormGroup.get('boardId')?.clearValidators();
       this.taskFormGroup.get('boardColumnId')?.clearValidators();
     } else {
@@ -106,14 +113,25 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.taskFormGroup.get('boardColumnId')?.updateValueAndValidity();
 
     if (this.data.boardId) {
-      this.taskFormGroup?.patchValue({ boardId: this.data.boardId });
+      this.taskFormGroup?.patchValue({boardId: this.data.boardId});
+
     }
 
     if (this.data.column) {
       this.taskFormGroup?.patchValue({
         boardColumnId: this.data.column.id,
+        columnTaskStatus: this.data.column.taskStatus
+
       });
+      console.log( this.data.column)
+      console.log(this.data.column.id)
+
     }
+
+  }
+  onCheckboxClick() {
+    const columnIndex = this.data.column.taskStatus === 'ToDo' ? 1 : 0;
+    this.data.column.taskStatus = columnIndex === 0 ? 'Done' || 'InProgress' : 'Done';
   }
 
   getActiveIssues() {
