@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {BoardResponse, Project} from 'src/app/core/interfaces';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { BoardResponse, Project } from 'src/app/core/interfaces';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 import { StepperService } from 'src/app/pages/stepper/stepper.service';
-import {PermissionsDirective} from "../../../core/directives/permissions.directive";
+import { PermissionsDirective } from '../../../core/directives/permissions.directive';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
 
   currentProject?: Project = this.projectFacadeService.getProject();
-  currentBoards: any
+  currentBoards: any;
 
   projects$ = this.projectFacadeService.projects$;
 
@@ -28,9 +28,9 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private projectFacadeService: ProjectFacadeService,
     private boardFacadeService: BoardFacadeService,
-    private stepperService: StepperService
-  ) {
-  }
+    private stepperService: StepperService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getMyProjects();
@@ -54,6 +54,4 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(0);
   }
-
-
 }

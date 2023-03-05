@@ -6,11 +6,11 @@ import {
   UsersResponse,
 } from '../../../core/interfaces';
 import { BoardFacadeService } from '../../../facades/board-facade.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TasksFacadeService } from 'src/app/facades/tasks-facade.sevice';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { AuthFacadeService } from '../../auth/auth-facade.service';
-import { of, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
@@ -39,7 +39,11 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   activeBoardColumns;
   assignee: UsersResponse[] = [];
   activeTasks;
-
+  //-----------------------------------------------------
+  activateDialog: boolean;
+  boardColumnsUrl: string;
+  isOnBoardColumnsPage: boolean = false;
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++
   constructor(
     private boardFacadeService: BoardFacadeService,
     private route: ActivatedRoute,
@@ -49,9 +53,39 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     private projectFacadeService: ProjectFacadeService,
     private router: Router,
     public dialog: MatDialog
-  ) {}
+  ) {
+    //---------------------------------------------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  }
 
   ngOnInit(): void {
+    //-----------------------dialog---------------------------
+    // Subscribe to the project activation event
+    this.projectFacadeService.activateCurrent.subscribe((res) => {
+      console.log(res);
+
+      if (res && this.isOnBoardColumnsPage) {
+        this.selectOtherBoards();
+      }
+      this.currentProject = this.projectFacadeService.getProject();
+      this.getBoardById();
+
+      console.log(this.activeTasks);
+      this.getProjectUsers();
+    });
+
+    // Subscribe to router events to check if we're on the board columns page
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkIfOnBoardColumnsPage();
+      }
+    });
+
+    // Call the checkIfOnBoardColumnsPage method to set the flag when the component is initialized
+    this.checkIfOnBoardColumnsPage();
+
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     this.boardFacadeService.update$.subscribe((res) => {
       if (res) {
         this.getBoardById();
@@ -60,10 +94,18 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     this.getBoardById();
     this.currentProject = this.projectFacadeService.getProject();
     this.getProjectUsers();
-
-    this.getTasks();
+    // this.getTasks();
   }
-
+  //--------------------check----------------------------
+  private checkIfOnBoardColumnsPage(): void {
+    const boardColumnsUrl = this.router
+      .createUrlTree(['/task/project-board', ':id'])
+      .toString()
+      .replace(':id', '');
+    this.isOnBoardColumnsPage = this.router.url.startsWith(boardColumnsUrl);
+    console.log('isOnBoardColumnsPage:', this.isOnBoardColumnsPage);
+  }
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   getBoardById() {
     this.route.params.subscribe((params) => {
       const id = params['id'];
@@ -78,6 +120,8 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
             console.log(board);
 
             this.activeBoardColumns = this.activeBoard.columns;
+            // Call getTasks() here after activeBoardId is set
+            this.getTasks();
           },
           (error) => {
             console.error(error);
@@ -230,6 +274,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.isOnBoardColumnsPage = false;
     this.sub$.next(null);
     this.sub$.complete();
   }

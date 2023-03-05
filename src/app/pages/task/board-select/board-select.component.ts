@@ -3,6 +3,7 @@ import { BoardFacadeService } from '../../../facades/board-facade.service';
 import { BoardResponse } from '../../../core/interfaces';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { TasksFacadeService } from 'src/app/facades/tasks-facade.sevice';
 
 @Component({
   selector: 'app-board-select',
@@ -34,6 +35,7 @@ export class BoardSelectComponent implements OnInit {
     console.log(boardId);
 
     this.router.navigate([`/task/project-board/${boardId}`]);
+
     this.dialogRef.close();
   }
 }

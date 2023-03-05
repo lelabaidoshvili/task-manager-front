@@ -5,7 +5,6 @@ import { Project, ProjectUsers, UsersResponse } from '../core/interfaces';
 
 import { ProjectHttpService } from '../core/services/project-http.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -17,16 +16,16 @@ export class ProjectFacadeService {
   >([]);
 
   users$ = this.myUsers.asObservable();
-  //--------------
+
   current: BehaviorSubject<Project> = new BehaviorSubject<Project>(
     this.getProject()
   );
   current$ = this.current.asObservable();
-  //-------------
 
   activateCurrent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
   );
+
   constructor(private projectHttpService: ProjectHttpService) {}
 
   setProject(projectId: number): void {
@@ -79,9 +78,7 @@ export class ProjectFacadeService {
     );
   }
 
-
   addUsersToProject(payload: ProjectUsers) {
     return this.projectHttpService.addUsersToProject(payload);
   }
-
 }

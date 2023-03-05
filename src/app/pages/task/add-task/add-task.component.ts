@@ -17,7 +17,6 @@ import { ActivatedRoute } from '@angular/router';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 
-
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
