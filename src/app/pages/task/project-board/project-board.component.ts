@@ -26,6 +26,7 @@ import * as _ from 'lodash';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { BoardSelectComponent } from '../board-select/board-select.component';
 
+
 @Component({
   selector: 'app-project-board',
   templateUrl: './project-board.component.html',
@@ -213,6 +214,23 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
           this.getTasks();
         }
       });
+  }
+  OpenTask() {
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      width: '600px',
+      data: {
+
+
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((task) => {
+      console.log('The dialog was closed');
+      if (task) {
+        this.getTasks();
+      }
+    });
+
   }
 
   selectOtherBoards() {

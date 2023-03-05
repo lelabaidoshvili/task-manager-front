@@ -106,6 +106,8 @@
       <button class="btn" mat-stroked-button (click)="dialogRef.close()">
         Close
       </button>
+      <mat-checkbox [(ngModel)]="checked" (click)="onCheckboxClick()">Done</mat-checkbox>
+      <p class="task-status">{{data.column.taskStatus}}</p>
     </div>
   </div>
 </div>
