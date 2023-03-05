@@ -118,8 +118,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     }
 
-
-
     if (this.data.column) {
       this.taskFormGroup?.patchValue({
         boardColumnId: this.data.column.id,
