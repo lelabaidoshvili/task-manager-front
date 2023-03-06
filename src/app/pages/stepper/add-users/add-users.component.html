@@ -24,7 +24,7 @@
           usersFormGroup.get("firstName").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-          }}</mat-icon>
+        }}</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -40,7 +40,7 @@
           usersFormGroup.get("lastName").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-          }}</mat-icon>
+        }}</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -56,7 +56,7 @@
           usersFormGroup.get("email").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-          }}</mat-icon>
+        }}</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -72,7 +72,7 @@
           usersFormGroup.get("mobileNumber").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-          }}</mat-icon>
+        }}</mat-icon>
       </mat-form-field>
     </div>
   </form>
@@ -107,24 +107,19 @@
         *ngFor="let user of projectUsers.slice().reverse()"
         lines="3"
       >
-        <span matListItemTitle>{{ user.email }}</span>
+        <span matListItemTitle>{{ user?.email }}</span>
       </mat-list-item>
     </mat-list>
   </div>
   <div class="scroll">
     <mat-label class="label">All Users</mat-label>
     <mat-list class="example-list-wrapping">
-      <mat-list-item
-        *ngFor="let user of users"
-        lines="3"
-      >
-
-        <span matListItemTitle >{{ user.email }} </span>
-        <button  mat-raised-button (click)="addOldUsersToProject(user)">Add User</button>
+      <mat-list-item *ngFor="let user of users" lines="3">
+        <span matListItemTitle>{{ user?.email }} </span>
+        <button mat-raised-button (click)="addOldUsersToProject(user)">
+          Add User
+        </button>
       </mat-list-item>
     </mat-list>
   </div>
 </div>
-
-
-
