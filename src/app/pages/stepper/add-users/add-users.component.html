@@ -87,9 +87,8 @@
 >
   Save
 </button>
-
 <button
-  *ngIf="!additionalUser"
+  *ngIf="showNext"
   class="next"
   [disabled]="!goNextStep"
   mat-raised-button
@@ -98,6 +97,7 @@
 >
   Next
 </button>
+
 <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
 <div class="scrolls">
   <div class="scroll">
@@ -114,9 +114,13 @@
   <div class="scroll">
     <mat-label class="label">All Users</mat-label>
     <mat-list class="example-list-wrapping">
-      <mat-list-item *ngFor="let user of users" lines="3">
+      <mat-list-item class="list" *ngFor="let user of users" lines="3">
         <span matListItemTitle>{{ user?.email }} </span>
-        <button mat-raised-button (click)="addOldUsersToProject(user)">
+        <button
+          class="btn-l"
+          mat-raised-button
+          (click)="addOldUsersToProject(user)"
+        >
           Add User
         </button>
       </mat-list-item>

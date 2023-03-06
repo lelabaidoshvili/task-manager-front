@@ -1,4 +1,4 @@
-<div class="container" >
+<div class="container">
   <button
     class="more"
     (click)="selectOtherBoards()"
@@ -28,23 +28,23 @@
       class="column"
       cdkDropList
       *ngFor="let column of activeBoard?.columns"
-      [cdkDropListData]="activeTasks[column.id] || []"
+      [cdkDropListData]="activeTasks[column?.id] || []"
       (cdkDropListDropped)="drop($event, column)"
     >
       <div class="column-head">
-        <h2>{{ column.name }}</h2>
+        <h2>{{ column?.name }}</h2>
       </div>
       <div>
         <div
           class="card"
-          *ngFor="let task of activeTasks[column.id] || []"
+          *ngFor="let task of activeTasks[column?.id] || []"
           cdkDrag
           (dblclick)="viewTask(task, column)"
         >
           <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
           <div class="left">
-            <p class="cardText">{{ task.name }}</p>
-            <img class="icon" [src]="task.issueType['icon']" alt="icon" />
+            <p class="cardText">{{ task?.name }}</p>
+            <img class="icon" [src]="task?.issueType['icon']" alt="icon" />
           </div>
           <div class="right">
             <div class="dots">
@@ -62,7 +62,7 @@
               </mat-menu>
             </div>
             <div class="circle ass">
-              {{ task.assignee["firstName"].slice(0, 1).toUpperCase() }}
+              {{ task?.assignee["firstName"].slice(0, 1).toUpperCase() }}
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@
       </div>
     </div>
     <button
-      (click)="addColumn(activeBoard.id)"
+      (click)="addColumn(activeBoard?.id)"
       class="add-col"
       mat-button
       color="primary"
