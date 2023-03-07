@@ -5,7 +5,7 @@
     color="primary"
     (click)="toggleUserForm()"
   >
-    Add User
+    + Create User
   </button>
 </div>
 <ng-container *ngIf="createUser">
@@ -88,7 +88,7 @@
   Save
 </button>
 <button
-  *ngIf="showNext"
+  *ngIf="!additionalUser"
   class="next"
   [disabled]="!goNextStep"
   mat-raised-button
@@ -114,13 +114,9 @@
   <div class="scroll">
     <mat-label class="label">All Users</mat-label>
     <mat-list class="example-list-wrapping">
-      <mat-list-item class="list" *ngFor="let user of users" lines="3">
+      <mat-list-item *ngFor="let user of users" lines="3">
         <span matListItemTitle>{{ user?.email }} </span>
-        <button
-          class="btn-l"
-          mat-raised-button
-          (click)="addOldUsersToProject(user)"
-        >
+        <button mat-raised-button (click)="addOldUsersToProject(user)">
           Add User
         </button>
       </mat-list-item>

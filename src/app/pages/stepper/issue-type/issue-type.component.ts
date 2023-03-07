@@ -5,6 +5,7 @@ import { Subject, switchMap, takeUntil } from 'rxjs';
 import { IssueTypeEnum } from 'src/app/core/enums/issue-type.enum';
 import { IssueTypeResponse } from 'src/app/core/interfaces/issuetype.interface';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
+import { UsersFacadeService } from 'src/app/facades/users-facade.service';
 
 import { StepperService } from '../stepper.service';
 
@@ -37,6 +38,7 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
 
   constructor(
     private issueTypeFacadeService: IssueTypeFacadeService,
+    private usersFacadeService: UsersFacadeService,
     private _snackBar: MatSnackBar
   ) {
     this.issueEnum = Object.keys(this.issues);
@@ -105,6 +107,7 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
   }
   submit() {
     this.stepperService.goToStep(3);
+    this.usersFacadeService.additionalUser.next(false);
   }
 
   ngOnDestroy(): void {

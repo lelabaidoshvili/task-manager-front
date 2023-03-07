@@ -28,7 +28,7 @@ export class AddUsersComponent implements OnInit, OnDestroy {
   addedUsers = [];
   users: any;
   additionalUser: boolean = false;
-  showNext: boolean = false;
+
   constructor(
     private stepperService: StepperService,
     private usersFacadeService: UsersFacadeService,
@@ -48,15 +48,12 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       mobileNumber: new FormControl(null, Validators.required),
     });
     this.goNextStep = false;
-    this.showNext = true;
+
     this.currentProject = this.projectFacadeService.getProject();
-    this.projectUsers.push(this.authFacadeService.user);
-    this.getProjectUsers();
 
     this.usersFacadeService.additionalUser$.subscribe((res) => {
       this.additionalUser = res;
       if (res) {
-        this.showNext = false;
         this.projectFacadeService
           .getProjectUsers$()
           .pipe(takeUntil(this.sub$))
@@ -64,6 +61,10 @@ export class AddUsersComponent implements OnInit, OnDestroy {
             const userIds = users.map((user) => user.id);
             this.addedUsers.unshift(...userIds);
           });
+        this.getProjectUsers();
+      } else {
+        this.addedUsers = [];
+        this.getProjectUsers();
       }
     });
 
@@ -90,30 +91,22 @@ export class AddUsersComponent implements OnInit, OnDestroy {
   saveUser() {
     if (this.usersFormGroup.valid) {
       this.goNextStep = true;
+
       this.usersFacadeService
         .createUsers(this.usersFormGroup.value)
         .pipe(takeUntil(this.sub$))
         .subscribe((res) => {
-          console.log('user create response');
-          console.log(res);
           this.setProjectUsers(res);
+
           this.getProjectUsers();
 
           this._snackBar.open('User Created', 'Close', { duration: 1000 });
 
           this.createUser = false;
-          //-----------------------
+
           if (this.additionalUser) {
             this.openDialog();
-            // this.router.navigate(['/task']);
           }
-          // if (this.additionalUser) {
-          //   this.active = true;
-          //   setTimeout(() => {
-          //     this.router.navigate(['/task']);
-          //   }, 6000);
-          // }
-          //-------------------------
         });
     }
     this.usersFormGroup.reset();
@@ -140,15 +133,19 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         console.log('from old users');
         console.log(res);
+        console.log(this.addedUsers);
         this.getProjectUsers();
-        // console.log(res), this.router.navigate(['/task']);
+        if (this.additionalUser) {
+          this.openDialog();
+        } else {
+          this.goNextStep = true;
+        }
       });
   }
 
   setProjectUsers(res: UsersResponse) {
-    //--
     this.currentProject = this.projectFacadeService.getProject();
-    //--
+
     this.addedUsers.unshift(`${res.id}`);
     this.projectFacadeService
       .addUsersToProject({
