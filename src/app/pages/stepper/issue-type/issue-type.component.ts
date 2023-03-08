@@ -85,6 +85,7 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
     if (this.issueTypeFormGroup.invalid) return;
 
     if (this.issueTypeFormGroup.valid) {
+      this.active = true;
       this.issueTypeFacadeService
         .createIssueType(this.issueTypeFormGroup.value)
         .pipe(
@@ -92,7 +93,7 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
           switchMap(() => this.issueTypeFacadeService.getMyIssueTypes$())
         )
         .subscribe((res) => {
-          this.active = true;
+          // this.active = true;
           this.issueTypes = res;
           this._snackBar.open('Issue Created', 'Close', { duration: 1000 });
           setTimeout(() => {

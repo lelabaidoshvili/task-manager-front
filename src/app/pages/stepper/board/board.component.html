@@ -223,8 +223,8 @@
 <div [ngClass]="{ update: update }" class="container">
   <div>
     <button
+      [disabled]="boardFormGroup.invalid || active"
       class="board-save"
-      [disabled]="boardFormGroup.invalid"
       mat-raised-button
       color="basic"
       (click)="saveBoard()"
@@ -233,7 +233,7 @@
     </button>
     <button
       *ngIf="!update"
-      [disabled]="!goNextStep"
+      [disabled]="!goNextStep || additionalBoard"
       class="next"
       mat-raised-button
       color="primary"

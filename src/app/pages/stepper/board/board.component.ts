@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs-compat';
 
 import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { BoardResponse } from 'src/app/core/interfaces';
@@ -35,9 +36,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   boardFormGroup: FormGroup;
   columnGroup: FormGroup;
 
-  additionalBoard: boolean = false;
+  additionalBoard: boolean;
   boardId: number;
   sub$ = new Subject<any>();
+  boardPosition = 0;
   constructor(
     private boardFacadeService: BoardFacadeService,
     private router: Router,
@@ -49,6 +51,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.boardFacadeService.additional$.subscribe((res) => {
+      this.additionalBoard = res;
+      console.log(res);
+      this.boardFacadeService.myBoards.subscribe((res) => {
+        this.myBoards = res.sort((a, b) => a.id - b.id);
+      });
+    });
+
     this.boardFormGroup = new FormGroup({
       id: new FormControl(null),
       name: new FormControl(null, Validators.required),
@@ -103,12 +113,6 @@ export class BoardComponent implements OnInit, OnDestroy {
           });
         }
       });
-
-    this.boardFacadeService.additional$.subscribe((res) => {
-      this.additionalBoard = res;
-      console.log(res);
-      console.log(this.additionalBoard);
-    });
   }
 
   get boardColumnArray() {
@@ -140,7 +144,13 @@ export class BoardComponent implements OnInit, OnDestroy {
   saveBoard() {
     this.boardFormGroup.markAllAsTouched();
     if (this.boardFormGroup.invalid) return;
-
+    //--
+    this.boardPosition++;
+    this.boardFormGroup.get('position').setValue(this.boardPosition);
+    console.log('position');
+    console.log(this.boardPosition);
+    //--
+    this.active = true;
     if (!this.boardFormGroup.value.id) {
       this.boardFacadeService
         .createBoard(this.boardFormGroup.value)
@@ -149,13 +159,20 @@ export class BoardComponent implements OnInit, OnDestroy {
           switchMap(() => this.boardFacadeService.getMyBoards$())
         )
         .subscribe((res) => {
-          this.active = true;
-          this.myBoards = res;
+          //--
+          this.boardColumnArray.clear();
+          //--
+
+          console.log(res);
+
+          this.myBoards = res.sort((a, b) => a.id - b.id);
+
+          console.log('boards');
+          console.log(this.myBoards);
           this._snackBar.open('Board Created', 'Close', { duration: 1000 });
           setTimeout(() => {
             this.active = false;
             if (this.additionalBoard) {
-              // this.router.navigate(['/task']);
               this.openDialog();
             }
             this.goNextStep = true;
@@ -181,7 +198,6 @@ export class BoardComponent implements OnInit, OnDestroy {
           // this.boardFormGroup.reset();
         });
 
-      // this.router.navigate(['/tables']);
       this.router.navigate([`/task/project-board/${this.boardId}`]);
       this.boardFacadeService.update$.next(true);
     }

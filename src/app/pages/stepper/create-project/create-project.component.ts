@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { StepperService } from '../stepper.service';
 import { CreateProjectService } from './create-project.service';
@@ -26,6 +27,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private projectFacadeService: ProjectFacadeService,
+    private boardFacadeService: BoardFacadeService,
     private router: Router,
     private _snackBar: MatSnackBar
   ) {
@@ -67,6 +69,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
     if (this.projectFormGroup.invalid) return;
 
     if (!this.projectFormGroup.value.id) {
+      this.active = true;
       this.createProjectService
         .createProject(this.projectFormGroup.value)
         .pipe(
@@ -75,7 +78,9 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
           switchMap(() => this.projectFacadeService.getOnlyMyProjects$())
         )
         .subscribe((response) => {
-          this.active = true;
+          this.boardFacadeService.additional.next(false);
+          // this.active = true;
+
           this._snackBar.open('Project Created', 'Close', { duration: 2000 });
           setTimeout(() => {
             this.stepperService.goToStep(1);

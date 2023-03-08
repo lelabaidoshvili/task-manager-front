@@ -11,18 +11,12 @@
     <div class="wrapper">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="name"
-          formControlName="name"
-        />
+        <input type="text" matInput placeholder="name" formControlName="name" />
         <mat-icon matSuffix>{{
-          epicGroup.get("name").invalid &&
-          epicGroup.get("name").touched
+          epicGroup.get("name").invalid && epicGroup.get("name").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-          }}</mat-icon>
+        }}</mat-icon>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Description</mat-label>
@@ -34,17 +28,17 @@
         />
         <mat-icon matSuffix>{{
           epicGroup.get("description").invalid &&
-         epicGroup.get("description").touched
+          epicGroup.get("description").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-          }}</mat-icon>
+        }}</mat-icon>
       </mat-form-field>
     </div>
   </form>
 </ng-container>
 <button
   class="epic"
-  [disabled]="epicGroup.invalid"
+  [disabled]="epicGroup.invalid || active || goNextStep"
   mat-raised-button
   color="basic"
   (click)="saveEpics()"
@@ -61,3 +55,4 @@
 >
   Next
 </button>
+<mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>

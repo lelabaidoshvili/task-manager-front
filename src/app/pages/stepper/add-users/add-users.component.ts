@@ -121,6 +121,9 @@ export class AddUsersComponent implements OnInit, OnDestroy {
       this.stepperService.goToStep(4);
     }
   }
+  skip() {
+    this.stepperService.goToStep(4);
+  }
 
   addOldUsersToProject(user: any) {
     this.currentProject = this.projectFacadeService.getProject();

@@ -40,7 +40,10 @@
         <mat-label>Icon</mat-label>
         <mat-select class="form-control" formControlName="icon">
           <mat-option *ngFor="let icon of icons" [value]="icon">
-            <img class="icon" src="{{ icon }}" />
+            <div class="al">
+              <img class="icon" src="{{ icon }}" />
+              <p>{{ icon.slice(14, -4) }}</p>
+            </div>
           </mat-option>
         </mat-select>
         <mat-icon matSuffix>{{

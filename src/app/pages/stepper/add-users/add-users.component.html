@@ -97,7 +97,15 @@
 >
   Next
 </button>
-
+<button
+  *ngIf="!additionalUser"
+  class="skip"
+  mat-stroked-button
+  color="primary"
+  (click)="skip()"
+>
+  Skip
+</button>
 <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
 <div class="scrolls">
   <div class="scroll">
