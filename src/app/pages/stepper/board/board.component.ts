@@ -83,6 +83,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           const boardColumns = response.columns;
           const columnsArray = this.boardFormGroup.get('columns') as FormArray;
           this.boardFormGroup.patchValue(response);
+          // columnsArray.removeAt(0);
           boardColumns.forEach((column, index) => {
             columnsArray.push(
               new FormGroup({
