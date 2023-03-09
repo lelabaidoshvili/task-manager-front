@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs-compat';
 import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { BoardResponse } from 'src/app/core/interfaces';
 import { BoardFacadeService } from 'src/app/facades/board-facade.service';
+import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { DialogComponent } from '../dialog/dialog';
 import { StepperService } from '../stepper.service';
 
@@ -42,6 +43,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   boardPosition = 0;
   constructor(
     private boardFacadeService: BoardFacadeService,
+    private IssueTypeFacadeService: IssueTypeFacadeService,
     private router: Router,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
@@ -210,6 +212,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   submit() {
     this.stepperService.goToStep(2);
+    this.IssueTypeFacadeService.additionalIssue.next(false);
   }
 
   openDialog() {

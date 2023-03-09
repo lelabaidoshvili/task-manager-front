@@ -192,4 +192,39 @@ img {
 .user-button {
   color: #6b9577;
   font-size: 14px;
+  margin-bottom: 1.6rem;
+}
+
+.issue-align {
+  background-color: #fefeff;
+  border-bottom: 1px solid #6b9577;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 0.8rem;
+}
+.issue-align p {
+  margin: 0;
+}
+
+.issue-loop {
+  padding: 0.8rem;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.issue-button {
+  color: #6b9577;
+  font-size: 14px;
+  margin-left: 1rem;
+}
+.line {
+  font-weight: 600;
+  color: #6b9577;
+}
+.img {
+  width: 15px;
+  height: 15px;
 }

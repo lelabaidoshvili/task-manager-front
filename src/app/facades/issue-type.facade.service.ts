@@ -16,6 +16,10 @@ export class IssueTypeFacadeService {
   >([]);
   issues$ = this.myIssues.asObservable();
 
+  additionalIssue: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  additionalIssue$ = this.additionalIssue.asObservable();
   constructor(private issueTypeHttpService: IssueTypeHttpService) {}
 
   createIssueType(payload: IssueType) {

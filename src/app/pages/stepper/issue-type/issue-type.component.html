@@ -1,14 +1,15 @@
 <button
+  [ngClass]="{ alignBtn: update }"
   class="add-issue"
   mat-raised-button
   color="primary"
   (click)="toggleIssueForm()"
 >
-  Add Issue Type
+  {{ update ? "Update" : "Add IssueType" }}
 </button>
 
 <ng-container *ngIf="createIssueType">
-  <form [formGroup]="issueTypeFormGroup">
+  <form [ngClass]="{ align: update }" [formGroup]="issueTypeFormGroup">
     <div class="wrapper">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -198,10 +199,10 @@
     </div>
   </form>
 </ng-container>
-<div class="container">
+<div [ngClass]="{ alignBtns: update }" class="container">
   <button
     class="user"
-    [disabled]="issueTypeFormGroup.invalid"
+    [disabled]="issueTypeFormGroup.invalid || active"
     mat-raised-button
     color="basic"
     (click)="saveIssueType()"
@@ -210,7 +211,7 @@
   </button>
   <button
     class="next"
-    [disabled]="!goNextStep"
+    [disabled]="!goNextStep || additionalIssue"
     mat-raised-button
     color="primary"
     (click)="submit()"

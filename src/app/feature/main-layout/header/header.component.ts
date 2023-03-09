@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   currentBoards: any;
 
   projects$ = this.projectFacadeService.projects$;
+  currentUser;
 
   get loggedIn() {
     return this.authFacadeService.token;
@@ -34,6 +35,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMyProjects();
+    //--
+    this.currentUser = this.authFacadeService.user;
+
+    //--
   }
 
   public signOut(): void {
@@ -54,4 +59,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/stepper']);
     this.stepperService.goToStep(0);
   }
+
+  //--
+
+  //--
 }

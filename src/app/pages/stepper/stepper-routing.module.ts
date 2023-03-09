@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BoardComponent } from './board/board.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { StepperComponent } from './stepper.component';
-import {AddUsersComponent} from "./add-users/add-users.component";
+import { AddUsersComponent } from './add-users/add-users.component';
+import { IssueTypeComponent } from './issue-type/issue-type.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'boards/edit/:id',
     component: BoardComponent,
+  },
+  {
+    path: 'issues/edit/:id',
+    component: IssueTypeComponent,
   },
   {
     path: 'users/edit/:id',

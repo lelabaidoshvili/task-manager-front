@@ -1,11 +1,14 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { IssueTypeEnum } from 'src/app/core/enums/issue-type.enum';
 import { IssueTypeResponse } from 'src/app/core/interfaces/issuetype.interface';
 import { IssueTypeFacadeService } from 'src/app/facades/issue-type.facade.service';
 import { UsersFacadeService } from 'src/app/facades/users-facade.service';
+import { DialogComponent } from '../dialog/dialog';
 
 import { StepperService } from '../stepper.service';
 
@@ -30,23 +33,39 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
     'assets/images/Task.png',
     'assets/images/Sub-Task.png',
     'assets/images/Spike.png',
-    'assets/images/Task.png',
-    'assets/images/Task.png',
+    'assets/images/Research.png',
+    'assets/images/Test.png',
   ];
   goNextStep: boolean;
   createIssueType: boolean = false;
+  //--
+  additionalIssue: boolean;
+  issueTypeId: number;
+  update: boolean = false;
+  //--
 
   constructor(
     private issueTypeFacadeService: IssueTypeFacadeService,
     private usersFacadeService: UsersFacadeService,
-    private _snackBar: MatSnackBar
+    private route: ActivatedRoute,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+    public matDialog: MatDialog
   ) {
     this.issueEnum = Object.keys(this.issues);
   }
 
   ngOnInit(): void {
+    //--
+    this.issueTypeFacadeService.additionalIssue$.subscribe((res) => {
+      this.additionalIssue = res;
+      console.log('additional issue boolean');
+      console.log(this.additionalIssue);
+    });
+    //--
     console.log(this.issueEnum);
     this.issueTypeFormGroup = new FormGroup({
+      id: new FormControl(null),
       name: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
       icon: new FormControl(null, Validators.required),
@@ -55,6 +74,42 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
       type: new FormControl(null, Validators.required),
       issueTypeColumns: new FormArray([]),
     });
+
+    //--
+    this.route.params
+      .pipe(
+        switchMap((params: any) => {
+          if (params['id']) {
+            this.update = true;
+            this.issueTypeId = params['id'];
+            return this.issueTypeFacadeService.getIssueTypeById(params['id']);
+          }
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+          const issueColumns = response.issueTypeColumns;
+          const columnsArray = this.issueTypeFormGroup.get(
+            'issueTypeColumns'
+          ) as FormArray;
+          this.issueTypeFormGroup.patchValue(response);
+          // columnsArray.removeAt(0);
+          issueColumns.forEach((column, index) => {
+            columnsArray.push(
+              new FormGroup({
+                id: new FormControl(column.id),
+                name: new FormControl(column.name, Validators.required),
+                filedName: new FormControl(
+                  column.filedName,
+                  Validators.required
+                ),
+              })
+            );
+          });
+        }
+      });
+    //--
   }
 
   get issueTypeColumnArray() {
@@ -83,9 +138,8 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
   saveIssueType() {
     this.issueTypeFormGroup.markAllAsTouched();
     if (this.issueTypeFormGroup.invalid) return;
-
-    if (this.issueTypeFormGroup.valid) {
-      this.active = true;
+    this.active = true;
+    if (!this.issueTypeFormGroup.value.id) {
       this.issueTypeFacadeService
         .createIssueType(this.issueTypeFormGroup.value)
         .pipe(
@@ -93,24 +147,50 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
           switchMap(() => this.issueTypeFacadeService.getMyIssueTypes$())
         )
         .subscribe((res) => {
-          // this.active = true;
+          this.issueTypeColumnArray.clear();
+
           this.issueTypes = res;
           this._snackBar.open('Issue Created', 'Close', { duration: 1000 });
+          if (this.additionalIssue) {
+            this.openDialog();
+            this.goNextStep = false;
+          }
           setTimeout(() => {
             this.active = false;
             this.goNextStep = true;
           }, 3000);
 
           this.createIssueType = false;
+          this.issueTypeFormGroup.reset();
+        });
+    } else {
+      this.issueTypeFacadeService
+        .updateIssueType(
+          this.issueTypeFormGroup.value.id,
+          this.issueTypeFormGroup.value
+        )
+        .pipe(takeUntil(this.sub$))
+        .subscribe((response: IssueTypeResponse) => {
+          this.issueTypeColumnArray.clear();
+          this.goNextStep = false;
+          this.router.navigate([`/task`]);
+
+          console.log(response);
         });
     }
-    this.issueTypeFormGroup.reset();
   }
   submit() {
     this.stepperService.goToStep(3);
     this.usersFacadeService.additionalUser.next(false);
   }
-
+  openDialog() {
+    let dialogRef = this.matDialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.router.navigate(['/task']);
+      }
+    });
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();
