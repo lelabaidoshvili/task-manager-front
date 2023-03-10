@@ -20,7 +20,10 @@ export class HeaderComponent implements OnInit {
 
   projects$ = this.projectFacadeService.projects$;
   currentUser;
+  //--
+  toggle: boolean = false;
 
+  //--
   get loggedIn() {
     return this.authFacadeService.token;
   }
@@ -31,7 +34,9 @@ export class HeaderComponent implements OnInit {
     private boardFacadeService: BoardFacadeService,
     private stepperService: StepperService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.toggle = false;
+  }
 
   ngOnInit(): void {
     this.getMyProjects();
@@ -61,6 +66,10 @@ export class HeaderComponent implements OnInit {
   }
 
   //--
-
+  toggleMenu() {
+    this.toggle = !this.toggle;
+  }
   //--
+
+  ngOnDestroy() {}
 }
