@@ -89,6 +89,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
+          <button class="email">{{currentUser?.email }}</button>
           <button routerLink="/" mat-menu-item>Home</button>
           <button type="submit" mat-menu-item (click)="signOut()">
             Sign out
