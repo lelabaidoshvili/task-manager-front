@@ -88,12 +88,13 @@ export class TaskComponent implements OnInit, OnDestroy {
           });
       }
     });
-
-    this.IssueTypeFacadeService.getIssueTypes()
-      .pipe(takeUntil(this.sub$))
-      .subscribe((issues) => {
-        this.myIssue = issues;
-      });
+    this.projectFacadeService.activateCurrent.subscribe((res) => {
+      this.IssueTypeFacadeService.getIssueTypes()
+        .pipe(takeUntil(this.sub$))
+        .subscribe((issues) => {
+          this.myIssue = issues;
+        });
+    });
   }
 
   deleteUser(id: number) {

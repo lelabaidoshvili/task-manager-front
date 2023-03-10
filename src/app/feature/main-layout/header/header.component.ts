@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   currentBoards: any;
 
   projects$ = this.projectFacadeService.projects$;
+  projectsFromLocalStorage: any;
   currentUser;
   //--
   toggle: boolean = false;
@@ -33,15 +34,44 @@ export class HeaderComponent implements OnInit {
     private projectFacadeService: ProjectFacadeService,
     private boardFacadeService: BoardFacadeService,
     private stepperService: StepperService,
+
     private route: ActivatedRoute
   ) {
     this.toggle = false;
+    if (this.authFacadeService.user) {
+      this.projectsFromLocalStorage = this.authFacadeService?.user?.projects;
+      if (this.projectsFromLocalStorage) {
+        this.projectFacadeService.setProject(
+          this.projectsFromLocalStorage[
+            this.authFacadeService?.user?.projects.length - 1
+          ]['id']
+        );
+      }
+
+      console.log(' projects from localStorage');
+      console.log(this.projectsFromLocalStorage);
+    }
   }
 
   ngOnInit(): void {
     this.getMyProjects();
-    //--
     this.currentUser = this.authFacadeService.user;
+
+    //--
+
+    // if (this.authFacadeService.user) {
+    //   this.projectsFromLocalStorage = this.authFacadeService?.user?.projects;
+    //   if (this.projectsFromLocalStorage) {
+    //     this.projectFacadeService.setProject(
+    //       this.projectsFromLocalStorage[
+    //         this.authFacadeService?.user?.projects.length - 1
+    //       ]['id']
+    //     );
+    //   }
+
+    //   console.log(' projects from localStorage');
+    //   console.log(this.projectsFromLocalStorage);
+    // }
 
     //--
   }
