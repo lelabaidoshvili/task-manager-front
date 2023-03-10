@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
-import { BehaviorSubject } from 'rxjs-compat';
+
 
 import { TaskStatus } from 'src/app/core/enums/taskStatus.enum';
 import { BoardResponse } from 'src/app/core/interfaces';

@@ -18,6 +18,13 @@ h1 {
   position: absolute;
   left: 56px;
 }
+@media (max-width: 550px) {
+  h1 {
+    color: #46309f;
+    font-size: 20px;
+  }
+}
+
 .abr {
   color: #46309f;
   font-weight: bold;
@@ -33,6 +40,18 @@ h1 {
   position: absolute;
   left: 30%;
 }
+@media (max-width: 650px) {
+  .columns {
+    left: 5%;
+  }
+
+}
+
+@media (max-width: 550px) {
+  .columns {
+    margin-top: 1px;
+  }
+}
 
 .column {
   width: 400px;
@@ -43,19 +62,6 @@ h1 {
   margin-top: 100px;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 
-  .task-button {
-    color: #504a8f;
-    font-style: italic;
-    background-color: #f4f5f4;
-    font-size: 15px;
-    position: absolute;
-    top: 100px;
-    width: 140px;
-    height: 70px;
-    left: 128px;
-    border-radius: 5px;
-    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
-  }
 
   p {
     color: #504a8f;
@@ -63,6 +69,35 @@ h1 {
     top: 15px;
     left: 39%;
     font-weight: bold;
+  }
+}
+.task-button {
+  color: #504a8f;
+  font-style: italic;
+  background-color: #f4f5f4;
+  font-size: 15px;
+  position: absolute;
+  top: 100px;
+  width: 140px;
+  height: 70px;
+  left: 128px;
+  border-radius: 5px;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 770px) {
+  .column {
+    width: 200px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 700px) {
+  .task-button {
+    width: 59px;
+    height: 30px;
+    font-size: 10px;
+    left: 70px;
+    top: 60px;
   }
 }
 
@@ -80,6 +115,13 @@ mat-sidenav-container {
 mat-sidenav {
   width: 300px;
 }
+@media (max-width: 550px) {
+  mat-sidenav {
+    width: 380px;
+  }
+}
+
+
 h2 {
   color: #d5d2d2;
   margin: 0;
@@ -89,7 +131,11 @@ h2 {
     color: #d5d2d2;
     font-style: italic;
   }
+
+
 }
+
+
 .sidenav-container {
   display: flex;
   flex-direction: column;

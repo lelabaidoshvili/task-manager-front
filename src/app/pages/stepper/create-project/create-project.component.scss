@@ -8,6 +8,14 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+}
 .color {
   // width: 80px;
   // height: 80px;
@@ -46,6 +54,13 @@ mat-list {
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+}
+
+@media  (max-width: 550px) {
+  .example-list-wrapping {
+    width: 300px;
+  }
+
 }
 
 mat-label.label {
