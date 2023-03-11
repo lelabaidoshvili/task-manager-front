@@ -31,13 +31,14 @@ export class ProjectFacadeService {
   setProject(projectId: number): void {
     this.projectHttpService
       .getProjectById(projectId)
-      .pipe(tap((res) => this.current.next(res)))
       .subscribe((project: Project) => {
         localStorage.setItem('project', JSON.stringify(project));
+
+        this.current.next(project);
         this.activateCurrent.next(true);
       });
   }
-
+  // .pipe(tap((res) => this.current.next(res)))
   getProject(): Project {
     const project = localStorage.getItem('project');
     return project ? JSON.parse(project) : null;

@@ -5,7 +5,6 @@ import { BoardFacadeService } from 'src/app/facades/board-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 import { StepperService } from 'src/app/pages/stepper/stepper.service';
-import { PermissionsDirective } from '../../../core/directives/permissions.directive';
 
 @Component({
   selector: 'app-header',
@@ -14,17 +13,17 @@ import { PermissionsDirective } from '../../../core/directives/permissions.direc
 })
 export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
-
+  //--
   currentProject?: Project = this.projectFacadeService.getProject();
+  // currentProject?: Project = this.projectFacadeService.current.getValue();
+  //--
   currentBoards: any;
 
   projects$ = this.projectFacadeService.projects$;
   currentUser;
 
   toggle: boolean = false;
-  //--
-  projectsFromLocalStorage: any;
-  //--
+
   get loggedIn() {
     return this.authFacadeService.token;
   }
@@ -43,24 +42,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.getMyProjects();
     this.currentUser = this.authFacadeService.user;
-
-    //--
-
-    if (this.authFacadeService.user) {
-      this.projectsFromLocalStorage = this.authFacadeService?.user?.projects;
-      if (this.projectsFromLocalStorage) {
-        this.projectFacadeService.setProject(
-          this.projectsFromLocalStorage[
-            this.authFacadeService?.user?.projects.length - 1
-          ]['id']
-        );
-      }
-
-      console.log(' projects from localStorage');
-      console.log(this.projectsFromLocalStorage);
-    }
-
-    //--
   }
 
   public signOut(): void {

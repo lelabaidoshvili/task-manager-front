@@ -7,7 +7,14 @@ import { ViewChild } from '@angular/core';
 import { IssueTypeFacadeService } from '../../facades/issue-type.facade.service';
 import { IssueTypeResponse } from '../../core/interfaces/issuetype.interface';
 import { BoardResponse } from 'src/app/core/interfaces';
-import { Subject, takeUntil, Observable, switchMap, tap } from 'rxjs';
+import {
+  Subject,
+  takeUntil,
+  Observable,
+  switchMap,
+  tap,
+  combineLatest,
+} from 'rxjs';
 import { Router } from '@angular/router';
 import { StepperService } from '../stepper/stepper.service';
 import { UsersFacadeService } from 'src/app/facades/users-facade.service';
@@ -58,20 +65,31 @@ export class TaskComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    combineLatest([
+      this.projectFacadeService.current$,
+      this.boardFacadeService.getMyBoards$(),
+      this.projectFacadeService.getProjectUsers$(),
+      this.IssueTypeFacadeService.getIssueTypes(),
+    ])
+      .pipe(takeUntil(this.sub$))
+      .subscribe(([project, boards, users, issueTypes]) => {
+        this.currentProject = project;
+        this.currentBoards = boards;
+        this.projectUsers = users;
+        this.myIssue = issueTypes;
+      });
+    //------------------
+
     this.projectFacadeService.current$
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
         this.currentProject = res;
-        console.log(res);
-        console.log(this.currentProject);
       });
-
     this.projectFacadeService.activateCurrent.subscribe((res) => {
       if (res) {
         this.boardFacadeService
           .getMyBoards$()
           .pipe(takeUntil(this.sub$))
-
           .subscribe((boards) => {
             this.currentBoards = boards;
           });
@@ -95,6 +113,8 @@ export class TaskComponent implements OnInit, OnDestroy {
           this.myIssue = issues;
         });
     });
+
+    //------------------
   }
 
   deleteUser(id: number) {

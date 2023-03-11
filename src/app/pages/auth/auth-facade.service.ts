@@ -1,16 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs';
-import { AuthResponse, Login } from 'src/app/core/interfaces';
+import { AuthResponse, Login, Project } from 'src/app/core/interfaces';
 import { Users, UsersResponse } from 'src/app/core/interfaces/users.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CookieStorageService } from 'src/app/core/services/cookie.service';
+import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthFacadeService extends AuthService {
   cookieStorageService: CookieStorageService = inject(CookieStorageService);
-
+  projectFacadeService: ProjectFacadeService = inject(ProjectFacadeService);
   override login(payload: Login) {
     return super.login(payload).pipe(
       tap((response: AuthResponse) => {
@@ -36,18 +37,23 @@ export class AuthFacadeService extends AuthService {
         console.log(this.RefreshTok);
 
         this.setUser(response.user);
-
+        setTimeout(() => {
+          if (response.user.projects.length) {
+            const project = response.user.projects[0] as Project;
+            this.projectFacadeService.setProject(project.id);
+          }
+        });
         console.log(this.token);
         console.log(this.user);
       })
     );
   }
   get roles(): string[] {
-    const roles = this.cookieStorageService.getCookie('roles')
+    const roles = this.cookieStorageService.getCookie('roles');
     return (roles ? JSON.parse(roles) : []) as string[];
   }
   get permissions(): string[] {
-    const permissions = localStorage.getItem('permissions')
+    const permissions = localStorage.getItem('permissions');
     return (permissions ? JSON.parse(permissions) : []) as string[];
   }
 

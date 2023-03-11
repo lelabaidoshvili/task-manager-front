@@ -16,7 +16,8 @@ export class ProjectInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const project = this.projectFacade.getProject();
+    // const project = this.projectFacade.getProject();
+    const project = this.projectFacade.current.getValue();
     if (project) {
       return next.handle(
         request.clone({
