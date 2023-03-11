@@ -19,11 +19,11 @@ export class HeaderComponent implements OnInit {
   currentBoards: any;
 
   projects$ = this.projectFacadeService.projects$;
-  projectsFromLocalStorage: any;
   currentUser;
-  //--
-  toggle: boolean = false;
 
+  toggle: boolean = false;
+  //--
+  projectsFromLocalStorage: any;
   //--
   get loggedIn() {
     return this.authFacadeService.token;
@@ -38,6 +38,14 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.toggle = false;
+  }
+
+  ngOnInit(): void {
+    this.getMyProjects();
+    this.currentUser = this.authFacadeService.user;
+
+    //--
+
     if (this.authFacadeService.user) {
       this.projectsFromLocalStorage = this.authFacadeService?.user?.projects;
       if (this.projectsFromLocalStorage) {
@@ -51,27 +59,6 @@ export class HeaderComponent implements OnInit {
       console.log(' projects from localStorage');
       console.log(this.projectsFromLocalStorage);
     }
-  }
-
-  ngOnInit(): void {
-    this.getMyProjects();
-    this.currentUser = this.authFacadeService.user;
-
-    //--
-
-    // if (this.authFacadeService.user) {
-    //   this.projectsFromLocalStorage = this.authFacadeService?.user?.projects;
-    //   if (this.projectsFromLocalStorage) {
-    //     this.projectFacadeService.setProject(
-    //       this.projectsFromLocalStorage[
-    //         this.authFacadeService?.user?.projects.length - 1
-    //       ]['id']
-    //     );
-    //   }
-
-    //   console.log(' projects from localStorage');
-    //   console.log(this.projectsFromLocalStorage);
-    // }
 
     //--
   }
