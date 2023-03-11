@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthFacadeService } from '../auth-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 import {tap, map} from "rxjs";
-import {AuthResponse} from "../../../core/interfaces";
+import {AuthResponse, UsersResponse} from "../../../core/interfaces";
 import {CookieStorageService} from "../../../core/services/cookie.service";
 import {RoleHttpService} from "../../../core/services/role-http.service";
 
@@ -17,6 +17,8 @@ import {RoleHttpService} from "../../../core/services/role-http.service";
 export class LoginComponent implements OnInit, OnDestroy {
   sub$ = new Subject();
   loginForm: FormGroup;
+  user: UsersResponse;
+  email: string;
   constructor(
     private router: Router,
     private authFacadeService: AuthFacadeService,
@@ -44,7 +46,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
         this.navigateToPages();
-        console.log(res);
+        this.authFacadeService.updateUser(res.user);
+        this.user = res.user
+        this.email = res.user.email
+
       });
   }
 
@@ -53,15 +58,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(
         tap((res: AuthResponse) => {
           const roles = res.user.roles.map((r: any) => r.name);
-          this.cookieService.setCookie('roles', JSON.stringify(roles), );
+          const expiration = new Date();
+          expiration.setDate(expiration.getDate() + 1);
+          this.cookieService.setCookie('roles', JSON.stringify(roles), expiration);
           localStorage.setItem('user', JSON.stringify(res.user));
-          this.router.navigate(['/task']);
         }),
         switchMap(() => this.roleService.getMyRole()
           .pipe(
             map((res: any) => {
               const permissions: string[] = [];
-              res.forEach((r: any) => {
+              const roles = res.forEach((r: any) => {
                 r.permissions && permissions.push(...r.permissions.map((p: any) => p.name))
               });
               localStorage.setItem('permissions', JSON.stringify(permissions));
@@ -69,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           )
         )
       )
-      .subscribe();
+      .subscribe(() => this.navigateToPages());
   }
   navigateToPages() {
     this.projectFacadeService.getMyProjects().subscribe((projects) => {

@@ -31,15 +31,37 @@ button {
 }
 
 .warn {
+  width: 82px;
+  height: 37px;
   background-color: #d27569;
   color: #e8ebfc;
 }
 .primary {
+  width: 82px;
+  height: 37px;
   background-color: #779d82;
   color: #e8ebfc;
 }
 .set-role_button {
+  width: 82px;
+  height: 37px;
   background-color: #504a90;
   color: white;
+}
+@media (max-width: 730px) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    .primary {
+      margin: 8px 0;
+    }
+    .warn {
+      margin: 8px 0;
+    }
+    .set-role_button {
+      margin: 8px 0;
+    }
+  }
+
 }
 

@@ -31,14 +31,37 @@ button {
 }
 
 .warn {
+  width: 105px;
+  height: 37px;
   background-color: #d27569;
   color: #e8ebfc;
 }
 .primary {
+  width: 105px;
+  height: 37px;
   background-color: #779d82;
   color: #e8ebfc;
 }
 .permission-button {
+  width: 105px;
+  height: 37px;
   background-color: #504a90;
   color: white;
+}
+@media (max-width: 930px) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  .warn {
+    margin: 8px 0;
+  }
+  .primary{
+    margin: 8px 0;
+  }
+  .permission-button{
+    margin: 8px 0;
+  }
+
+
 }

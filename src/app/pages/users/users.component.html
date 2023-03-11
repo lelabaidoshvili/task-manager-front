@@ -25,9 +25,11 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef >  </th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-raised-button class="set-role_button" (click)="setUser(element)"[appPermissions]="['role:dropdown']" >Set Role</button>
-        <button mat-raised-button class="primary" (click)="updateUser(element.id)">Edit</button>
-        <button mat-raised-button class="warn" (click)="delete(element.id)">Delete</button>
+        <div class="buttons">
+          <button mat-raised-button class="set-role_button" (click)="setUser(element)"[appPermissions]="['role:dropdown']" >Set Role</button>
+          <button mat-raised-button class="primary" (click)="updateUser(element.id)">Edit</button>
+          <button mat-raised-button class="warn" (click)="delete(element.id)">Delete</button>
+        </div>
 
 
       </td>

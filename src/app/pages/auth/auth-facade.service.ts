@@ -4,12 +4,17 @@ import { AuthResponse, Login } from 'src/app/core/interfaces';
 import { Users, UsersResponse } from 'src/app/core/interfaces/users.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CookieStorageService } from 'src/app/core/services/cookie.service';
+import { BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthFacadeService extends AuthService {
   cookieStorageService: CookieStorageService = inject(CookieStorageService);
+  private userSubject = new BehaviorSubject<UsersResponse>(null);
+
+  user$ = this.userSubject.asObservable();
+
 
   override login(payload: Login) {
     return super.login(payload).pipe(
@@ -66,11 +71,16 @@ export class AuthFacadeService extends AuthService {
   get user(): UsersResponse {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+
+  }
+  updateUser(user: UsersResponse) {
+    this.userSubject.next(user);
   }
 
   signOut() {
     localStorage.clear();
     this.cookieStorageService.deleteCookie('token');
     this.cookieStorageService.deleteCookie('refreshToken');
+    this.cookieStorageService.deleteCookie('roles')
   }
 }
