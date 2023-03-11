@@ -14,8 +14,8 @@ import { StepperService } from 'src/app/pages/stepper/stepper.service';
 export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
   //--
-  currentProject?: Project = this.projectFacadeService.getProject();
-  // currentProject?: Project = this.projectFacadeService.current.getValue();
+  // currentProject?: Project = this.projectFacadeService.getProject();
+  currentProject?: Project = this.projectFacadeService.current.getValue();
   //--
   currentBoards: any;
 

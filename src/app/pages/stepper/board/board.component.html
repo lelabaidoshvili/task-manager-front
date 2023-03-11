@@ -57,9 +57,11 @@
     </div>
 
     <!------------------------- Table tailwind------------------------------->
-
+    <h4 class="showColumns hideColumns">
+      Board Columns ----------------------------------
+    </h4>
     <div
-      class="relative overflow-x-auto shadow-md sm:rounded-lg bg-violet-50 shadow-md rounded px-8 pt-6 pb-8"
+      class="tableForms relative overflow-x-auto shadow-md sm:rounded-lg bg-violet-50 shadow-md rounded px-8 pt-6 pb-8"
     >
       <table
         cdkDropList
@@ -68,7 +70,7 @@
         class="w-full text-sm text-left bg-violet-50 dark:text-grey-400"
       >
         <thead class="text-xs text-white-700 uppercase bg-violet-900">
-          <tr>
+          <tr class="vertical">
             <th
               scope="col"
               class="px-6 py-3 text-white Class Properties text-left text-align: left;"
@@ -102,6 +104,7 @@
             </th>
           </tr>
         </thead>
+
         <tbody>
           <tr
             *ngFor="
@@ -112,7 +115,7 @@
             cdkDropList
             [cdkDropListData]="boardColumnArray.controls"
             cdkDrag
-            class="bg-violet-50 dark:bg-gray-100"
+            class="bg-violet-50 dark:bg-gray-100 vertical"
           >
             <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
             <td>
@@ -185,7 +188,7 @@
               </mat-form-field>
             </td>
 
-            <td class="btn-up">
+            <td class="btn-up btn-mobile">
               <div mat-dialog-actions>
                 <button
                   (click)="deleteInputsRow(i)"
@@ -206,10 +209,10 @@
                 class="add"
                 type="button"
                 mat-raised-button
-                class="primary-button"
+                class="primary-button newCol"
                 (click)="addColumn()"
               >
-                Add New column
+                Add column
               </button>
             </td>
           </tr>

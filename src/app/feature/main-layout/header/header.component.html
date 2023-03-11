@@ -1,7 +1,7 @@
 <div class="navigation flex justify-between direction-column">
   <h1 routerLink="/">My Task</h1>
   <button class="icon-btn showIcon" (click)="toggleMenu()">
-    <mat-icon>menu</mat-icon>
+    <mat-icon color="primary">menu</mat-icon>
   </button>
 
   <div class="flex justify-between">
@@ -89,7 +89,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button class="email">{{currentUser?.email }}</button>
+          <button class="email">{{ currentUser?.email }}</button>
           <button routerLink="/" mat-menu-item>Home</button>
           <button type="submit" mat-menu-item (click)="signOut()">
             Sign out
@@ -100,10 +100,20 @@
 
     <ng-template #notLoggedInState>
       <div class="flex gap-x-3.5 logSign">
-        <button routerLink="/auth/login" mat-button color="primary">
+        <button
+          class="log"
+          routerLink="/auth/login"
+          mat-stroked-button
+          color="primary"
+        >
           Login
         </button>
-        <button routerLink="/auth/register" mat-raised-button color="primary">
+        <button
+          class="sign"
+          routerLink="/auth/register"
+          mat-raised-button
+          color="primary"
+        >
           Sign-up
         </button>
       </div>

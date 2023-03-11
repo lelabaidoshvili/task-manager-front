@@ -104,7 +104,9 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
       this.router.navigate(['/tables']);
     }
   }
-
+  goTo() {
+    this.stepperService.goToStep(1);
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

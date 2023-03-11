@@ -148,6 +148,14 @@ button {
   }
 }
 .email {
-
   margin-left: 15px;
+}
+@media (max-width: 450px) {
+  .navigation {
+    position: relative;
+  }
+  h1 {
+    position: absolute;
+    top: 8rem;
+  }
 }
