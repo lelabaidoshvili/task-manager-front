@@ -9,6 +9,7 @@ import {AuthResponse, UsersResponse} from "../../../core/interfaces";
 import {CookieStorageService} from "../../../core/services/cookie.service";
 import {RoleHttpService} from "../../../core/services/role-http.service";
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private projectFacadeService: ProjectFacadeService,
     private readonly fb: NonNullableFormBuilder,
     private cookieService: CookieStorageService,
-    private roleService: RoleHttpService
+    private roleService: RoleHttpService,
   ) {
     this.loginForm = fb.group({
       email: ['', [Validators.required, Validators.email]],

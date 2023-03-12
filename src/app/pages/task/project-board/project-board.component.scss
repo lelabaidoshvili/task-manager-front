@@ -28,11 +28,12 @@
   overflow-x: scroll;
   overflow-y: scroll;
 }
-@media (max-width: 650px) {
+@media (max-width: 950px) {
   .column-container {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    align-items: center;
     .column {
       width: 300px;
     }
