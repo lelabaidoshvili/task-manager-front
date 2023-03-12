@@ -1,3 +1,4 @@
+<button mat-stroked-button (click)="goTo()">Go To</button>
 <div [ngClass]="{ update: update }">
   <button
     class="add-board"
@@ -57,9 +58,7 @@
     </div>
 
     <!------------------------- Table tailwind------------------------------->
-    <h4 class="showColumns hideColumns">
-      Board Columns ----------------------------------
-    </h4>
+    <h4 class="showColumns hideColumns">Board Columns</h4>
     <div
       class="tableForms relative overflow-x-auto shadow-md sm:rounded-lg bg-violet-50 shadow-md rounded px-8 pt-6 pb-8"
     >
@@ -174,7 +173,11 @@
 
             <td>
               <mat-form-field class="sized" appearance="outline">
-                <mat-select class="form-control" formControlName="taskStatus">
+                <mat-select
+                  placeholder="Task Status"
+                  class="form-control"
+                  formControlName="taskStatus"
+                >
                   <mat-option *ngFor="let task of taskEnum" [value]="task">
                     {{ task }}
                   </mat-option>
@@ -204,12 +207,11 @@
         </tbody>
         <tfoot>
           <tr>
-            <td>
+            <td class="add-td">
               <button
-                class="add"
                 type="button"
                 mat-raised-button
-                class="primary-button newCol"
+                class="primary-button newCol add add-mob"
                 (click)="addColumn()"
               >
                 Add column
@@ -246,13 +248,12 @@
     </button>
     <mat-progress-bar *ngIf="active" mode="indeterminate"></mat-progress-bar>
   </div>
-
-  <div *ngIf="!update" class="scroll">
-    <mat-label class="label">My Boards</mat-label>
-    <mat-list class="example-list-wrapping">
-      <mat-list-item *ngFor="let board of myBoards.slice().reverse()" lines="3">
-        <span matListItemTitle>{{ board.name | titlecase }}</span>
-      </mat-list-item>
-    </mat-list>
-  </div>
+</div>
+<div *ngIf="!update" class="scroll">
+  <mat-label class="label">My Boards</mat-label>
+  <mat-list class="example-list-wrapping">
+    <mat-list-item *ngFor="let board of myBoards.slice().reverse()" lines="3">
+      <span matListItemTitle>{{ board.name | titlecase }}</span>
+    </mat-list-item>
+  </mat-list>
 </div>

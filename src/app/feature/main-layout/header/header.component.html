@@ -1,6 +1,10 @@
-<div class="navigation flex justify-between direction-column">
-  <h1 routerLink="/">My Task</h1>
-  <button class="icon-btn showIcon" (click)="toggleMenu()">
+<div
+  [ngClass]="{ navAlign: loggedIn }"
+  class="navigation flex justify-between direction-column"
+>
+  <div class="header"><h1 class="mobile" routerLink="/">My Task</h1></div>
+
+  <button *ngIf="loggedIn" class="icon-btn showIcon" (click)="toggleMenu()">
     <mat-icon color="primary">menu</mat-icon>
   </button>
 

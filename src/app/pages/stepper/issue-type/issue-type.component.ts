@@ -191,6 +191,10 @@ export class IssueTypeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  goTo() {
+    this.stepperService.goToStep(3);
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

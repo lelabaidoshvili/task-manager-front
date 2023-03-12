@@ -171,6 +171,10 @@ export class AddUsersComponent implements OnInit, OnDestroy {
         this.projectUsers = users;
       });
   }
+
+  goTo() {
+    this.stepperService.goToStep(4);
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

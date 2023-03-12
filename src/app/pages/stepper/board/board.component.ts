@@ -243,6 +243,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  goTo() {
+    this.stepperService.goToStep(2);
+  }
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();
