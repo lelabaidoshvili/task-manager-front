@@ -9,10 +9,11 @@
   justify-content: space-between;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 880px) {
   .container {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
 }
@@ -56,9 +57,11 @@ mat-list {
   align-items: center;
 }
 
-@media  (max-width: 550px) {
+
+@media  (max-width: 1050px) {
   .example-list-wrapping {
     width: 300px;
+    margin-bottom: 15px;
   }
 
 }
@@ -89,3 +92,8 @@ mat-label.label {
 mat-progress-bar {
   width: 15rem;
 }
+
+
+
+
+

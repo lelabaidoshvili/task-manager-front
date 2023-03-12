@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { AuthResponse, Login, Project } from 'src/app/core/interfaces';
 import { Users, UsersResponse } from 'src/app/core/interfaces/users.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CookieStorageService } from 'src/app/core/services/cookie.service';
+
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 
 @Injectable({
@@ -11,7 +12,13 @@ import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
 })
 export class AuthFacadeService extends AuthService {
   cookieStorageService: CookieStorageService = inject(CookieStorageService);
+
   projectFacadeService: ProjectFacadeService = inject(ProjectFacadeService);
+
+  private userSubject = new BehaviorSubject<UsersResponse>(null);
+
+  user$ = this.userSubject.asObservable();
+
   override login(payload: Login) {
     return super.login(payload).pipe(
       tap((response: AuthResponse) => {
@@ -73,10 +80,14 @@ export class AuthFacadeService extends AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+  updateUser(user: UsersResponse) {
+    this.userSubject.next(user);
+  }
 
   signOut() {
     localStorage.clear();
     this.cookieStorageService.deleteCookie('token');
     this.cookieStorageService.deleteCookie('refreshToken');
+    this.cookieStorageService.deleteCookie('roles');
   }
 }

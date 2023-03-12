@@ -3,6 +3,13 @@
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 0.5rem;
 }
+@media (max-width: 980px) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+}
 .grid-item {
   grid-column: 2/4;
 }
@@ -15,6 +22,8 @@
   margin-top: 7px;
   width: 30rem;
 }
+
+
 .add {
   margin-bottom: 1rem;
 }
@@ -34,6 +43,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+@media (max-width: 1400px) {
+  .btn-up button {
+    position: initial;
+    bottom: initial;
+    left: initial;
+    transform: initial;
+  }
+}
 
 .primary-button {
   margin-top: 10px;
@@ -44,6 +61,30 @@
   background-color: #d27569;
   color: #e8ebfc;
 }
+@media (max-width: 1425px) {
+  .warn-button {
+    width: 480px;
+    height: 50px;
+  }
+}
+@media (max-width: 785px) {
+  .warn-button {
+    width: 300px;
+  }
+}
+@media (max-width: 590px) {
+  .warn-button {
+    width: 200px;
+  }
+}
+@media (max-width: 490px) {
+  .warn-button {
+    width: 150px;
+  }
+}
+
+
+
 .next {
   margin-top: 30px;
 }
@@ -123,3 +164,53 @@ mat-progress-bar {
 .alignBtns {
   margin-left: 10rem;
 }
+
+@media (max-width: 800px) {
+  .small-input.mat-form-field {
+    width: 300px;
+
+  }
+  .small-input.mat-form-field-infix {
+    font-size: 4px;
+  }
+}
+@media (max-width: 590px) {
+  .small-input.mat-form-field {
+    width: 200px;
+
+  }
+  .small-input.mat-form-field-infix {
+    font-size: 4px;
+  }
+}
+@media (max-width: 490px) {
+  .small-input.mat-form-field {
+    width: 150px;
+
+  }
+  .small-input.mat-form-field-infix {
+    font-size: 4px;
+  }
+}
+@media (max-width: 1420px) {
+  table thead{
+    display: none;
+
+  }
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 1425px){
+  tbody .vertical{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+
+
+
+

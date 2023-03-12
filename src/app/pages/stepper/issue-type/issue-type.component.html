@@ -20,7 +20,7 @@
           issueTypeFormGroup.get("name").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-        }}</mat-icon>
+          }}</mat-icon>
       </mat-form-field>
       <mat-form-field class="grid-item" appearance="outline">
         <mat-label>description</mat-label>
@@ -35,7 +35,7 @@
           issueTypeFormGroup.get("description").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-        }}</mat-icon>
+          }}</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -53,7 +53,7 @@
           issueTypeFormGroup.get("icon").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-        }}</mat-icon>
+          }}</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -68,7 +68,7 @@
           issueTypeFormGroup.get("type").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-        }}</mat-icon>
+          }}</mat-icon>
       </mat-form-field>
       <mat-form-field class="colorField" appearance="outline">
         <mat-label>Color</mat-label>
@@ -83,7 +83,7 @@
           issueTypeFormGroup.get("color").touched
             ? "mood_bad"
             : "sentiment_very_satisfied"
-        }}</mat-icon>
+          }}</mat-icon>
       </mat-form-field>
     </div>
 
@@ -97,104 +97,107 @@
         class="w-full text-sm text-left bg-violet-50 dark:text-grey-400"
       >
         <thead class="text-xs text-white-700 uppercase bg-violet-900">
-          <tr>
-            <th
-              scope="col"
-              class="px-6 py-3 text-white Class Properties text-left text-align: left;"
-            >
-              Name
-            </th>
-            <th
-              scope="col"
-              class="px-6 py-3 text-white Class Properties text-left text-align: left;"
-            >
-              Filed Name
-            </th>
+        <tr>
+          <th
+            scope="col"
+            class="px-6 py-3 text-white Class Properties text-left text-align: left;"
+          >
+            Name
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-white Class Properties text-left text-align: left;"
+          >
+            Filed Name
+          </th>
 
-            <th
-              scope="col"
-              class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
-            >
-              Actions
-            </th>
-          </tr>
+          <th
+            scope="col"
+            class="px-6 py-3 text-white Class Properties text-left text-align: left; text-center"
+          >
+            Actions
+          </th>
+        </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="
+        <tr
+          *ngFor="
               let column of issueTypeFormGroup.get('issueTypeColumns')[
                 'controls'
               ];
               let i = index
             "
-            [formGroupName]="i"
-            class="bg-violet-50 dark:bg-gray-100"
-          >
-            <td>
-              <mat-form-field class="sized" appearance="outline">
-                <mat-label>Name</mat-label>
-                <input
-                  type="text"
-                  matInput
-                  class="form-control"
-                  placeholder="name"
-                  formControlName="name"
-                />
-                <mat-icon matSuffix>{{
-                  issueTypeFormGroup.get("issueTypeColumns").invalid &&
-                  issueTypeFormGroup.get("issueTypeColumns").touched
-                    ? "mood_bad"
-                    : "sentiment_very_satisfied"
+          [formGroupName]="i"
+          class="bg-violet-50 dark:bg-gray-100 vertical"
+        >
+          <td >
+            <mat-form-field class="sized small-input" appearance="outline">
+              <mat-label>Name</mat-label>
+              <input
+                type="text"
+                matInput
+                class="form-control"
+                placeholder="name"
+                formControlName="name"
+              />
+              <mat-icon matSuffix>{{
+                issueTypeFormGroup.get("issueTypeColumns").invalid &&
+                issueTypeFormGroup.get("issueTypeColumns").touched
+                  ? "mood_bad"
+                  : "sentiment_very_satisfied"
                 }}</mat-icon>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field class="sized" appearance="outline">
-                <mat-label>Filed Name</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  class="form-control"
-                  placeholder="filedName"
-                  formControlName="filedName"
-                />
-                <mat-icon matSuffix>{{
-                  issueTypeFormGroup.get("issueTypeColumns").invalid &&
-                  issueTypeFormGroup.get("issueTypeColumns").touched
-                    ? "mood_bad"
-                    : "sentiment_very_satisfied"
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="sized small-input" appearance="outline">
+              <mat-label>Filed Name</mat-label>
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                placeholder="filedName"
+                formControlName="filedName"
+              />
+              <mat-icon matSuffix>{{
+                issueTypeFormGroup.get("issueTypeColumns").invalid &&
+                issueTypeFormGroup.get("issueTypeColumns").touched
+                  ? "mood_bad"
+                  : "sentiment_very_satisfied"
                 }}</mat-icon>
-              </mat-form-field>
-            </td>
+            </mat-form-field>
+          </td>
 
-            <td class="btn-up">
-              <div mat-dialog-actions>
-                <button
-                  (click)="deleteInputsRow(i)"
-                  mat-raised-button
-                  class="warn-button"
-                  type="button"
-                >
-                  Delete
-                </button>
-              </div>
-            </td>
-          </tr>
+          <td class="btn-up">
+            <div mat-dialog-actions>
+              <button
+                (click)="deleteInputsRow(i)"
+                mat-raised-button
+                class="warn-button"
+                type="button"
+              >
+                Delete
+              </button>
+            </div>
+
+          </td>
+
+        </tr>
+
         </tbody>
         <tfoot>
-          <tr>
-            <td>
-              <button
-                class="add"
-                type="button"
-                mat-raised-button
-                class="primary-button"
-                (click)="addIssueTypeColumn()"
-              >
-                Add New column
-              </button>
-            </td>
-          </tr>
+        <tr>
+          <td>
+            <button
+              class="add"
+              type="button"
+              mat-raised-button
+              class="primary-button"
+              (click)="addIssueTypeColumn()"
+            >
+              Add New column
+            </button>
+          </td>
+        </tr>
         </tfoot>
       </table>
     </div>

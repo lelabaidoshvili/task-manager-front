@@ -25,10 +25,11 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef >  </th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-raised-button class="primary" (click)="addRole(element.id)">Edit</button>
-        <button mat-raised-button class="warn" (click)="delete(element.id)">Delete</button>
-        <button mat-raised-button class="permission-button" [routerLink]="['/roles/permissions', element.id]">Permissions</button>
-
+        <div class="buttons">
+          <button mat-raised-button class="primary" (click)="addRole(element.id)">Edit</button>
+          <button mat-raised-button class="warn" (click)="delete(element.id)">Delete</button>
+          <button mat-raised-button class="permission-button" [routerLink]="['/roles/permissions', element.id]">Permissions</button>
+        </div>
       </td>
     </ng-container>
 

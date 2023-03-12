@@ -41,10 +41,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMyProjects();
+    this.authFacadeService.user$.subscribe(user => {
+      this.currentUser = user;
+    });
     this.currentUser = this.authFacadeService.user;
   }
 
   public signOut(): void {
+    localStorage.removeItem('user');
     this.authFacadeService.signOut();
 
     this.router.navigate(['/']);

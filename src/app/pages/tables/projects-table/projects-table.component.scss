@@ -36,10 +36,28 @@ button {
 }
 
 .warn {
+  width: 75px;
+  height: 37px;
   background-color: #d27569;
   color: #e8ebfc;
 }
 .primary {
+  width: 75px;
+  height: 37px;
   background-color: #779d82;
   color: #e8ebfc;
+}
+@media (max-width: 550px) {
+  .warn {
+    width: 69px;
+    height: 34px;
+    margin:8px 0;
+
+  }
+  .primary {
+    width: 69px;
+    height: 34px;
+    margin: 8px 0;
+  }
+
 }
