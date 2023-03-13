@@ -4,6 +4,9 @@
   margin: auto;
   position: relative;
 }
+
+
+
 .hr {
   color: #d5d2d2;
   font-size: 18px;
@@ -84,6 +87,22 @@ h1 {
   border-radius: 5px;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 }
+@media (max-width: 820px) {
+  .column {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 820px) {
+  .task-button {
+    width: 69px;
+    height: 38px;
+    font-size: 13px;
+    left: 100px;
+    top: 70px;
+  }
+}
 @media (max-width: 770px) {
   .column {
     width: 200px;
@@ -91,7 +110,7 @@ h1 {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 770px) {
   .task-button {
     width: 59px;
     height: 30px;
@@ -115,9 +134,14 @@ mat-sidenav-container {
 mat-sidenav {
   width: 300px;
 }
+@media (max-width: 770px) {
+  mat-sidenav {
+    width: 340px;
+  }
+}
 @media (max-width: 550px) {
   mat-sidenav {
-    width: 380px;
+    width: 420px;
   }
 }
 
