@@ -7,6 +7,7 @@
   .wrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
 }
@@ -74,14 +75,15 @@
 }
 @media (max-width: 590px) {
   .warn-button {
-    width: 200px;
+    width: 230px;
   }
 }
-@media (max-width: 490px) {
+@media (max-width: 500px) {
   .warn-button {
-    width: 150px;
+    width: 190px;
   }
 }
+
 
 
 
@@ -176,36 +178,34 @@ mat-progress-bar {
 }
 @media (max-width: 590px) {
   .small-input.mat-form-field {
-    width: 200px;
+    width: 230px;
 
   }
   .small-input.mat-form-field-infix {
     font-size: 4px;
   }
 }
-@media (max-width: 490px) {
+@media (max-width: 500px) {
   .small-input.mat-form-field {
-    width: 150px;
+    width: 190px;
 
   }
   .small-input.mat-form-field-infix {
     font-size: 4px;
   }
 }
+
 @media (max-width: 1420px) {
   table thead{
     display: none;
 
   }
 }
-.flex {
-  display: flex;
-  justify-content: space-between;
-}
 @media (max-width: 1425px){
   tbody .vertical{
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 }
 
