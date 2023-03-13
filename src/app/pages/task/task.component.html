@@ -6,6 +6,9 @@
         <div class="sidenav-header">
           <h2>{{ currentProject?.name }} <small>- software project</small></h2>
         </div>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon color="primary">menu</mat-icon>
+        </button>
         <div class="board-info">
           <p class="side-head">Select Board &#10534;</p>
 
