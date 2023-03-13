@@ -119,6 +119,7 @@ mat-progress-bar {
     column-gap: 0.2rem;
     width: 100%;
   }
+
   .tableForms {
     padding: 0.2rem;
     width: 100%;
@@ -168,10 +169,6 @@ mat-progress-bar {
     padding: 0;
   }
 
-  // .scroll {
-  //   display: none;
-  // }
-
   .showColumns {
     display: block;
     text-transform: uppercase;
@@ -205,6 +202,51 @@ mat-progress-bar {
   }
 }
 @media (max-width: 1024px) {
+  //------update
+  .update {
+    // background-color: red;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .tableFormsUpdate {
+    padding: 0.2rem;
+    width: 80%;
+    background-color: transparent;
+    padding: 0;
+    // background-color: #504a90;
+    margin: 0 auto;
+  }
+
+  .wrapperUpdate {
+    // background-color: yellow;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .tableUpdate {
+    width: 80%;
+    // background-color: green;
+    margin: 0 auto;
+  }
+
+  .tableUpdate tbody tr {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .addUpdateBtn.add-board {
+    margin-left: 6rem;
+  }
+  .addUpdateBtn.showColumns {
+    margin-left: 6rem;
+  }
+  .addUpdateBtn.board-save {
+    margin-left: 6rem;
+  }
+
+  .addUpdateBtn.primary-button {
+    margin-left: 6rem;
+  }
+  //----------------------
   form {
     width: 90vw;
   }
@@ -294,6 +336,54 @@ mat-progress-bar {
     column-gap: 0.2rem;
     width: 80%;
   }
+  //------update
+  .update {
+    // background-color: red;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .tableFormsUpdate {
+    padding: 0.2rem;
+    width: 80%;
+    background-color: transparent;
+    padding: 0;
+    // background-color: #504a90;
+    margin: 0 auto;
+  }
+
+  .wrapperUpdate {
+    // background-color: yellow;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .tableUpdate {
+    width: 80%;
+    // background-color: green;
+    margin: 0 auto;
+  }
+
+  .tableUpdate tbody tr {
+    width: 80%;
+    margin: 0 auto;
+  }
+  // .addUpdateBtn {
+  //   margin-left: 2rem;
+  // }
+
+  .addUpdateBtn.add-board {
+    margin-left: 2rem;
+  }
+  .addUpdateBtn.showColumns {
+    margin-left: 2rem;
+  }
+  .addUpdateBtn.board-save {
+    margin-left: 2rem;
+  }
+
+  .addUpdateBtn.primary-button {
+    margin-left: 4rem;
+  }
+  //----------------------
   table {
     width: 100%;
   }
@@ -328,9 +418,10 @@ mat-progress-bar {
     padding: 0;
   }
 
-  // .scroll {
-  //   display: none;
-  // }
+  .scroll {
+    width: 70%;
+    margin: 6px auto;
+  }
 
   .showColumns {
     display: block;

@@ -3,18 +3,22 @@
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 0.5rem;
 }
-@media (max-width: 980px) {
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
+.hideColumns {
+  display: none;
 }
+// @media (max-width: 980px) {
+//   .wrapper {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//   }
+// }
 .grid-item {
   grid-column: 2/4;
 }
-
+.primary-button {
+  margin: 2rem;
+}
 .colorField input.mat-input-element {
   margin-top: -16em;
 }
@@ -23,7 +27,6 @@
   margin-top: 7px;
   width: 30rem;
 }
-
 
 .add {
   margin-bottom: 1rem;
@@ -36,56 +39,29 @@
   margin-top: 1rem;
 }
 .btn-up {
-  position: relative;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
 }
 .btn-up button {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-@media (max-width: 1400px) {
-  .btn-up button {
-    position: initial;
-    bottom: initial;
-    left: initial;
-    transform: initial;
-  }
+  width: 100%;
 }
 
 .primary-button {
-  margin-top: 10px;
   background-color: #779d82;
   color: #e8ebfc;
+}
+
+.add-btn {
+  margin: 1rem;
 }
 .warn-button {
   background-color: #d27569;
   color: #e8ebfc;
 }
-@media (max-width: 1425px) {
-  .warn-button {
-    width: 480px;
-    height: 50px;
-  }
-}
-@media (max-width: 785px) {
-  .warn-button {
-    width: 300px;
-  }
-}
-@media (max-width: 590px) {
-  .warn-button {
-    width: 230px;
-  }
-}
-@media (max-width: 500px) {
-  .warn-button {
-    width: 190px;
-  }
-}
-
-
-
 
 .next {
   margin-top: 30px;
@@ -161,56 +137,295 @@ mat-progress-bar {
   margin: 0 auto;
 }
 .alignBtn {
-  margin-left: 10rem;
+  margin-left: 4rem;
 }
 .alignBtns {
   margin-left: 10rem;
 }
 
-@media (max-width: 800px) {
-  .small-input.mat-form-field {
-    width: 300px;
+//------------------------------------------------
+@media (max-width: 1450px) {
+  form {
+    width: 100%;
+  }
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 0.2rem;
+    width: 100%;
+  }
+  .tableForms {
+    padding: 0.2rem;
+    width: 100%;
+    background-color: transparent;
+    padding: 0;
+  }
 
+  table {
+    width: 100%;
   }
-  .small-input.mat-form-field-infix {
-    font-size: 4px;
+  .showColumns {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #504a90;
+    margin-bottom: 0.3rem;
   }
-}
-@media (max-width: 590px) {
-  .small-input.mat-form-field {
-    width: 230px;
-
-  }
-  .small-input.mat-form-field-infix {
-    font-size: 4px;
-  }
-}
-@media (max-width: 500px) {
-  .small-input.mat-form-field {
-    width: 190px;
-
-  }
-  .small-input.mat-form-field-infix {
-    font-size: 4px;
-  }
-}
-
-@media (max-width: 1420px) {
-  table thead{
-    display: none;
-
-  }
-}
-@media (max-width: 1425px){
-  tbody .vertical{
+  tbody .vertical {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody .vertical {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  td {
+    width: 100%;
+  }
+  tbody {
+    background-color: transparent;
+  }
+  tbody .mat-form-field {
+    width: 100%;
+    padding: 0 2rem;
+  }
+
+  .mat-form-field input {
+    margin: 0 auto;
+  }
+  .mat-form-field {
+    width: 100%;
+    padding: 0;
+  }
+
+  .showColumns {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #504a90;
+    margin-bottom: 0.3rem;
+  }
+
+  .add-td {
+    display: flex;
+    align-items: center;
+  }
+  .primary-button.add-mob {
+    margin-left: 2rem;
+  }
+  .primary-button {
+    margin: 2rem;
+  }
+  td.btn-up div {
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    padding: 0 2rem;
+  }
+  td.btn-up div button {
+    height: 100%;
+  }
+}
+@media (max-width: 1024px) {
+  //------update
+  form {
+    width: 100%;
+  }
+  .tableFormsUpdate {
+    padding: 0.2rem;
+    width: 80%;
+    background-color: transparent;
+    padding: 0;
+    // background-color: #504a90;
+    margin: 0 auto;
+  }
+
+  .wrapperUpdate {
+    // background-color: yellow;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .tableUpdate {
+    width: 80%;
+    // background-color: green;
+    margin: 0 auto;
+  }
+
+  .tableUpdate tbody tr {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .addUpdateBtn.add-board {
+    margin-left: 6rem;
+  }
+  .addUpdateBtn.showColumns {
+    margin-left: 6rem;
+  }
+  .addUpdateBtn.board-save {
+    margin-left: 6rem;
+  }
+
+  .addUpdateBtn.primary-button {
+    margin-left: 6rem;
+  }
+  // form {
+  //   width: 90vw;
+  // }
+  .tableForms {
+    padding: 0.2rem;
+    width: 80%;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    width: 80%;
+  }
+  .mat-form-field {
+    width: 100%;
+    padding: 0;
+  }
+  table {
+    width: 100%;
+  }
+  thead {
+    display: none;
+  }
+
+  tbody .vertical {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  td {
+    width: 100%;
+  }
+  tbody {
+    background-color: transparent;
+  }
+  tbody .mat-form-field {
+    width: 100%;
+    padding: 0 2rem;
+  }
+
+  .mat-form-field input {
+    margin: 0 auto;
+  }
+
+  .scroll {
+    // display: none;
+  }
+
+  .showColumns {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #504a90;
+    margin-bottom: 0.3rem;
+  }
+
+  .add-td {
+    display: flex;
+    align-items: center;
+  }
+
+  .primary-button {
+    margin: 2rem;
   }
 }
 
+@media (max-width: 600px) {
+  form {
+    width: 100vw;
+  }
+  .tableForms {
+    padding: 0.2rem;
+    width: 80%;
+    background-color: transparent;
+    padding: 0;
+  }
 
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    width: 80%;
+  }
+  table {
+    width: 100%;
+  }
+  thead {
+    display: none;
+  }
 
+  tbody .vertical {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
 
+  td {
+    width: 100%;
+  }
+  tbody {
+    background-color: transparent;
+  }
+  tbody .mat-form-field {
+    width: 100%;
+    padding: 0 2rem;
+  }
 
+  .mat-form-field input {
+    margin: 0 auto;
+  }
+  .mat-form-field {
+    width: 100%;
+    padding: 0;
+  }
 
+  // .scroll {
+  //   display: none;
+  // }
+
+  .showColumns {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #504a90;
+    margin-bottom: 0.3rem;
+  }
+
+  .add-td {
+    display: flex;
+    align-items: center;
+  }
+
+  .primary-button {
+    margin: 2rem;
+  }
+}
