@@ -36,7 +36,6 @@
   gap: 1rem;
 }
 .custom-checkbox {
-
 }
 .task-status {
   color: #67ba7f;
@@ -46,3 +45,25 @@
   margin-top: 10px;
 }
 
+@media (max-width: 600px) {
+  .taskForm {
+    // background-color: #67ba7f;
+    width: 100%;
+    padding: 2rem;
+    margin: 0 auto;
+  }
+
+  .wrapper {
+    // background-color: red;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 0.8rem;
+  }
+
+  .btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    // background-color: rebeccapurple;
+    row-gap: 0.8rem;
+  }
+}
