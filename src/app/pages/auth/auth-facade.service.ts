@@ -16,8 +16,9 @@ export class AuthFacadeService extends AuthService {
   projectFacadeService: ProjectFacadeService = inject(ProjectFacadeService);
 
   private userSubject = new BehaviorSubject<UsersResponse>(null);
-
+  private roleSubject = new BehaviorSubject<any>(null)
   user$ = this.userSubject.asObservable();
+
 
   override login(payload: Login) {
     return super.login(payload).pipe(
@@ -83,6 +84,8 @@ export class AuthFacadeService extends AuthService {
   updateUser(user: UsersResponse) {
     this.userSubject.next(user);
   }
+
+
 
   signOut() {
     localStorage.clear();

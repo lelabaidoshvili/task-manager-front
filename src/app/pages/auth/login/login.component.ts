@@ -4,10 +4,11 @@ import { Subject, takeUntil, switchMap} from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthFacadeService } from '../auth-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
-import {tap, map} from "rxjs";
+import {tap, map, pipe} from "rxjs";
 import {AuthResponse, UsersResponse} from "../../../core/interfaces";
 import {CookieStorageService} from "../../../core/services/cookie.service";
 import {RoleHttpService} from "../../../core/services/role-http.service";
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -42,22 +43,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.invalid) return;
     this.saveRoles()
-    this.authFacadeService
-      .login(this.loginForm.value)
-      .pipe(takeUntil(this.sub$))
-      .subscribe((res) => {
-        this.navigateToPages();
-        this.authFacadeService.updateUser(res.user);
-        this.user = res.user
-        this.email = res.user.email
-
-      });
+    // this.authFacadeService
+    //   .login(this.loginForm.value)
+    //   .pipe(takeUntil(this.sub$))
+    //   .subscribe((res) => {
+    //     this.navigateToPages();
+    //     this.authFacadeService.updateUser(res.user);
+    //     this.user = res.user
+    //     this.email = res.user.email
+    //
+    //   });
   }
 
   saveRoles() {
     this.authFacadeService.login(this.loginForm.value)
       .pipe(
         tap((res: AuthResponse) => {
+          this.authFacadeService.updateUser(res.user);
+          this.user = res.user;
+          this.email = res.user.email;
           const roles = res.user.roles.map((r: any) => r.name);
           const expiration = new Date();
           expiration.setDate(expiration.getDate() + 1);
@@ -74,7 +78,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               localStorage.setItem('permissions', JSON.stringify(permissions));
             })
           )
-        )
+        ),
+        takeUntil(this.sub$)
       )
       .subscribe(() => this.navigateToPages());
   }
