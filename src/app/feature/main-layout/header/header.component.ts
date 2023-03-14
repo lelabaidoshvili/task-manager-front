@@ -15,13 +15,13 @@ export class HeaderComponent implements OnInit {
   authFacadeService: AuthFacadeService = inject(AuthFacadeService);
   //--
   // currentProject?: Project = this.projectFacadeService.getProject();
-  currentProject?: Project = this.projectFacadeService.current.getValue();
+  currentProject = this.projectFacadeService.current.getValue();
   //--
   currentBoards: any;
 
-  projects$ = this.projectFacadeService.projects$;
+  // projects$ = this.projectFacadeService.projects$;
   currentUser;
-
+  currentUsersProjects;
   toggle: boolean = false;
 
   get loggedIn() {
@@ -40,9 +40,20 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMyProjects();
-    this.authFacadeService.user$.subscribe(user => {
+    this.projectFacadeService.activateCurrent.subscribe((res) => {
+      if (res) {
+        this.currentProject = this.projectFacadeService.current.getValue();
+      }
+    });
+
+    // this.getMyProjects();
+    this.authFacadeService.user$.subscribe((user) => {
       this.currentUser = user;
+      console.log(this.currentUser);
+      this.currentUsersProjects = this.currentUser?.projects;
+      console.log('current users project');
+
+      console.log(this.currentUsersProjects);
     });
     this.currentUser = this.authFacadeService.user;
   }

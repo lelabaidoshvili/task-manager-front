@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Project, ProjectUsers, UsersResponse } from '../core/interfaces';
 
 import { ProjectHttpService } from '../core/services/project-http.service';
+import { BoardFacadeService } from './board-facade.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,8 +26,12 @@ export class ProjectFacadeService {
   activateCurrent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
   );
+  // activate: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private projectHttpService: ProjectHttpService) {}
+  constructor(
+    private projectHttpService: ProjectHttpService,
+    private boardFacadeService: BoardFacadeService
+  ) {}
 
   setProject(projectId: number): void {
     this.projectHttpService

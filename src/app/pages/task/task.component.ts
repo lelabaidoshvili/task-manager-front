@@ -65,6 +65,51 @@ export class TaskComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loadAllInTasks();
+
+    this.projectFacadeService.activateCurrent.subscribe((res) => {
+      if (res) {
+        this.loadAllInTasks();
+      }
+    });
+
+    //------------------
+    // this.projectFacadeService.current$
+    //   .pipe(takeUntil(this.sub$))
+    //   .subscribe((res) => {
+    //     this.currentProject = res;
+    //   });
+    // this.projectFacadeService.activateCurrent.subscribe((res) => {
+    //   if (res) {
+    //     this.boardFacadeService
+    //       .getMyBoards$()
+    //       .pipe(takeUntil(this.sub$))
+    //       .subscribe((boards) => {
+    //         this.currentBoards = boards;
+    //       });
+    //   }
+    // });
+    // this.projectFacadeService.activateCurrent.subscribe((res) => {
+    //   if (res) {
+    //     this.projectFacadeService
+    //       .getProjectUsers$()
+    //       .pipe(takeUntil(this.sub$))
+    //       .subscribe((users) => {
+    //         this.projectUsers = users;
+    //         console.log(users);
+    //       });
+    //   }
+    // });
+    // this.projectFacadeService.activateCurrent.subscribe((res) => {
+    //   this.IssueTypeFacadeService.getIssueTypes()
+    //     .pipe(takeUntil(this.sub$))
+    //     .subscribe((issues) => {
+    //       this.myIssue = issues;
+    //     });
+    // });
+    //------------------
+  }
+  loadAllInTasks() {
     combineLatest([
       this.projectFacadeService.current$,
       this.boardFacadeService.getMyBoards$(),
@@ -74,49 +119,17 @@ export class TaskComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.sub$))
       .subscribe(([project, boards, users, issueTypes]) => {
         this.currentProject = project;
+
+        console.log('current');
+        console.log(this.currentProject);
+
         this.currentBoards = boards;
+
+        console.log(this.currentBoards);
         this.projectUsers = users;
         this.myIssue = issueTypes;
       });
-    //------------------
-
-    this.projectFacadeService.current$
-      .pipe(takeUntil(this.sub$))
-      .subscribe((res) => {
-        this.currentProject = res;
-      });
-    this.projectFacadeService.activateCurrent.subscribe((res) => {
-      if (res) {
-        this.boardFacadeService
-          .getMyBoards$()
-          .pipe(takeUntil(this.sub$))
-          .subscribe((boards) => {
-            this.currentBoards = boards;
-          });
-      }
-    });
-    this.projectFacadeService.activateCurrent.subscribe((res) => {
-      if (res) {
-        this.projectFacadeService
-          .getProjectUsers$()
-          .pipe(takeUntil(this.sub$))
-          .subscribe((users) => {
-            this.projectUsers = users;
-            console.log(users);
-          });
-      }
-    });
-    this.projectFacadeService.activateCurrent.subscribe((res) => {
-      this.IssueTypeFacadeService.getIssueTypes()
-        .pipe(takeUntil(this.sub$))
-        .subscribe((issues) => {
-          this.myIssue = issues;
-        });
-    });
-
-    //------------------
   }
-
   deleteUser(id: number) {
     console.log(id);
     this.projectUsers = this.projectUsers.filter((user) => user.id !== id);

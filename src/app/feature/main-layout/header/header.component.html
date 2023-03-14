@@ -17,7 +17,7 @@
           (ngModelChange)="selectProject($event)"
         >
           <option
-            *ngFor="let project of projects$ | async"
+            *ngFor="let project of currentUsersProjects"
             [value]="project.id"
           >
             {{ project?.name | uppercase }}

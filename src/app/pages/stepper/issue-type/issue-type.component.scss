@@ -6,13 +6,7 @@
 .hideColumns {
   display: none;
 }
-// @media (max-width: 980px) {
-//   .wrapper {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//   }
-// }
+
 .grid-item {
   grid-column: 2/4;
 }
@@ -147,6 +141,7 @@ mat-progress-bar {
 @media (max-width: 1450px) {
   form {
     width: 100%;
+    // background-color: #504a90;
   }
   .wrapper {
     display: grid;
