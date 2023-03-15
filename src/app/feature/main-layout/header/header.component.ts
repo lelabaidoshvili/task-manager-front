@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.projectFacadeService.activateCurrent.subscribe((res) => {
+    this.projectFacadeService.current.subscribe((res) => {
       if (res) {
         this.currentProject = this.projectFacadeService.current.getValue();
       }

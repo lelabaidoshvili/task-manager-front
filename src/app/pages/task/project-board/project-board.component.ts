@@ -58,7 +58,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     //-----------------------dialog---------------------------
     // Subscribe to the project activation event
-    this.projectFacadeService.activateCurrent.subscribe((res) => {
+    this.projectFacadeService.current.subscribe((res) => {
       console.log(res);
 
       if (res && this.isOnBoardColumnsPage) {

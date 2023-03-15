@@ -23,10 +23,9 @@ export class ProjectFacadeService {
   );
   current$ = this.current.asObservable();
 
-  activateCurrent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    true
-  );
-  // activate: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // activateCurrent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  //   true
+  // );
 
   constructor(
     private projectHttpService: ProjectHttpService,
@@ -40,7 +39,7 @@ export class ProjectFacadeService {
         localStorage.setItem('project', JSON.stringify(project));
 
         this.current.next(project);
-        this.activateCurrent.next(true);
+        // this.activateCurrent.next(true);
       });
   }
   // .pipe(tap((res) => this.current.next(res)))
