@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { Subject, takeUntil, switchMap} from 'rxjs';
+import { Subject, takeUntil, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthFacadeService } from '../auth-facade.service';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
-import {tap, map, pipe} from "rxjs";
-import {AuthResponse, UsersResponse} from "../../../core/interfaces";
-import {CookieStorageService} from "../../../core/services/cookie.service";
-import {RoleHttpService} from "../../../core/services/role-http.service";
+import { tap, map, pipe } from 'rxjs';
+import { AuthResponse, UsersResponse } from '../../../core/interfaces';
+import { CookieStorageService } from '../../../core/services/cookie.service';
+import { RoleHttpService } from '../../../core/services/role-http.service';
 import { first } from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-login',
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private projectFacadeService: ProjectFacadeService,
     private readonly fb: NonNullableFormBuilder,
     private cookieService: CookieStorageService,
-    private roleService: RoleHttpService,
+    private roleService: RoleHttpService
   ) {
     this.loginForm = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,45 +35,44 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.onSignIn()
+    this.onSignIn();
   }
 
   public onSignIn(): void {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.invalid) return;
-    this.saveRoles()
-    // this.authFacadeService
-    //   .login(this.loginForm.value)
-    //   .pipe(takeUntil(this.sub$))
-    //   .subscribe((res) => {
-    //     this.navigateToPages();
-    //     this.authFacadeService.updateUser(res.user);
-    //     this.user = res.user
-    //     this.email = res.user.email
-    //
-    //   });
+    this.saveRoles();
   }
 
   saveRoles() {
-    this.authFacadeService.login(this.loginForm.value)
+    this.authFacadeService
+      .login(this.loginForm.value)
       .pipe(
         tap((res: AuthResponse) => {
           this.authFacadeService.updateUser(res.user);
           this.user = res.user;
           this.email = res.user.email;
+
           const roles = res.user.roles.map((r: any) => r.name);
           const expiration = new Date();
           expiration.setDate(expiration.getDate() + 1);
-          this.cookieService.setCookie('roles', JSON.stringify(roles), expiration);
+          this.cookieService.setCookie(
+            'roles',
+            JSON.stringify(roles),
+            expiration
+          );
           localStorage.setItem('user', JSON.stringify(res.user));
         }),
-        switchMap(() => this.roleService.getMyRole()
-          .pipe(
+        switchMap(() =>
+          this.roleService.getMyRole().pipe(
             map((res: any) => {
               const permissions: string[] = [];
               const roles = res.forEach((r: any) => {
-                r.permissions && permissions.push(...r.permissions.map((p: any) => p.name))
+                r.permissions &&
+                  permissions.push(...r.permissions.map((p: any) => p.name));
               });
+
+              this.authFacadeService.permissionsSubject.next(permissions);
               localStorage.setItem('permissions', JSON.stringify(permissions));
             })
           )
@@ -87,8 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.projectFacadeService.getMyProjects().subscribe((projects) => {
       if (projects.length > 0) {
         this.router.navigate(['/task']);
-      }
-      else {
+      } else {
         this.router.navigate(['/stepper']);
       }
     });

@@ -19,6 +19,11 @@ export class AuthFacadeService extends AuthService {
   private roleSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
 
+  //--
+  permissionsSubject = new BehaviorSubject<string[]>([]);
+  permissions$ = this.permissionsSubject.asObservable();
+  //--
+
   override login(payload: Login) {
     return super.login(payload).pipe(
       tap((response: AuthResponse) => {

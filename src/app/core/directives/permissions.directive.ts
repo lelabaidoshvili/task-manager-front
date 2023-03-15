@@ -1,30 +1,58 @@
-import { Directive, Input, AfterViewInit, ElementRef } from '@angular/core';
-import { AuthFacadeService} from "../../pages/auth/auth-facade.service";
+import {
+  Directive,
+  Input,
+  AfterViewInit,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
+
+import { AuthFacadeService } from '../../pages/auth/auth-facade.service';
 
 @Directive({
   selector: '[appPermissions]',
-  standalone: true
+  standalone: true,
 })
-export class PermissionsDirective implements AfterViewInit{
+export class PermissionsDirective implements AfterViewInit {
   @Input() appPermissions: string[] = [];
 
   constructor(
     private authFacadeService: AuthFacadeService,
     private elementRef: ElementRef<HTMLElement>,
-  ) { }
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  hasPermission(): boolean {
-    const userPermissions = this.authFacadeService.permissions;
+  // hasPermission(): boolean {
+  //   this.authFacadeService.permissions$.subscribe((res) => {
+  //     this.userPermissions = res;
+  //   });
 
-    return userPermissions.some(permission => this.appPermissions.includes(permission));
-  }
+  //   return this.userPermissions.some((permission) =>
+  //     this.appPermissions.includes(permission)
+  //   );
+  // }
 
   ngAfterViewInit(): void {
-    console.log(this.elementRef.nativeElement)
-    console.log(this.hasPermission())
-    if (!this.hasPermission()) {
-      this.elementRef.nativeElement.remove();
-    }
-  }
+    this.authFacadeService.permissionsSubject.subscribe(
+      (permissions: string[]) => {
+        // console.log('look here');
+        // console.log(permissions);
+        const userPermissions = permissions.some((permission) =>
+          this.appPermissions.includes(permission)
+        );
+        setTimeout(() => {
+          if (!userPermissions) {
+            this.elementRef.nativeElement.classList.add('hidden');
+          } else {
+            this.elementRef.nativeElement.classList.remove('hidden');
+          }
+          this.cdr.detectChanges();
+        });
 
+        console.log(this.elementRef.nativeElement);
+        console.log(userPermissions);
+      }
+    );
+  }
 }
+
+//--
