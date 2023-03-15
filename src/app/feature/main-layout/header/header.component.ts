@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   //--
   currentBoards: any;
 
-  // projects$ = this.projectFacadeService.projects$;
+  projects$ = this.projectFacadeService.projects$;
   currentUser;
   currentUsersProjects;
   toggle: boolean = false;
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-    // this.getMyProjects();
+    this.getMyProjects();
     this.authFacadeService.user$.subscribe((user) => {
       this.currentUser = user;
       console.log(this.currentUser);

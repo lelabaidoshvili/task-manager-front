@@ -72,8 +72,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                   permissions.push(...r.permissions.map((p: any) => p.name));
               });
 
-              this.authFacadeService.permissionsSubject.next(permissions);
               localStorage.setItem('permissions', JSON.stringify(permissions));
+              this.authFacadeService.permissionsSubject.next(permissions);
             })
           )
         ),

@@ -5,6 +5,7 @@ import {
   ElementRef,
   ChangeDetectorRef,
 } from '@angular/core';
+import { first } from 'rxjs';
 
 import { AuthFacadeService } from '../../pages/auth/auth-facade.service';
 
@@ -30,24 +31,28 @@ export class PermissionsDirective implements AfterViewInit {
   //     this.appPermissions.includes(permission)
   //   );
   // }
+  ngOnInit() {
+    const permissionsString = localStorage.getItem('permissions');
+    if (permissionsString) {
+      const permissions = JSON.parse(permissionsString);
+      this.authFacadeService.permissionsSubject.next(permissions);
+    }
+  }
 
   ngAfterViewInit(): void {
     this.authFacadeService.permissionsSubject.subscribe(
       (permissions: string[]) => {
-        // console.log('look here');
-        // console.log(permissions);
         const userPermissions = permissions.some((permission) =>
           this.appPermissions.includes(permission)
         );
-        setTimeout(() => {
-          if (!userPermissions) {
-            this.elementRef.nativeElement.classList.add('hidden');
-          } else {
-            this.elementRef.nativeElement.classList.remove('hidden');
-          }
-          this.cdr.detectChanges();
-        });
-
+        if (!userPermissions) {
+          this.elementRef.nativeElement.classList.add('hidden');
+        } else {
+          this.elementRef.nativeElement.classList.remove('hidden');
+        }
+        this.cdr.detectChanges();
+        // setTimeout(() => {
+        // });
         console.log(this.elementRef.nativeElement);
         console.log(userPermissions);
       }
