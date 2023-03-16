@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Project } from 'src/app/core/interfaces/project.interface';
 import { ProjectFacadeService } from 'src/app/facades/project.facade.service';
+import { AuthFacadeService } from '../../auth/auth-facade.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -18,18 +19,33 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private projectFacadeService: ProjectFacadeService,
+    private authFacadeService: AuthFacadeService,
     private router: Router,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.projectFacadeService
-      .getMyProjects()
-      .pipe(takeUntil(this.sub$))
-      .subscribe((projects) => {
-        console.log(projects);
-        this.allProjects = projects;
-      });
+    //--
+    console.log('user');
+
+    console.log(this.authFacadeService.user.roles[0].name);
+
+    //--
+    if (this.authFacadeService.user.roles[0].name === 'Super Admin') {
+      this.projectFacadeService
+        .getProjects()
+        .pipe(takeUntil(this.sub$))
+        .subscribe((projects) => {
+          this.allProjects = projects;
+        });
+    } else {
+      this.projectFacadeService
+        .getMyProjects()
+        .pipe(takeUntil(this.sub$))
+        .subscribe((projects) => {
+          this.allProjects = projects;
+        });
+    }
   }
 
   updateProject(id: number) {

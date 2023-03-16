@@ -23,9 +23,7 @@ export class ProjectFacadeService {
   );
   current$ = this.current.asObservable();
 
-  // activateCurrent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-  //   true
-  // );
+  activate: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private projectHttpService: ProjectHttpService,
