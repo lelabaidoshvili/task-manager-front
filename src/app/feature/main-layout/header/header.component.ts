@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-    this.getMyProjects();
     this.authFacadeService.user$.subscribe((user) => {
       this.currentUser = user;
       console.log(this.currentUser);
@@ -54,6 +53,8 @@ export class HeaderComponent implements OnInit {
       console.log('current users project');
 
       console.log(this.currentUsersProjects);
+
+      this.getMyProjects();
     });
     this.currentUser = this.authFacadeService.user;
   }
