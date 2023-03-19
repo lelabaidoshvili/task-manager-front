@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://task-manager-1-production.up.railway.app/api/',
+  apiUrl: 'https://task-manager-backend-mary.herokuapp.com/api/',
 };
 
 /*
