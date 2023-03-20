@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://task-manager-1-production.up.railway.app/api/',
+  apiUrl: 'http://localhost:3000/api/',
 };
 
 /*
