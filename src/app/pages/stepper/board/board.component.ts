@@ -194,14 +194,12 @@ export class BoardComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.sub$))
         .subscribe((response: BoardResponse) => {
           console.log(response);
-
+          this.router.navigate([`/task/project-board/${this.boardId}`]);
           this.goNextStep = true;
           this.createBoard = false;
-          // this.boardFormGroup.reset();
+          this.boardFacadeService.update$.next(true);
         });
 
-      this.router.navigate([`/task/project-board/${this.boardId}`]);
-      this.boardFacadeService.update$.next(true);
     }
   }
 
