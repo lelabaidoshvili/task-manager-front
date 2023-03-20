@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit {
       this.getMyProjects();
     });
     this.currentUser = this.authFacadeService.user;
+    this.signOut()
   }
 
   public signOut(): void {
