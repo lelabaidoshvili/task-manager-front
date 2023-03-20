@@ -8,6 +8,8 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
+import {take, map} from "rxjs";
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,7 @@ import { AuthFacadeService } from 'src/app/pages/auth/auth-facade.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private authFacadeService: AuthFacadeService,
-    private router: Router
+    private router: Router,
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -25,10 +27,16 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    if (!this.authFacadeService.token) {
-      this.router.navigate(['/auth/login']);
-      return false;
-    }
-    return true;
+    return this.authFacadeService.token$
+      .pipe(
+        take(1),
+        map (token => {
+          if(token) {
+            return true
+          }
+          return this.router.createUrlTree(['auth/login'])
+        }
+      ))
+
   }
 }

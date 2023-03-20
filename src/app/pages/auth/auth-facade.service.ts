@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import { AuthResponse, Login, Project } from 'src/app/core/interfaces';
 import { Users, UsersResponse } from 'src/app/core/interfaces/users.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -18,7 +18,8 @@ export class AuthFacadeService extends AuthService {
   private userSubject = new BehaviorSubject<UsersResponse>(null);
   private roleSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
-
+  $token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>( null)
+  token$: Observable<string | null> = this.$token.asObservable()
   //--
   permissionsSubject = new BehaviorSubject<string[]>([]);
   permissions$ = this.permissionsSubject.asObservable();
@@ -28,6 +29,7 @@ export class AuthFacadeService extends AuthService {
     return super.login(payload).pipe(
       tap((response: AuthResponse) => {
         const expiresInMilliseconds = 24 * 60 * 60 * 1000;
+        this.$token.next(response.token.accessToken)
 
         const cookieExpire = new Date(Date.now() + expiresInMilliseconds);
 
