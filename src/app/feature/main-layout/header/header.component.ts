@@ -64,6 +64,7 @@ export class HeaderComponent implements OnInit {
     this.authFacadeService.signOut();
 
     this.router.navigate(['/']);
+    window.location.reload();
   }
 
   selectProject(projectId: number) {
