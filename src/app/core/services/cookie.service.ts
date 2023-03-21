@@ -22,7 +22,10 @@ export class CookieStorageService {
   }
 
   deleteCookie(name: string) {
-    this.cookieService.delete(name);
+    // this.cookieService.delete(name);
+    const domain = window.location.hostname;
+    const path = '/';
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}; domain=${domain}`;
   }
 
   deleteAllCookies() {
